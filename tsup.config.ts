@@ -1,0 +1,15 @@
+import { defineConfig } from "tsup";
+
+export default defineConfig({
+    entry: {
+        index: "src/index.ts",
+        "icons/index": "src/icons/index.ts",
+    },
+    format: ["esm", "cjs"],
+    dts: true,
+    sourcemap: true,
+    treeshake: true,
+    splitting: true,
+    clean: true,
+    external: ["react", "react-dom", "tailwindcss", "@phosphor-icons/react"],
+});

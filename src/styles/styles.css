@@ -1,0 +1,4 @@
+/* Agregador para dev/showcase. O dist/styles.css é gerado por scripts/build-css.mjs. */
+@import "./tokens.css";
+@import "./animations.css";
+@import "./base.css";

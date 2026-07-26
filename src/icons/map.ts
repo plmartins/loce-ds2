@@ -1,0 +1,152 @@
+/*
+ * ÚNICO arquivo que importa a biblioteca de ícones.
+ * Trocar de família (ex.: Phosphor -> outra) = reescrever só este arquivo.
+ *
+ * Convenção de nomes:
+ *  - Semânticos para domínio/navegação: IconProducts, IconSales, IconCashRegister...
+ *  - Literais para ações genéricas: IconPlus, IconTrash, IconSearch...
+ * Peso: "fill" como padrão da suíte; glifos de traço (plus, x, setas, busca) usam "bold".
+ */
+import {
+    ArrowLeft,
+    ArrowRight,
+    ArrowSquareOut,
+    ArrowsClockwise,
+    ArrowsLeftRight,
+    ArrowUUpLeft,
+    BellRinging,
+    Buildings,
+    CaretDown,
+    CaretLeft,
+    CaretRight,
+    CaretUp,
+    Check,
+    CheckCircle,
+    ClipboardText,
+    Coins,
+    Copy,
+    CreditCard,
+    Cube,
+    CurrencyCircleDollar,
+    EnvelopeSimple,
+    Eye,
+    EyeSlash,
+    FileText,
+    FloppyDisk,
+    Gauge,
+    GearSix,
+    Gift,
+    Globe,
+    HandCoins,
+    Info,
+    Key,
+    LinkSimple,
+    Lock,
+    MagnifyingGlass,
+    MapPin,
+    Moped,
+    PencilSimple,
+    Phone,
+    Plus,
+    PlugsConnected,
+    Printer,
+    Prohibit,
+    QrCode,
+    Receipt,
+    SealPercent,
+    ShieldCheck,
+    ShoppingBag,
+    ShoppingCart,
+    SlidersHorizontal,
+    Sparkle,
+    Spinner,
+    Storefront,
+    Tag,
+    Trash,
+    Truck,
+    UploadSimple,
+    UserCircle,
+    Users,
+    Vault,
+    Wallet,
+    Warning,
+    WarningCircle,
+    X,
+    XCircle,
+} from "@phosphor-icons/react";
+import { createIcon } from "./create-icon";
+
+/* ─── Navegação / menu ─── */
+export const IconDashboard = /*#__PURE__*/ createIcon(Gauge);
+export const IconCatalog = /*#__PURE__*/ createIcon(Cube);
+export const IconSales = /*#__PURE__*/ createIcon(ShoppingBag);
+export const IconLogistics = /*#__PURE__*/ createIcon(ArrowsLeftRight, "bold");
+export const IconPeople = /*#__PURE__*/ createIcon(Users);
+export const IconFinance = /*#__PURE__*/ createIcon(CurrencyCircleDollar);
+export const IconTasks = /*#__PURE__*/ createIcon(ClipboardText);
+export const IconIntegrations = /*#__PURE__*/ createIcon(PlugsConnected);
+export const IconSettings = /*#__PURE__*/ createIcon(GearSix);
+
+/* ─── Domínio ─── */
+export const IconProducts = /*#__PURE__*/ createIcon(Cube);
+export const IconClients = /*#__PURE__*/ createIcon(UserCircle);
+export const IconSupplier = /*#__PURE__*/ createIcon(Truck);
+export const IconCourier = /*#__PURE__*/ createIcon(Moped);
+export const IconStore = /*#__PURE__*/ createIcon(Storefront);
+export const IconCompany = /*#__PURE__*/ createIcon(Buildings);
+export const IconWallet = /*#__PURE__*/ createIcon(Wallet);
+export const IconMoney = /*#__PURE__*/ createIcon(Coins);
+export const IconCard = /*#__PURE__*/ createIcon(CreditCard);
+export const IconCommission = /*#__PURE__*/ createIcon(HandCoins);
+export const IconVault = /*#__PURE__*/ createIcon(Vault);
+export const IconTag = /*#__PURE__*/ createIcon(Tag);
+export const IconPromotion = /*#__PURE__*/ createIcon(SealPercent);
+export const IconInvoice = /*#__PURE__*/ createIcon(FileText);
+export const IconReceipt = /*#__PURE__*/ createIcon(Receipt);
+export const IconPrinter = /*#__PURE__*/ createIcon(Printer);
+export const IconQrCode = /*#__PURE__*/ createIcon(QrCode);
+export const IconCart = /*#__PURE__*/ createIcon(ShoppingCart);
+export const IconAddress = /*#__PURE__*/ createIcon(MapPin);
+export const IconGift = /*#__PURE__*/ createIcon(Gift);
+export const IconNotification = /*#__PURE__*/ createIcon(BellRinging);
+export const IconMail = /*#__PURE__*/ createIcon(EnvelopeSimple);
+export const IconPhone = /*#__PURE__*/ createIcon(Phone);
+export const IconLink = /*#__PURE__*/ createIcon(LinkSimple, "bold");
+export const IconGlobe = /*#__PURE__*/ createIcon(Globe);
+export const IconShield = /*#__PURE__*/ createIcon(ShieldCheck);
+export const IconKey = /*#__PURE__*/ createIcon(Key);
+export const IconLock = /*#__PURE__*/ createIcon(Lock);
+export const IconAI = /*#__PURE__*/ createIcon(Sparkle);
+
+/* ─── Ações ─── */
+export const IconPlus = /*#__PURE__*/ createIcon(Plus, "bold");
+export const IconClose = /*#__PURE__*/ createIcon(X, "bold");
+export const IconTrash = /*#__PURE__*/ createIcon(Trash);
+export const IconEdit = /*#__PURE__*/ createIcon(PencilSimple);
+export const IconCheck = /*#__PURE__*/ createIcon(Check, "bold");
+export const IconSearch = /*#__PURE__*/ createIcon(MagnifyingGlass, "bold");
+export const IconCopy = /*#__PURE__*/ createIcon(Copy);
+export const IconSave = /*#__PURE__*/ createIcon(FloppyDisk);
+export const IconEye = /*#__PURE__*/ createIcon(Eye);
+export const IconEyeOff = /*#__PURE__*/ createIcon(EyeSlash);
+export const IconRefresh = /*#__PURE__*/ createIcon(ArrowsClockwise, "bold");
+export const IconUpload = /*#__PURE__*/ createIcon(UploadSimple, "bold");
+export const IconUndo = /*#__PURE__*/ createIcon(ArrowUUpLeft, "bold");
+export const IconArrowLeft = /*#__PURE__*/ createIcon(ArrowLeft, "bold");
+export const IconArrowRight = /*#__PURE__*/ createIcon(ArrowRight, "bold");
+export const IconExternal = /*#__PURE__*/ createIcon(ArrowSquareOut, "bold");
+export const IconFilters = /*#__PURE__*/ createIcon(SlidersHorizontal, "bold");
+export const IconChevronDown = /*#__PURE__*/ createIcon(CaretDown, "bold");
+export const IconChevronUp = /*#__PURE__*/ createIcon(CaretUp, "bold");
+export const IconChevronLeft = /*#__PURE__*/ createIcon(CaretLeft, "bold");
+export const IconChevronRight = /*#__PURE__*/ createIcon(CaretRight, "bold");
+
+/* ─── Estados e feedback ─── */
+export const IconSuccess = /*#__PURE__*/ createIcon(CheckCircle);
+export const IconError = /*#__PURE__*/ createIcon(XCircle);
+export const IconWarning = /*#__PURE__*/ createIcon(Warning);
+export const IconAlert = /*#__PURE__*/ createIcon(WarningCircle);
+export const IconInfo = /*#__PURE__*/ createIcon(Info);
+export const IconBlocked = /*#__PURE__*/ createIcon(Prohibit);
+/** Girar no consumidor com a classe animate-spin. */
+export const IconSpinner = /*#__PURE__*/ createIcon(Spinner, "bold");

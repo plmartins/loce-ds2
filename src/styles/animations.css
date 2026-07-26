@@ -1,0 +1,208 @@
+/* loce-ds2 — animações CSS-first (herdadas do ds1, revisadas) */
+
+@keyframes shine {
+    0% { background-position: 100%; }
+    100% { background-position: -100%; }
+}
+.animate-shine { animation: shine 5s linear infinite; }
+
+@keyframes pop-in {
+    0% { transform: scale(0.6); }
+    100% { transform: scale(1); }
+}
+.animate-pop-in { animation: pop-in 0.1s both; }
+
+@keyframes slide-up-fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up { animation: slide-up-fade 0.2s ease-out both; }
+
+@keyframes typing-dot {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+    40% { transform: translateY(-6px); opacity: 1; }
+}
+.typing-dot { animation: typing-dot 1.4s infinite ease-in-out; }
+
+@keyframes replay-appear {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+.animate-replay-appear { animation: replay-appear 0.2s ease-out both; }
+
+/* ─── AI ─── */
+
+@keyframes ai-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes ai-sparkle {
+    0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes ai-rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 200% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes sparkle-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+.ai-rainbow-btn {
+    --loce-c: var(--accent-brand, #ad46ff);
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+}
+
+.ai-rainbow-btn-bg {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--loce-c) 10%, transparent), transparent 50%, color-mix(in srgb, var(--loce-c) 10%, transparent));
+}
+
+.ai-rainbow-btn:hover .ai-rainbow-btn-bg,
+.ai-rainbow-btn-bg:hover {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--loce-c) 15%, transparent), transparent 50%, color-mix(in srgb, var(--loce-c) 15%, transparent));
+}
+
+.ai-rainbow-btn::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(90deg, var(--loce-c), color-mix(in srgb, var(--loce-c) 30%, white), white, color-mix(in srgb, var(--loce-c) 30%, white), var(--loce-c));
+    background-size: 300% 100%;
+    animation: ai-rainbow 8s linear infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+.ai-rainbow-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 16px color-mix(in srgb, var(--loce-c) 25%, transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: -2;
+}
+
+.ai-rainbow-btn:hover::after { opacity: 1; }
+
+.ai-card {
+    --c: var(--accent-brand, #ad46ff);
+    background: linear-gradient(to right, color-mix(in srgb, var(--c) 15%, transparent), color-mix(in srgb, var(--c) 5%, transparent) 50%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 20%, transparent);
+    border-radius: 1rem;
+}
+
+.dark .ai-card {
+    background: linear-gradient(to right, color-mix(in srgb, var(--c) 10%, transparent), color-mix(in srgb, var(--c) 3%, transparent) 50%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 12%, transparent);
+}
+
+.ai-card-reverse {
+    --c: var(--accent-brand, #ad46ff);
+    background: linear-gradient(to left, color-mix(in srgb, var(--c) 15%, transparent), color-mix(in srgb, var(--c) 5%, transparent) 50%, transparent);
+}
+
+.dark .ai-card-reverse {
+    background: linear-gradient(to left, color-mix(in srgb, var(--c) 10%, transparent), color-mix(in srgb, var(--c) 3%, transparent) 50%, transparent);
+}
+
+.ai-card-icon {
+    background: color-mix(in srgb, var(--accent-brand, #ad46ff) 12%, transparent);
+    color: var(--accent-brand, #ad46ff);
+}
+
+.ai-gradient-text {
+    --c1: var(--accent-brand, #ad46ff);
+    --c2: var(--accent-brand-sec, #a60bff);
+    background: linear-gradient(90deg, var(--c2), var(--c1), color-mix(in srgb, var(--c1) 40%, #ec4899), color-mix(in srgb, var(--c1) 50%, #f97316), color-mix(in srgb, var(--c1) 40%, #ec4899), var(--c1), var(--c2));
+    background-size: 400% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ai-rainbow 5s linear infinite;
+}
+
+@property --loce-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes loce-rotate {
+    to { --loce-angle: 360deg; }
+}
+
+@keyframes texttype-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.improve-loading {
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--accent-brand) 20%, transparent), 0 0 26px color-mix(in srgb, var(--accent-brand-sec) 18%, transparent);
+}
+
+.improve-loading::before {
+    content: "";
+    position: absolute;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    inset: -2px;
+    padding: 2px;
+    background: repeating-conic-gradient(from var(--loce-angle), color-mix(in srgb, var(--accent-brand) 80%, white) 0deg 16deg, transparent 16deg 34deg, var(--accent-brand) 34deg 50deg, transparent 50deg 70deg, var(--accent-brand-sec) 70deg 86deg, transparent 86deg 110deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent-brand) 45%, transparent)) drop-shadow(0 0 22px color-mix(in srgb, var(--accent-brand-sec) 35%, transparent));
+    animation: loce-rotate 2.4s linear infinite;
+}
+
+.ai-border-subtle {
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+}
+
+.ai-border-subtle::before {
+    content: "";
+    position: absolute;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    inset: -2px;
+    padding: 2px;
+    background: repeating-conic-gradient(from var(--loce-angle), color-mix(in srgb, var(--accent-brand) 50%, white) 0deg 16deg, transparent 16deg 34deg, color-mix(in srgb, var(--accent-brand) 40%, transparent) 34deg 50deg, transparent 50deg 70deg, color-mix(in srgb, var(--accent-brand-sec) 35%, transparent) 70deg 86deg, transparent 86deg 110deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: loce-rotate 4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .improve-loading::before,
+    .ai-border-subtle::before,
+    .ai-rainbow-btn::before,
+    .ai-gradient-text,
+    .animate-shine {
+        animation: none;
+    }
+}

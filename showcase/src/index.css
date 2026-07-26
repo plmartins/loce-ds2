@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@import "../../src/styles/styles.css";
+
+/* Componentes do DS ficam fora da raiz do showcase; aponta o scan do Tailwind pra lá */
+@source "../../src";

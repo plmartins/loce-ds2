@@ -1,0 +1,183 @@
+/*
+ * loce-ds2 — Tokens
+ *
+ * Setup no CSS global do app:
+ *   @import "tailwindcss";
+ *   @import "loce-ds2/styles.css";
+ *
+ * O app declara a plataforma no root (define a cor de acento):
+ *   <html data-platform="erp">
+ *
+ * Nenhum app deve sobrescrever --color-loce manualmente (isso era o padrão do ds1).
+ */
+
+/* Tailwind do consumidor escaneia o bundle do DS (inclui chunks do splitting) */
+@source "./";
+
+/* Dark mode por classe .dark, igual ao ds1 (compatível com theme-loader dos apps) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-dm: 'DM Sans', sans-serif;
+    --font-russo: 'Russo One', sans-serif;
+
+    /* Compat ds1: utilitários legados (bg-light, border-borderDark...). Remover no M9. */
+    --color-light: #fff;
+    --color-dark: #171717;
+    --color-secLight: #1717170d;
+    --color-secDark: #ffffff0d;
+    --color-borderLight: #e5e5e5;
+    --color-borderDark: #404040;
+}
+
+:root {
+    /* ─── Plataformas da suíte (o rail precisa de todas em qualquer app) ─── */
+    --platform-erp: #0882ff;
+    --platform-erp-sec: #186fc9;
+    --platform-ecommerce: #08ae69;
+    --platform-ecommerce-sec: #09df86;
+    --platform-marketing: #ee2a7b;
+    --platform-marketing-sec: #f25a99;
+    --platform-talkbia: #7c3aed;
+    --platform-talkbia-sec: #a78bfa;
+
+    /* Acento ativo. Default = roxo Loce; um data-platform ausente fica visível de propósito. */
+    --accent-brand: #ad46ff;
+    --accent-brand-sec: #a60bff;
+
+    /* ─── Base neutra ─── */
+    --radius: 0.625rem;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --success: oklch(0.62 0.19 145);
+    --warning: oklch(0.75 0.18 85);
+    --info: oklch(0.6 0.17 250);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+
+    /* Steps de superfície para profundidade (novo no ds2) */
+    --surface-1: oklch(0.985 0 0);
+    --surface-2: oklch(0.967 0 0);
+    --surface-3: oklch(0.945 0 0);
+
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+}
+
+/* ─── Acento por plataforma ─── */
+[data-platform="erp"] {
+    --accent-brand: var(--platform-erp);
+    --accent-brand-sec: var(--platform-erp-sec);
+}
+[data-platform="ecommerce"] {
+    --accent-brand: var(--platform-ecommerce);
+    --accent-brand-sec: var(--platform-ecommerce-sec);
+}
+[data-platform="marketing"] {
+    --accent-brand: var(--platform-marketing);
+    --accent-brand-sec: var(--platform-marketing-sec);
+}
+[data-platform="talkbia"] {
+    --accent-brand: var(--platform-talkbia);
+    --accent-brand-sec: var(--platform-talkbia-sec);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --success: oklch(0.72 0.19 155);
+    --warning: oklch(0.82 0.17 85);
+    --info: oklch(0.65 0.17 250);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+
+    --surface-1: oklch(0.185 0 0);
+    --surface-2: oklch(0.225 0 0);
+    --surface-3: oklch(0.265 0 0);
+
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+}
+
+@theme inline {
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+
+    /* Marca ativa: utilitários novos (bg-brand) e aliases de compat ds1 (bg-loce). */
+    --color-brand: var(--accent-brand);
+    --color-brand-sec: var(--accent-brand-sec);
+    --color-loce: var(--accent-brand);
+    --color-loceSec: var(--accent-brand-sec);
+
+    /* Cores das plataformas como utilitários (rail: bg-platform-erp etc) */
+    --color-platform-erp: var(--platform-erp);
+    --color-platform-ecommerce: var(--platform-ecommerce);
+    --color-platform-marketing: var(--platform-marketing);
+    --color-platform-talkbia: var(--platform-talkbia);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-info: var(--info);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-surface-1: var(--surface-1);
+    --color-surface-2: var(--surface-2);
+    --color-surface-3: var(--surface-3);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+}

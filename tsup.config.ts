@@ -5,7 +5,7 @@ export default defineConfig({
         index: "src/index.ts",
         "icons/index": "src/icons/index.ts",
     },
-    format: ["esm", "cjs"],
+    format: ["esm"],
     dts: true,
     sourcemap: true,
     treeshake: true,

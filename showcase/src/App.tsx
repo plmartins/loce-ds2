@@ -2,6 +2,7 @@ import { useState } from "react";
 import { cn } from "loce-ds2";
 import * as Icons from "loce-ds2/icons";
 import type { IconProps } from "loce-ds2/icons";
+import { ShellDemo } from "./ShellDemo";
 
 const PLATFORMS = [
     { id: "erp", label: "ERP" },
@@ -28,6 +29,23 @@ const SWATCHES: [string, string][] = [
 export default function App() {
     const [platform, setPlatform] = useState("erp");
     const [dark, setDark] = useState(true);
+    const [view, setView] = useState<"fundamentos" | "shell">(
+        () => (window.location.hash === "#shell" ? "shell" : "fundamentos")
+    );
+
+    if (view === "shell") {
+        return (
+            <>
+                <button
+                    onClick={() => { window.location.hash = ""; setView("fundamentos"); }}
+                    className="fixed bottom-4 right-4 z-50 cursor-pointer rounded-xl border border-border bg-card px-3 py-2 text-[12px] font-semibold shadow-lg hover:bg-surface-2"
+                >
+                    ← Fundamentos
+                </button>
+                <ShellDemo />
+            </>
+        );
+    }
 
     const setTheme = (p: string, d: boolean) => {
         document.documentElement.dataset.platform = p;
@@ -64,6 +82,12 @@ export default function App() {
                         className="px-3 py-1 rounded-md border border-border text-sm cursor-pointer hover:bg-surface-2"
                     >
                         {dark ? "Light" : "Dark"}
+                    </button>
+                    <button
+                        onClick={() => { window.location.hash = "shell"; setView("shell"); }}
+                        className="px-3 py-1 rounded-md bg-brand text-white text-sm font-semibold cursor-pointer hover:opacity-90"
+                    >
+                        Ver shell →
                     </button>
                 </header>
 

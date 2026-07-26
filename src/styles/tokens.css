@@ -45,6 +45,10 @@
     --accent-brand: #ad46ff;
     --accent-brand-sec: #a60bff;
 
+    /* Compat ds1 (index.html dos apps usa var(--bg)/var(--text)). Remover no M9. */
+    --bg: #fff;
+    --text: #171717;
+
     /* ─── Base neutra ─── */
     --radius: 0.625rem;
     --background: oklch(1 0 0);
@@ -100,6 +104,8 @@
 }
 
 .dark {
+    --bg: #171717;
+    --text: #fff;
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
     --card: oklch(0.205 0 0);

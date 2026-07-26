@@ -20,6 +20,7 @@ import {
     CaretLeft,
     CaretRight,
     CaretUp,
+    ChatCircleDots,
     Check,
     CheckCircle,
     ClipboardText,
@@ -41,13 +42,17 @@ import {
     Info,
     Key,
     LinkSimple,
+    List,
     Lock,
     MagnifyingGlass,
     MapPin,
+    Megaphone,
+    Moon,
     Moped,
     PencilSimple,
     Phone,
     Plus,
+    PushPin,
     PlugsConnected,
     Printer,
     Prohibit,
@@ -57,10 +62,13 @@ import {
     ShieldCheck,
     ShoppingBag,
     ShoppingCart,
+    SignOut,
     SlidersHorizontal,
     Sparkle,
     Spinner,
+    SquaresFour,
     Storefront,
+    Sun,
     Tag,
     Trash,
     Truck,
@@ -140,6 +148,16 @@ export const IconChevronDown = /*#__PURE__*/ createIcon(CaretDown, "bold");
 export const IconChevronUp = /*#__PURE__*/ createIcon(CaretUp, "bold");
 export const IconChevronLeft = /*#__PURE__*/ createIcon(CaretLeft, "bold");
 export const IconChevronRight = /*#__PURE__*/ createIcon(CaretRight, "bold");
+
+/* ─── Shell / suíte ─── */
+export const IconApps = /*#__PURE__*/ createIcon(SquaresFour);
+export const IconMarketing = /*#__PURE__*/ createIcon(Megaphone);
+export const IconChat = /*#__PURE__*/ createIcon(ChatCircleDots);
+export const IconPin = /*#__PURE__*/ createIcon(PushPin);
+export const IconMenu = /*#__PURE__*/ createIcon(List, "bold");
+export const IconMoon = /*#__PURE__*/ createIcon(Moon);
+export const IconSun = /*#__PURE__*/ createIcon(Sun);
+export const IconLogout = /*#__PURE__*/ createIcon(SignOut, "bold");
 
 /* ─── Estados e feedback ─── */
 export const IconSuccess = /*#__PURE__*/ createIcon(CheckCircle);

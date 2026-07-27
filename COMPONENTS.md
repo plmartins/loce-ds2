@@ -33,7 +33,7 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 | Checkbox | ⬜ | |
 | Textarea / ExpandableTextarea | ⬜ | |
 | MultiSelect | ⬜ | |
-| ComboBox | ⬜ | |
+| ComboBox | ✅ | busca digitável, opções com descrição/ícone, server-side (isLoading), teclado, flip-up, clear |
 | DatePicker / TimeInput | ⬜ | |
 | SelectCard | ⬜ | |
 | ImageUpload | ⬜ | |

@@ -37,3 +37,4 @@ export { MetricCard, type MetricCardProps, type MetricDeltaTone, type MetricAcce
 export { SegmentedControl, type SegmentedControlProps, type SegmentedControlOption } from "./components/SegmentedControl";
 export { BarList, type BarListProps, type BarListItem } from "./components/BarList";
 export { EmptyState, type EmptyStateProps } from "./components/EmptyState";
+export { ComboBox, type ComboBoxProps, type ComboBoxOption } from "./components/ComboBox";

@@ -8,15 +8,23 @@
  * Peso: "fill" como padrão da suíte; glifos de traço (plus, x, setas, busca) usam "bold".
  */
 import {
+    ArrowDown,
     ArrowLeft,
     ArrowRight,
     ArrowSquareOut,
     ArrowsClockwise,
     ArrowsLeftRight,
+    ArrowUp,
     ArrowUUpLeft,
+    Barcode,
     BellRinging,
     Buildings,
+    CalendarBlank,
     CaretDown,
+    ClockCounterClockwise,
+    DownloadSimple,
+    Minus,
+    Scales,
     CaretLeft,
     CaretRight,
     CaretUp,
@@ -149,6 +157,10 @@ export const IconUpload = /*#__PURE__*/ createIcon(UploadSimple, "bold");
 export const IconUndo = /*#__PURE__*/ createIcon(ArrowUUpLeft, "bold");
 export const IconArrowLeft = /*#__PURE__*/ createIcon(ArrowLeft, "bold");
 export const IconArrowRight = /*#__PURE__*/ createIcon(ArrowRight, "bold");
+export const IconArrowUp = /*#__PURE__*/ createIcon(ArrowUp, "bold");
+export const IconArrowDown = /*#__PURE__*/ createIcon(ArrowDown, "bold");
+export const IconMinus = /*#__PURE__*/ createIcon(Minus, "bold");
+export const IconDownload = /*#__PURE__*/ createIcon(DownloadSimple, "bold");
 export const IconExternal = /*#__PURE__*/ createIcon(ArrowSquareOut, "bold");
 export const IconFilters = /*#__PURE__*/ createIcon(SlidersHorizontal, "bold");
 export const IconChevronDown = /*#__PURE__*/ createIcon(CaretDown, "bold");
@@ -174,6 +186,10 @@ export const IconPercent = /*#__PURE__*/ createIcon(Percent, "bold");
 export const IconTrendUp = /*#__PURE__*/ createIcon(TrendUp, "bold");
 export const IconTrendDown = /*#__PURE__*/ createIcon(TrendDown, "bold");
 export const IconStockAdd = /*#__PURE__*/ createIcon(StackPlus);
+export const IconBalance = /*#__PURE__*/ createIcon(Scales);
+export const IconCalendar = /*#__PURE__*/ createIcon(CalendarBlank);
+export const IconBarcode = /*#__PURE__*/ createIcon(Barcode);
+export const IconHistory = /*#__PURE__*/ createIcon(ClockCounterClockwise, "bold");
 
 /* ─── Estados e feedback ─── */
 export const IconSuccess = /*#__PURE__*/ createIcon(CheckCircle);

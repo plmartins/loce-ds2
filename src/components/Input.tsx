@@ -8,7 +8,7 @@ export const fieldClass = cn(
     "shadow-xs transition-all duration-150",
     "placeholder:font-normal placeholder:text-muted-foreground/80",
     "hover:border-ring/50",
-    "focus:border-brand focus:outline-none focus:ring-[3px] focus:ring-brand/20",
+    "focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25",
     "disabled:pointer-events-none disabled:opacity-50"
 );
 

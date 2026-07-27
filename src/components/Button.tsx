@@ -14,13 +14,11 @@ export const buttonVariants = cva(
     {
         variants: {
             variant: {
-                primary:
-                    "bg-brand text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-[1.07]",
+                primary: "ds-btn-3d [--btn-bg:var(--accent-brand)] text-white",
                 secondary:
-                    "border border-border bg-card text-foreground shadow-xs hover:bg-surface-2/60 hover:border-ring/40",
+                    "border border-border bg-card text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_1px_2px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_1px_2px_rgba(0,0,0,0.3)] hover:bg-surface-2/60 hover:border-ring/40 active:shadow-none",
                 ghost: "text-foreground/70 hover:bg-foreground/[0.05] hover:text-foreground",
-                destructive:
-                    "bg-destructive text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] hover:brightness-[1.07]",
+                destructive: "ds-btn-3d [--btn-bg:var(--destructive)] text-white",
                 "destructive-ghost": "text-destructive hover:bg-destructive/10",
             },
             size: {

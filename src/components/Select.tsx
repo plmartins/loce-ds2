@@ -27,7 +27,7 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", d
                     className={cn(
                         fieldClass,
                         "flex cursor-pointer items-center justify-between gap-2 text-left",
-                        "data-[state=open]:border-brand data-[state=open]:ring-[3px] data-[state=open]:ring-brand/20",
+                        "data-[state=open]:border-brand data-[state=open]:ring-2 data-[state=open]:ring-brand/25",
                         !selected && "text-muted-foreground/80",
                         className
                     )}

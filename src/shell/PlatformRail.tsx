@@ -65,7 +65,7 @@ function RailTile({ item }: { item: PlatformRailItem }) {
     const tile = (
         <span
             className={cn(
-                "relative flex size-10 items-center justify-center overflow-visible rounded-[12px] transition-all duration-150 ease-out",
+                "relative flex size-9 items-center justify-center overflow-visible rounded-[10px] transition-all duration-150 ease-out",
                 !item.logoSrc && available && cn(meta.tileClass, "text-white"),
                 !item.logoSrc && !available && "bg-surface-2 text-muted-foreground/50",
                 item.active && cn(meta.glowClass, "ring-2 ring-white/25"),
@@ -77,12 +77,12 @@ function RailTile({ item }: { item: PlatformRailItem }) {
                     src={item.logoSrc}
                     alt=""
                     className={cn(
-                        "size-10 rounded-[12px] object-cover",
+                        "size-9 rounded-[10px] object-cover",
                         !available && "opacity-45 grayscale"
                     )}
                 />
             ) : (
-                <Icon size={19} />
+                <Icon size={17} />
             )}
             {!available && (
                 <span className="absolute -right-1 -bottom-1 flex size-4 items-center justify-center rounded-full bg-surface-3 text-muted-foreground ring-2 ring-surface-0">

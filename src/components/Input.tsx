@@ -4,9 +4,9 @@ import { cn } from "../lib/utils";
 /* Base compartilhada por Input, Select e SearchInput: superfície de card com
    borda visível e sombra sutil, pra parecer clicável de longe. */
 export const fieldClass = cn(
-    "h-9 w-full rounded-xl border border-border bg-card px-3 text-[13px] font-medium text-foreground",
+    "h-9 w-full rounded-xl border border-border bg-card px-3 text-[13px] font-semibold text-foreground",
     "shadow-xs transition-all duration-150",
-    "placeholder:font-normal placeholder:text-muted-foreground/80",
+    "placeholder:font-medium placeholder:text-muted-foreground/70",
     "hover:border-ring/50",
     "focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25",
     "disabled:pointer-events-none disabled:opacity-50"

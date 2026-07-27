@@ -86,7 +86,7 @@ export function TagsInput({ value, onChange, placeholder = "Digite e aperte Ente
                 onKeyDown={handleKeyDown}
                 onPaste={handlePaste}
                 onBlur={() => draft && commit(draft)}
-                className="min-w-28 flex-1 bg-transparent text-[13px] font-medium outline-none placeholder:font-normal placeholder:text-muted-foreground/80"
+                className="min-w-28 flex-1 bg-transparent text-[13px] font-semibold outline-none placeholder:font-medium placeholder:text-muted-foreground/70"
             />
         </div>
     );

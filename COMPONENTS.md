@@ -39,7 +39,7 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 | ImageUpload | ⬜ | |
 | FileDropzone (uiLoce) | ⬜ | |
 | InputMoneyOrPercent (uiLoce) | ⬜ | |
-| InputTags (ex InputArray_CTRL) | ⬜ | |
+| TagsInput (ex InputArray_CTRL) | ✅ | chips horizontais, Enter/vírgula/colar |
 | SwitchRow (ex ToggleRow) | ⬜ | |
 
 ## Dados e exibição

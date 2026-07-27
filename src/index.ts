@@ -33,7 +33,7 @@ export { Avatar, type AvatarProps } from "./components/Avatar";
 export { Skeleton, SkeletonText, SkeletonTable, type SkeletonProps } from "./components/Skeleton";
 export { SkeletonForm } from "./components/SkeletonForm";
 export { TagsInput, type TagsInputProps } from "./components/TagsInput";
-export { MetricCard, type MetricCardProps, type MetricDeltaTone } from "./components/MetricCard";
+export { MetricCard, type MetricCardProps, type MetricDeltaTone, type MetricAccent } from "./components/MetricCard";
 export { SegmentedControl, type SegmentedControlProps, type SegmentedControlOption } from "./components/SegmentedControl";
 export { BarList, type BarListProps, type BarListItem } from "./components/BarList";
 export { EmptyState, type EmptyStateProps } from "./components/EmptyState";

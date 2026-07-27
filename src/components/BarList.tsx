@@ -33,29 +33,33 @@ export function BarList({ items, emptyText = "Nada no período.", className }: B
     }
 
     return (
-        <div className={cn("flex flex-col gap-3.5", className)}>
-            {items.map((item, idx) => (
-                <div key={item.key ?? idx} className="group flex flex-col gap-1.5">
-                    <div className="flex items-baseline justify-between gap-3">
-                        <span
-                            className={cn(
-                                "truncate text-[13px] font-semibold",
-                                item.muted && "font-medium text-muted-foreground"
-                            )}
-                        >
-                            {item.label}
-                        </span>
-                        <span className="shrink-0 text-[13px] font-bold tabular-nums">{item.value}</span>
+        <div className={cn("flex flex-col gap-4", className)}>
+            {items.map((item, idx) => {
+                const isZero = item.ratio <= 0;
+                return (
+                    <div key={item.key ?? idx} className={cn("group flex flex-col gap-1.5", isZero && "opacity-55")}>
+                        <div className="flex items-baseline justify-between gap-3">
+                            <span
+                                className={cn(
+                                    "truncate text-[13px] font-semibold",
+                                    item.muted && "font-medium text-muted-foreground"
+                                )}
+                            >
+                                {item.label}
+                            </span>
+                            <span className="shrink-0 text-[13.5px] font-bold tabular-nums">{item.value}</span>
+                        </div>
+                        <div className="h-2 overflow-hidden rounded-full bg-surface-2">
+                            {/* Zero é zero: sem barra fake de 2% pra quem não vendeu */}
+                            <div
+                                className="h-full rounded-full bg-gradient-to-r from-brand to-brand-sec transition-[width] duration-700 ease-out group-hover:brightness-110"
+                                style={{ width: mounted && !isZero ? `${Math.max(item.ratio * 100, 1.5)}%` : "0%" }}
+                            />
+                        </div>
+                        {item.sub && <span className="text-[11px] text-muted-foreground tabular-nums">{item.sub}</span>}
                     </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-surface-2">
-                        <div
-                            className="h-full rounded-full bg-brand transition-[width] duration-700 ease-out group-hover:brightness-110"
-                            style={{ width: mounted ? `${Math.max(item.ratio * 100, 2)}%` : "0%" }}
-                        />
-                    </div>
-                    {item.sub && <span className="text-[11px] text-muted-foreground tabular-nums">{item.sub}</span>}
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 }

@@ -23,21 +23,21 @@ export function MetricCard({ label, value, helper, delta, icon, className }: Met
     return (
         <div
             className={cn(
-                "group flex flex-col gap-2.5 rounded-2xl border border-border bg-card p-4 shadow-xs",
-                "transition-all duration-150 hover:-translate-y-px hover:shadow-md hover:shadow-black/[0.04]",
+                "group relative flex flex-col gap-2 overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-xs",
+                "transition-all duration-150 hover:-translate-y-px hover:border-brand/25 hover:shadow-md hover:shadow-black/[0.05]",
                 className
             )}
         >
-            <div className="flex items-start justify-between gap-2">
-                <span className="text-[12.5px] font-semibold text-muted-foreground">{label}</span>
+            <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-[0.07em] text-muted-foreground">{label}</span>
                 {icon && (
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-surface-2 text-foreground/55 transition-colors duration-150 group-hover:bg-brand/10 group-hover:text-brand">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
                         {icon}
                     </span>
                 )}
             </div>
             <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[22px] font-extrabold leading-none tracking-tight tabular-nums">{value}</span>
+                <span className="text-2xl font-extrabold leading-none tracking-tight tabular-nums">{value}</span>
                 {delta && (
                     <span
                         className={cn(
@@ -52,7 +52,7 @@ export function MetricCard({ label, value, helper, delta, icon, className }: Met
                     </span>
                 )}
             </div>
-            {helper && <span className="text-[12px] leading-snug text-muted-foreground">{helper}</span>}
+            {helper && <span className="text-[11.5px] leading-snug text-muted-foreground">{helper}</span>}
         </div>
     );
 }

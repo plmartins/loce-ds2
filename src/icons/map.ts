@@ -24,7 +24,11 @@ import {
     ArrowUpRight,
     ArrowUUpLeft,
     ArrowUUpRight,
+    ArrowsOutCardinal,
     Barcode,
+    Crop,
+    Image,
+    MagnifyingGlassPlus,
     BellRinging,
     BellSlash,
     Buildings,
@@ -286,6 +290,10 @@ export const IconStack = /*#__PURE__*/ createIcon(Stack);
 export const IconUser = /*#__PURE__*/ createIcon(User);
 export const IconCommand = /*#__PURE__*/ createIcon(Command, "bold");
 export const IconHand = /*#__PURE__*/ createIcon(Hand);
+export const IconCrop = /*#__PURE__*/ createIcon(Crop, "bold");
+export const IconMove = /*#__PURE__*/ createIcon(ArrowsOutCardinal, "bold");
+export const IconZoomIn = /*#__PURE__*/ createIcon(MagnifyingGlassPlus, "bold");
+export const IconImage = /*#__PURE__*/ createIcon(Image);
 
 /* ─── Estados e feedback ─── */
 export const IconSuccess = /*#__PURE__*/ createIcon(CheckCircle);

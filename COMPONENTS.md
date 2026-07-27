@@ -55,8 +55,8 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 | MetricCard | ⬜ | |
 | Timeline | ⬜ | |
 | EmptyState | ⬜ | |
-| Skeleton (+Text/Card) | ⬜ | |
-| Avatar | ⬜ | |
+| Skeleton (+Text/Table) | ✅ | shimmer próprio do pacote, SkeletonTable pra listagens |
+| Avatar | ✅ | gradiente determinístico por nome + foto com fallback |
 | Separator | ⬜ | |
 | StatusDot / ColorDot | ⬜ | |
 | TextCopy | ⬜ | |

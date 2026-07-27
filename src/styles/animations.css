@@ -58,6 +58,33 @@
     }
 }
 
+/* ─── Skeleton com shimmer ─── */
+
+@keyframes ds-shimmer {
+    100% { transform: translateX(100%); }
+}
+
+.ds-skeleton {
+    position: relative;
+    overflow: hidden;
+    background: color-mix(in oklab, var(--foreground) 6%, transparent);
+}
+
+.ds-skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 5%, transparent), transparent);
+    animation: ds-shimmer 1.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ds-skeleton::after {
+        animation: none;
+    }
+}
+
 /* ─── AI ─── */
 
 @keyframes ai-gradient {

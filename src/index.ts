@@ -29,3 +29,5 @@ export {
     DialogFooter,
 } from "./primitives/dialog";
 export { Tooltip, type TooltipProps } from "./components/Tooltip";
+export { Avatar, type AvatarProps } from "./components/Avatar";
+export { Skeleton, SkeletonText, SkeletonTable, type SkeletonProps } from "./components/Skeleton";

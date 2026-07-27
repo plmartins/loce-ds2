@@ -46,7 +46,6 @@ export function ShellDemo() {
             <AppShell
                 rail={
                     <PlatformRail
-                        logo={<span className="flex size-9 items-center justify-center rounded-xl bg-brand text-sm font-black text-white">L</span>}
                         platforms={[
                             { id: "erp", active: true, available: true },
                             { id: "ecommerce", available: true, href: "#" },
@@ -106,7 +105,7 @@ export function ShellDemo() {
                         </div>
                         <div className="flex flex-col gap-2">
                             {Array.from({ length: 6 }).map((_, i) => (
-                                <div key={i} className={cn("h-9 rounded-lg", i % 2 === 0 ? "bg-surface-1" : "bg-surface-2/60")} />
+                                <div key={i} className={cn("h-9 rounded-lg", i % 2 === 0 ? "bg-surface-2/70" : "bg-surface-2/30")} />
                             ))}
                         </div>
                     </div>

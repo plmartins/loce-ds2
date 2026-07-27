@@ -93,7 +93,7 @@ export function SidebarNav({
     return (
         <div
             className={cn(
-                "relative flex h-full select-none flex-col overflow-hidden border-r border-border bg-background transition-[width] duration-[250ms] ease-out",
+                "relative flex h-full select-none flex-col overflow-hidden border-r border-border bg-surface-1 transition-[width] duration-[250ms] ease-out",
                 className
             )}
             style={{ width: open ? EXPANDED_W : COLLAPSED_W }}
@@ -162,9 +162,9 @@ export function SidebarNav({
                                                 <button
                                                     onClick={() => onNavigate(sub.endPoint)}
                                                     className={cn(
-                                                        "relative flex h-8 w-full cursor-pointer items-center truncate whitespace-nowrap rounded-xl pl-7 pr-4 text-[13px] transition-colors duration-150",
+                                                        "relative flex h-8 w-full cursor-pointer items-center truncate whitespace-nowrap rounded-xl pl-7 pr-4 text-[13px] transition-[color,background-color,transform] duration-150",
                                                         subActive && "font-semibold text-brand",
-                                                        !subActive && "font-medium text-foreground/50 hover:bg-foreground/[0.04] hover:text-foreground"
+                                                        !subActive && "font-medium text-foreground/50 hover:translate-x-[2px] hover:bg-foreground/[0.04] hover:text-foreground"
                                                     )}
                                                 >
                                                     {sub.label}

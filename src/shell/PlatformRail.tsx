@@ -12,36 +12,43 @@ export type PlatformRailItem = {
     active?: boolean;
 };
 
-const PLATFORM_META: Record<PlatformId, { label: string; icon: ComponentType<IconProps>; activeClass: string; hoverClass: string }> = {
+/*
+ * Cada plataforma é um tile-logo (gradiente na cor da marca + glifo branco),
+ * como um dock de apps. Classes 100% estáticas por causa do scan do Tailwind.
+ */
+const PLATFORM_META: Record<
+    PlatformId,
+    { label: string; icon: ComponentType<IconProps>; tileClass: string; glowClass: string }
+> = {
     erp: {
         label: "Loce ERP",
         icon: IconApps,
-        activeClass: "bg-platform-erp/12 text-platform-erp",
-        hoverClass: "hover:bg-platform-erp/12 hover:text-platform-erp",
+        tileClass: "bg-gradient-to-br from-[#3ba2ff] to-[#0864d8]",
+        glowClass: "shadow-[0_2px_14px_rgba(8,130,255,0.5)]",
     },
     ecommerce: {
         label: "Loce Ecommerce",
         icon: IconCart,
-        activeClass: "bg-platform-ecommerce/12 text-platform-ecommerce",
-        hoverClass: "hover:bg-platform-ecommerce/12 hover:text-platform-ecommerce",
+        tileClass: "bg-gradient-to-br from-[#12d68d] to-[#079457]",
+        glowClass: "shadow-[0_2px_14px_rgba(8,174,105,0.5)]",
     },
     marketing: {
         label: "Loce Marketing",
         icon: IconMarketing,
-        activeClass: "bg-platform-marketing/12 text-platform-marketing",
-        hoverClass: "hover:bg-platform-marketing/12 hover:text-platform-marketing",
+        tileClass: "bg-gradient-to-br from-[#ff64a5] to-[#d61668]",
+        glowClass: "shadow-[0_2px_14px_rgba(238,42,123,0.5)]",
     },
     talkbia: {
         label: "Talkbia",
         icon: IconChat,
-        activeClass: "bg-platform-talkbia/12 text-platform-talkbia",
-        hoverClass: "hover:bg-platform-talkbia/12 hover:text-platform-talkbia",
+        tileClass: "bg-gradient-to-br from-[#a78bfa] to-[#6d28d9]",
+        glowClass: "shadow-[0_2px_14px_rgba(124,58,237,0.5)]",
     },
 };
 
 export type PlatformRailProps = {
     platforms: PlatformRailItem[];
-    /** Logo compacta no topo do rail (ex.: marca Loce). */
+    /** Logo compacta no topo do rail. Normalmente desnecessária: o tile ativo já é a marca. */
     logo?: ReactNode;
     /** Área inferior (ThemeToggle, avatar...). */
     footer?: ReactNode;
@@ -56,31 +63,49 @@ function RailTile({ item }: { item: PlatformRailItem }) {
     const tile = (
         <span
             className={cn(
-                "relative flex size-10 items-center justify-center rounded-xl transition-all duration-150",
-                item.active && cn(meta.activeClass, "shadow-[inset_0_0_0_1.5px_currentColor]"),
-                !item.active && available && cn("text-muted-foreground hover:scale-[1.06]", meta.hoverClass),
-                !available && "text-muted-foreground/40"
+                "relative flex size-10 items-center justify-center rounded-[12px] transition-all duration-150 ease-out",
+                available && cn(meta.tileClass, "text-white"),
+                item.active && cn(meta.glowClass, "ring-2 ring-white/25"),
+                !item.active && available && "opacity-75 saturate-[0.85] group-hover:opacity-100 group-hover:saturate-100 group-hover:scale-[1.07] group-hover:-translate-y-px group-active:scale-95",
+                !available && "bg-surface-2 text-muted-foreground/50"
             )}
         >
-            <Icon size={20} />
+            <Icon size={19} />
             {!available && (
-                <span className="absolute -right-0.5 -bottom-0.5 flex size-4 items-center justify-center rounded-full bg-surface-3 text-muted-foreground ring-2 ring-surface-1">
+                <span className="absolute -right-1 -bottom-1 flex size-4 items-center justify-center rounded-full bg-surface-3 text-muted-foreground ring-2 ring-surface-0">
                     <IconLock size={9} />
                 </span>
             )}
         </span>
     );
 
+    // Barrinha de ativo na borda do rail, estilo dock
+    const wrapped = (
+        <span className="relative flex w-full justify-center py-0.5">
+            <span
+                className={cn(
+                    "absolute left-0 top-1/2 w-[3px] -translate-y-1/2 rounded-r-full bg-foreground transition-all duration-200",
+                    item.active ? "h-6 opacity-100" : "h-2 opacity-0"
+                )}
+            />
+            {tile}
+        </span>
+    );
+
     if (available && item.href && !item.active) {
         return (
-            <a href={item.href} title={meta.label} aria-label={meta.label} className="cursor-pointer">
-                {tile}
+            <a href={item.href} title={meta.label} aria-label={meta.label} className="group block w-full cursor-pointer">
+                {wrapped}
             </a>
         );
     }
     return (
-        <span title={available ? meta.label : `${meta.label} · em breve`} aria-label={meta.label}>
-            {tile}
+        <span
+            title={available ? meta.label : `${meta.label} · em breve`}
+            aria-label={meta.label}
+            className="group block w-full"
+        >
+            {wrapped}
         </span>
     );
 }
@@ -89,12 +114,12 @@ export function PlatformRail({ platforms, logo, footer, className }: PlatformRai
     return (
         <div
             className={cn(
-                "flex h-full w-[56px] shrink-0 flex-col items-center gap-1 border-r border-border bg-surface-1 py-3",
+                "flex h-full w-[60px] shrink-0 flex-col items-center gap-1 bg-surface-0 py-3",
                 className
             )}
         >
             {logo && <div className="mb-2 flex size-10 items-center justify-center">{logo}</div>}
-            <nav className="flex flex-col items-center gap-1.5" aria-label="Plataformas Loce">
+            <nav className="flex w-full flex-col items-center gap-1.5" aria-label="Plataformas Loce">
                 {platforms.map((p) => (
                     <RailTile key={p.id} item={p} />
                 ))}

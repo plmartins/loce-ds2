@@ -17,7 +17,7 @@ export function HeaderBar({ left, right, className }: HeaderBarProps) {
     return (
         <header
             className={cn(
-                "flex h-12 shrink-0 items-center justify-between gap-2 border-b border-border bg-background/80 pl-3 pr-2 backdrop-blur-sm md:gap-3 md:pl-5 md:pr-4",
+                "flex h-12 shrink-0 items-center justify-between gap-2 border-b border-border/70 bg-background/75 pl-3 pr-2 backdrop-blur-md md:gap-3 md:pl-5 md:pr-4",
                 className
             )}
         >

@@ -12,6 +12,8 @@ export type BarListItem = {
     share?: number;
     /** Linha auxiliar (ex.: "5 vendas · ticket R$ 116,26"). */
     sub?: ReactNode;
+    /** Estatísticas em chips (ex.: ["5 vendas", "ticket R$ 116,26"]); tem precedência sobre sub. */
+    stats?: string[];
     /** Item apagado (ex.: "Sem vendedor"). */
     muted?: boolean;
 };
@@ -69,10 +71,10 @@ export function BarList({ items, showRank = false, emptyText = "Nada no período
                                 >
                                     {item.label}
                                 </span>
-                                <span className="flex shrink-0 items-baseline gap-1.5">
+                                <span className="flex shrink-0 items-center gap-1.5">
                                     <span className="text-[13.5px] font-bold tabular-nums">{item.value}</span>
                                     {item.share !== undefined && (
-                                        <span className="text-[11px] font-semibold text-muted-foreground tabular-nums">
+                                        <span className="rounded-md bg-surface-2 px-1.5 py-0.5 text-[10.5px] font-bold text-muted-foreground tabular-nums">
                                             {Math.round(item.share * 100)}%
                                         </span>
                                     )}
@@ -88,7 +90,17 @@ export function BarList({ items, showRank = false, emptyText = "Nada no período
                                     style={{ width: mounted && !isZero ? `${Math.max(item.ratio * 100, 1.5)}%` : "0%" }}
                                 />
                             </div>
-                            {item.sub && <span className="text-[11px] text-muted-foreground tabular-nums">{item.sub}</span>}
+                            {item.stats?.length ? (
+                                <span className="flex flex-wrap items-center gap-1">
+                                    {item.stats.map((stat) => (
+                                        <span key={stat} className="rounded-md bg-surface-1 px-1.5 py-0.5 text-[10.5px] font-medium text-muted-foreground tabular-nums ring-1 ring-border/60">
+                                            {stat}
+                                        </span>
+                                    ))}
+                                </span>
+                            ) : item.sub ? (
+                                <span className="text-[11px] text-muted-foreground tabular-nums">{item.sub}</span>
+                            ) : null}
                         </div>
                     </div>
                 );

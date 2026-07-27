@@ -1,28 +1,38 @@
 import { useState } from "react";
 import {
     AppShell,
+    Badge,
+    Button,
+    DataTable,
     HeaderBar,
     PageShell,
+    PaginationBar,
     PlatformRail,
+    SearchInput,
+    Select,
     SidebarNav,
+    Switch,
     ThemeToggle,
-    cn,
     type SidebarNavGroup,
 } from "loce-ds2";
 import {
     IconCatalog,
     IconChevronDown,
     IconDashboard,
+    IconEdit,
     IconFinance,
     IconIntegrations,
     IconLogistics,
     IconPeople,
     IconPlus,
+    IconPrinter,
+    IconProducts,
     IconSales,
     IconSearch,
     IconSettings,
     IconStore,
     IconTasks,
+    IconTrash,
 } from "loce-ds2/icons";
 
 const MENU: SidebarNavGroup[] = [
@@ -36,6 +46,114 @@ const MENU: SidebarNavGroup[] = [
     { icon: IconIntegrations, label: "Integrações", subItems: [{ label: "Todas as integrações", endPoint: "/app/integracoes-pagamento" }] },
     { icon: IconSettings, label: "Configurações", subItems: [{ label: "Empresa", endPoint: "/app/empresa" }, { label: "Natureza de Operação", endPoint: "/app/natureza-operacao" }, { label: "Estações de PDV", endPoint: "/app/estacoes" }] },
 ];
+
+type DemoProduct = {
+    id: number;
+    name: string;
+    sku: string;
+    stock: number;
+    price: string;
+    reviewed: boolean;
+    active: boolean;
+};
+
+const DEMO_PRODUCTS: DemoProduct[] = [
+    { id: 1, name: "Postiça Infantil Real Love 03 12 unidades", sku: "820589", stock: 0, price: "R$ 10,00", reviewed: true, active: true },
+    { id: 2, name: "Esmalte em Gel Dafu M062 10ml", sku: "7806808080625", stock: 0, price: "R$ 14,00", reviewed: false, active: true },
+    { id: 3, name: "Top Coat Real Love linha Light 8ml", sku: "0602883749399", stock: 71, price: "R$ 19,90", reviewed: true, active: true },
+    { id: 4, name: "Lixa Banana Honey 100/180 Red", sku: "15445", stock: 111, price: "R$ 5,00", reviewed: true, active: false },
+    { id: 5, name: "Esfoliante BioSoft Morango 180g", sku: "7896115145537", stock: 8, price: "R$ 26,90", reviewed: false, active: true },
+];
+
+function DemoProductsTable() {
+    const [rows, setRows] = useState(DEMO_PRODUCTS);
+    const [search, setSearch] = useState("");
+    const [order, setOrder] = useState("newest");
+    const [limit, setLimit] = useState("20");
+
+    const toggle = (id: number, key: "reviewed" | "active") =>
+        setRows((prev) => prev.map((r) => (r.id === id ? { ...r, [key]: !r[key] } : r)));
+
+    return (
+        <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+                <SearchInput
+                    className="max-w-md"
+                    placeholder="Nome, SKU, GTIN..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    showClear={!!search}
+                    onClear={() => setSearch("")}
+                />
+                <Select
+                    className="w-36 shrink-0"
+                    options={[
+                        { value: "newest", label: "Mais recente" },
+                        { value: "oldest", label: "Mais antigo" },
+                    ]}
+                    value={order}
+                    onChange={setOrder}
+                />
+                <Select
+                    className="w-36 shrink-0"
+                    options={[
+                        { value: "20", label: "20 por página" },
+                        { value: "50", label: "50 por página" },
+                    ]}
+                    value={limit}
+                    onChange={setLimit}
+                />
+            </div>
+            <DataTable
+                data={rows}
+                rowKey={(row) => row.id}
+                onRowClick={() => {}}
+                columns={[
+                    {
+                        header: "", accessor: "id", className: "w-12 pr-0", sortable: false,
+                        render: () => (
+                            <span className="flex size-[34px] items-center justify-center rounded-lg bg-surface-2 ring-1 ring-border text-muted-foreground">
+                                <IconProducts size={16} />
+                            </span>
+                        ),
+                    },
+                    { header: "Nome", accessor: "name", render: (v) => <span className="font-semibold">{v}</span> },
+                    { header: "1° SKU", accessor: "sku", className: "w-44", render: (v) => <span className="text-muted-foreground tabular-nums">{v}</span> },
+                    {
+                        header: "Estoque", accessor: "stock", className: "w-28",
+                        render: (v) => <Badge variant={v > 0 ? "success" : "destructive"}>{v > 0 ? `${v} disp.` : "Sem estoque"}</Badge>,
+                    },
+                    { header: "Preço", accessor: "price", className: "w-28", render: (v) => <span className="font-semibold tabular-nums">{v}</span> },
+                    {
+                        header: "Revisado", accessor: "reviewed", className: "w-24", sortable: false,
+                        render: (v, row) => (
+                            <span onClick={(e) => e.stopPropagation()} className="inline-flex">
+                                <Switch checked={v} onCheckedChange={() => toggle(row.id, "reviewed")} />
+                            </span>
+                        ),
+                    },
+                    {
+                        header: "Ativo", accessor: "active", className: "w-20", sortable: false,
+                        render: (v, row) => (
+                            <span onClick={(e) => e.stopPropagation()} className="inline-flex">
+                                <Switch checked={v} onCheckedChange={() => toggle(row.id, "active")} />
+                            </span>
+                        ),
+                    },
+                ]}
+                mainActions={[
+                    { label: "Imprimir etiqueta", icon: <IconPrinter size={16} />, onClick: () => {} },
+                    { label: "Editar", icon: <IconEdit size={16} />, onClick: () => {} },
+                ]}
+                actions={[
+                    { label: "Editar", icon: <IconEdit size={15} />, onClick: () => {} },
+                    { label: "Excluir", icon: <IconTrash size={15} />, onClick: () => {}, color: "text-destructive" },
+                ]}
+            />
+            <PaginationBar currentPage={1} perPage={20} totalResults={87} totalPages={5} action={() => {}} />
+        </div>
+    );
+}
 
 export function ShellDemo() {
     const [path, setPath] = useState("/app/produtos");
@@ -83,10 +201,13 @@ export function ShellDemo() {
                     title={page?.label ?? "Página"}
                     description={`Preview do shell navegando em ${path}`}
                     actions={
-                        <button className="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl bg-brand px-4 text-[13px] font-semibold text-white hover:opacity-90">
-                            <IconPlus size={15} />
-                            Novo
-                        </button>
+                        <>
+                            <Button variant="secondary">Atualizar fiscais por NCM</Button>
+                            <Button>
+                                <IconPlus size={15} />
+                                Criar
+                            </Button>
+                        </>
                     }
                 >
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -98,17 +219,7 @@ export function ShellDemo() {
                             </div>
                         ))}
                     </div>
-                    <div className="flex-1 rounded-2xl border border-border bg-card p-4">
-                        <div className="mb-3 flex items-center justify-between">
-                            <p className="text-[13px] font-semibold">Conteúdo da página</p>
-                            <span className="rounded-full bg-surface-2 px-2 py-0.5 text-[11px] text-muted-foreground">placeholder</span>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            {Array.from({ length: 6 }).map((_, i) => (
-                                <div key={i} className={cn("h-9 rounded-lg", i % 2 === 0 ? "bg-surface-2/70" : "bg-surface-2/30")} />
-                            ))}
-                        </div>
-                    </div>
+                    <DemoProductsTable />
                 </PageShell>
             </AppShell>
         </div>

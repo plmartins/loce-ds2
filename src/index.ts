@@ -4,7 +4,7 @@ export * from "./shell";
 export { Button, buttonVariants, type ButtonProps } from "./components/Button";
 export { Input, fieldClass, type InputProps } from "./components/Input";
 export { SearchInput, type SearchInputProps } from "./components/SearchInput";
-export { Select, type SelectProps, type SelectOption } from "./components/Select";
+export { Select, NativeSelect, type SelectProps, type NativeSelectProps, type SelectOption } from "./components/Select";
 export { Switch, type SwitchProps } from "./components/Switch";
 export { Badge, badgeVariants, type BadgeProps } from "./components/Badge";
 export { DataTable, type DataTableProps, type Column, type Action } from "./components/DataTable";

@@ -1,6 +1,6 @@
 {
     "name": "loce-ds2",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "Design system da suíte Loce (v2): tokens, componentes, shell e ícones",
     "type": "module",
     "license": "UNLICENSED",

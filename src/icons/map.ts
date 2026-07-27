@@ -8,26 +8,70 @@
  * Peso: "fill" como padrão da suíte; glifos de traço (plus, x, setas, busca) usam "bold".
  */
 import {
+    ArrowCircleDown,
+    ArrowCircleUp,
+    ArrowCounterClockwise,
     ArrowDown,
+    ArrowDownLeft,
+    ArrowFatDown,
+    ArrowFatUp,
     ArrowLeft,
     ArrowRight,
     ArrowSquareOut,
     ArrowsClockwise,
     ArrowsLeftRight,
     ArrowUp,
+    ArrowUpRight,
     ArrowUUpLeft,
+    ArrowUUpRight,
     Barcode,
     BellRinging,
+    BellSlash,
     Buildings,
     CalendarBlank,
     CaretDown,
     ClockCounterClockwise,
+    Clock,
+    Command,
+    CurrencyDollar,
     CursorClick,
+    DiceFive,
     DownloadSimple,
+    FacebookLogo,
+    FileArrowUp,
+    FileMagnifyingGlass,
+    Hand,
     HandGrabbing,
+    Hash,
+    Images,
+    Lightning,
+    ListChecks,
+    MagicWand,
     Minus,
+    MinusCircle,
     Mouse,
+    Note,
+    NotePencil,
+    PaperPlaneTilt,
+    PlusCircle,
+    Plugs,
+    Power,
+    Question,
+    Robot,
     Scales,
+    SealCheck,
+    ShieldSlash,
+    ShieldWarning,
+    Stack,
+    Star,
+    TestTube,
+    TextAlignCenter,
+    TextAlignLeft,
+    TextAlignRight,
+    Ticket,
+    User,
+    UserGear,
+    UserMinus,
     CaretLeft,
     CaretRight,
     CaretUp,
@@ -196,6 +240,52 @@ export const IconHistory = /*#__PURE__*/ createIcon(ClockCounterClockwise, "bold
 export const IconCursorClick = /*#__PURE__*/ createIcon(CursorClick);
 export const IconMouse = /*#__PURE__*/ createIcon(Mouse);
 export const IconHandGrab = /*#__PURE__*/ createIcon(HandGrabbing);
+
+/* ─── Complementos da migração (nomes semânticos por uso no ERP) ─── */
+export const IconClock = /*#__PURE__*/ createIcon(Clock);
+export const IconStar = /*#__PURE__*/ createIcon(Star);
+export const IconSend = /*#__PURE__*/ createIcon(PaperPlaneTilt);
+export const IconPower = /*#__PURE__*/ createIcon(Power, "bold");
+export const IconHelp = /*#__PURE__*/ createIcon(Question);
+export const IconTicket = /*#__PURE__*/ createIcon(Ticket);
+export const IconNote = /*#__PURE__*/ createIcon(Note);
+export const IconNoteEdit = /*#__PURE__*/ createIcon(NotePencil);
+export const IconHash = /*#__PURE__*/ createIcon(Hash, "bold");
+export const IconZap = /*#__PURE__*/ createIcon(Lightning);
+export const IconWand = /*#__PURE__*/ createIcon(MagicWand);
+export const IconBot = /*#__PURE__*/ createIcon(Robot);
+export const IconBellOff = /*#__PURE__*/ createIcon(BellSlash);
+export const IconDice = /*#__PURE__*/ createIcon(DiceFive);
+export const IconTestTube = /*#__PURE__*/ createIcon(TestTube);
+export const IconFacebook = /*#__PURE__*/ createIcon(FacebookLogo);
+export const IconImages = /*#__PURE__*/ createIcon(Images);
+export const IconFileUp = /*#__PURE__*/ createIcon(FileArrowUp);
+export const IconFileSearch = /*#__PURE__*/ createIcon(FileMagnifyingGlass);
+export const IconVerified = /*#__PURE__*/ createIcon(SealCheck);
+export const IconChecklist = /*#__PURE__*/ createIcon(ListChecks, "bold");
+export const IconUserOff = /*#__PURE__*/ createIcon(UserMinus);
+export const IconUserGear = /*#__PURE__*/ createIcon(UserGear);
+export const IconUnplug = /*#__PURE__*/ createIcon(Plugs);
+export const IconRotate = /*#__PURE__*/ createIcon(ArrowCounterClockwise, "bold");
+export const IconRedo = /*#__PURE__*/ createIcon(ArrowUUpRight, "bold");
+export const IconDollar = /*#__PURE__*/ createIcon(CurrencyDollar, "bold");
+export const IconArrowUpRight = /*#__PURE__*/ createIcon(ArrowUpRight, "bold");
+export const IconArrowDownLeft = /*#__PURE__*/ createIcon(ArrowDownLeft, "bold");
+export const IconPriorityUp = /*#__PURE__*/ createIcon(ArrowFatUp);
+export const IconPriorityDown = /*#__PURE__*/ createIcon(ArrowFatDown);
+export const IconAlignLeft = /*#__PURE__*/ createIcon(TextAlignLeft, "bold");
+export const IconAlignCenter = /*#__PURE__*/ createIcon(TextAlignCenter, "bold");
+export const IconAlignRight = /*#__PURE__*/ createIcon(TextAlignRight, "bold");
+export const IconMinusCircle = /*#__PURE__*/ createIcon(MinusCircle);
+export const IconPlusCircle = /*#__PURE__*/ createIcon(PlusCircle);
+export const IconArrowCircleUp = /*#__PURE__*/ createIcon(ArrowCircleUp);
+export const IconArrowCircleDown = /*#__PURE__*/ createIcon(ArrowCircleDown);
+export const IconShieldWarning = /*#__PURE__*/ createIcon(ShieldWarning);
+export const IconShieldOff = /*#__PURE__*/ createIcon(ShieldSlash);
+export const IconStack = /*#__PURE__*/ createIcon(Stack);
+export const IconUser = /*#__PURE__*/ createIcon(User);
+export const IconCommand = /*#__PURE__*/ createIcon(Command, "bold");
+export const IconHand = /*#__PURE__*/ createIcon(Hand);
 
 /* ─── Estados e feedback ─── */
 export const IconSuccess = /*#__PURE__*/ createIcon(CheckCircle);

@@ -21,6 +21,7 @@ import {
     CaretRight,
     CaretUp,
     CaretUpDown,
+    ChartBar,
     ChatCircleDots,
     Check,
     CheckCircle,
@@ -52,6 +53,7 @@ import {
     Moon,
     Moped,
     PencilSimple,
+    Percent,
     Phone,
     Plus,
     PushPin,
@@ -68,9 +70,12 @@ import {
     SlidersHorizontal,
     Sparkle,
     Spinner,
+    StackPlus,
     SquaresFour,
     Storefront,
     Sun,
+    TrendDown,
+    TrendUp,
     Tag,
     Trash,
     Truck,
@@ -162,6 +167,13 @@ export const IconMenu = /*#__PURE__*/ createIcon(List, "bold");
 export const IconMoon = /*#__PURE__*/ createIcon(Moon);
 export const IconSun = /*#__PURE__*/ createIcon(Sun);
 export const IconLogout = /*#__PURE__*/ createIcon(SignOut, "bold");
+
+/* ─── Métricas e estoque ─── */
+export const IconChart = /*#__PURE__*/ createIcon(ChartBar);
+export const IconPercent = /*#__PURE__*/ createIcon(Percent, "bold");
+export const IconTrendUp = /*#__PURE__*/ createIcon(TrendUp, "bold");
+export const IconTrendDown = /*#__PURE__*/ createIcon(TrendDown, "bold");
+export const IconStockAdd = /*#__PURE__*/ createIcon(StackPlus);
 
 /* ─── Estados e feedback ─── */
 export const IconSuccess = /*#__PURE__*/ createIcon(CheckCircle);

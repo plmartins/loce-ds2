@@ -1,13 +1,5 @@
 /* loce-ds2 — base global (scrollbar, fixes nativos) */
 
-/* Respiro garantido no fim de toda página do shell. Espaçador em vez de
-   padding-bottom porque o Safari ignora padding-bottom em scroll container. */
-.ds-shell-main::after {
-    content: "";
-    display: block;
-    flex: 0 0 3rem;
-}
-
 /* Botões com profundidade (gradiente + highlight em cima + aresta escura embaixo).
    A cor vem de --btn-bg, então funciona pra marca, destructive, etc. */
 .ds-btn-3d {

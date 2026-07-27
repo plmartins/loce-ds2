@@ -37,9 +37,12 @@ export function AppShell({ rail, sidebar, mobileSidebar, header, children, class
 
                 <div className="flex flex-1 min-w-0 flex-col min-h-0">
                     {header}
-                    {/* ds-shell-main::after = piso de respiro no fim de TODA página
-                        (Safari ignora padding-bottom em container de scroll) */}
-                    <main className="ds-shell-main flex-1 min-w-0 min-h-0 flex flex-col overflow-auto">{children}</main>
+                    <main className="flex-1 min-w-0 min-h-0 flex flex-col overflow-auto">
+                        {children}
+                        {/* Elemento REAL de respiro no fim de toda página: padding-bottom
+                            e ::after em scroll container falham no Safari */}
+                        <div aria-hidden className="h-14 shrink-0" />
+                    </main>
                 </div>
             </div>
         </ShellContext.Provider>

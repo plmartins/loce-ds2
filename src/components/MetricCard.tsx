@@ -4,13 +4,37 @@ import { IconArrowRight } from "../icons";
 
 export type MetricDeltaTone = "positive" | "negative" | "neutral";
 
+export type MetricAccent = "brand" | "green" | "red" | "amber" | "purple" | "pink" | "teal";
+
 export type MetricCardProps = {
     label: ReactNode;
     value: ReactNode;
     helper?: ReactNode;
     delta?: { label: string; tone: MetricDeltaTone };
     icon?: ReactNode;
+    /** Cor do chip do ícone e do brilho do card. */
+    accent?: MetricAccent;
     className?: string;
+};
+
+const ACCENT_TILE: Record<MetricAccent, string> = {
+    brand: "bg-brand/10 text-brand",
+    green: "bg-success/12 text-success",
+    red: "bg-destructive/10 text-destructive",
+    amber: "bg-warning/15 text-warning",
+    purple: "bg-[#8b5cf6]/12 text-[#8b5cf6]",
+    pink: "bg-[#ec4899]/12 text-[#ec4899]",
+    teal: "bg-[#14b8a6]/12 text-[#14b8a6]",
+};
+
+const ACCENT_GLOW: Record<MetricAccent, string> = {
+    brand: "from-brand/[0.07]",
+    green: "from-success/[0.08]",
+    red: "from-destructive/[0.07]",
+    amber: "from-warning/[0.1]",
+    purple: "from-[#8b5cf6]/[0.08]",
+    pink: "from-[#ec4899]/[0.08]",
+    teal: "from-[#14b8a6]/[0.08]",
 };
 
 const DELTA_CLASS: Record<MetricDeltaTone, string> = {
@@ -19,7 +43,7 @@ const DELTA_CLASS: Record<MetricDeltaTone, string> = {
     neutral: "bg-surface-2 text-foreground/60",
 };
 
-export function MetricCard({ label, value, helper, delta, icon, className }: MetricCardProps) {
+export function MetricCard({ label, value, helper, delta, icon, accent = "brand", className }: MetricCardProps) {
     return (
         <div
             className={cn(
@@ -28,10 +52,11 @@ export function MetricCard({ label, value, helper, delta, icon, className }: Met
                 className
             )}
         >
-            <div className="flex items-center justify-between gap-2">
+            <span aria-hidden className={cn("pointer-events-none absolute -right-8 -top-10 size-32 rounded-full bg-gradient-to-b to-transparent blur-2xl", ACCENT_GLOW[accent])} />
+            <div className="relative flex items-center justify-between gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-[0.07em] text-muted-foreground">{label}</span>
                 {icon && (
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                    <span className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg", ACCENT_TILE[accent])}>
                         {icon}
                     </span>
                 )}

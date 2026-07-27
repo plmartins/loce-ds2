@@ -78,7 +78,7 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 ## Gráficos e AI
 | Componente | Status | Notas |
 |---|---|---|
-| charts/* (Recharts: Bar, Line, Area, Donut, Sparkline, StatCard) | ⬜ | P1, entra com o dashboard novo |
+| charts/* (Recharts) | 🔨 | AreaChart ✅, BarChart ✅; Line/Donut/Sparkline pendentes |
 | AIButton / AICard / AIIcon / SparklesText / TextType / TypingIndicator | ⬜ | CSS já migrado em animations.css |
 | AudioPlayer | ⬜ | |
 | EditorText (Quill, entry separado) | ⬜ | |

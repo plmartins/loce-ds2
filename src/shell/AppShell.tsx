@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ShellContext } from "./shell-context";
 import { cn } from "../lib/utils";
 
@@ -12,10 +12,18 @@ export type AppShellProps = {
     header?: ReactNode;
     children: ReactNode;
     className?: string;
+    /** Quando muda (ex.: pathname da rota), o scroll do main volta pro topo. */
+    scrollResetKey?: string;
 };
 
-export function AppShell({ rail, sidebar, mobileSidebar, header, children, className }: AppShellProps) {
+export function AppShell({ rail, sidebar, mobileSidebar, header, children, className, scrollResetKey }: AppShellProps) {
     const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+    const mainRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        if (scrollResetKey === undefined) return;
+        if (mainRef.current) mainRef.current.scrollTop = 0;
+    }, [scrollResetKey]);
 
     return (
         <ShellContext.Provider value={{ mobileSidebarOpen, setMobileSidebarOpen }}>
@@ -37,7 +45,7 @@ export function AppShell({ rail, sidebar, mobileSidebar, header, children, class
 
                 <div className="flex flex-1 min-w-0 flex-col min-h-0">
                     {header}
-                    <main className="flex-1 min-w-0 min-h-0 flex flex-col overflow-auto">
+                    <main ref={mainRef} className="flex-1 min-w-0 min-h-0 flex flex-col overflow-auto">
                         {children}
                         {/* Elemento REAL de respiro no fim de toda página: padding-bottom
                             e ::after em scroll container falham no Safari */}

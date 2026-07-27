@@ -30,12 +30,12 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 | SearchInput | ✅ | |
 | Select (dropdown do DS) | ✅ | + NativeSelect |
 | Switch | ✅ | |
-| Checkbox | ⬜ | |
-| Textarea / ExpandableTextarea | ⬜ | |
-| MultiSelect | ⬜ | |
+| Checkbox | ✅ | brand quando marcado, focus ring, label+descrição |
+| Textarea / ExpandableTextarea | ✅ | autoResize, onSubmit com Enter, onChange(value) |
+| MultiSelect | ✅ | chips com avatar, popover próprio |
 | ComboBox | ✅ | busca digitável, opções com descrição/ícone, server-side (isLoading), teclado, flip-up, clear |
-| DatePicker / TimeInput | ⬜ | |
-| SelectCard | ⬜ | |
+| DatePicker / TimeInput | ✅ | calendar react-day-picker tematizado, pt-BR |
+| SelectCard | ✅ | horizontal/vertical, seleção com ring brand |
 | ImageUpload | ⬜ | |
 | FileDropzone (uiLoce) | ⬜ | |
 | InputMoneyOrPercent (uiLoce) | ⬜ | |
@@ -50,30 +50,30 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 | Badge | ✅ | |
 | Tooltip | ✅ | |
 | LabelBadge | ⬜ | |
-| Card (+Header/Content/Footer) | ⬜ | |
-| ConfigCard / SectionCard | ⬜ | |
-| MetricCard | ⬜ | |
-| Timeline | ⬜ | |
+| Card (+Header/Content/Footer) | ✅ | |
+| ConfigCard / SectionCard | ✅ | header com tile de ícone |
+| MetricCard | ✅ | accent colorido por KPI |
+| Timeline | ✅ | |
 | EmptyState | ✅ | superfície própria com tile, descrição e ação |
 | Skeleton (+Text/Table) | ✅ | shimmer próprio do pacote, SkeletonTable pra listagens |
 | Avatar | ✅ | gradiente determinístico por nome + foto com fallback |
-| Separator | ⬜ | |
-| StatusDot / ColorDot | ⬜ | |
-| TextCopy | ⬜ | |
-| Tabs | ⬜ | |
-| ScrollFade | ⬜ | |
-| ImageWithZoom | ⬜ | |
-| Text | ⬜ | avaliar se sobrevive ou vira type scale |
+| Separator | ✅ | horizontal/vertical/label |
+| StatusDot / ColorDot | ✅ | cores semânticas + pulse |
+| TextCopy | ✅ | feedback de copiado inline |
+| Tabs | ✅ | pill com count, ativo em brand |
+| ScrollFade | ✅ | fade nas bordas via mask |
+| ImageWithZoom | ✅ | lightbox com zoom/arraste |
+| Text | ✅ | type scale utilitária (mesma API do ds1) |
 
 ## Overlays
 | Componente | Status | Notas |
 |---|---|---|
 | Dialog (primitiva) | ✅ | animação própria do pacote, teto 85vh |
 | DropdownMenu (primitiva) | ✅ | + Label/Separator |
-| SheetEntity (+ size wide) | ⬜ | |
-| ModalConfirm / ModalDelete | ⬜ | |
-| DropdownActions | ⬜ | |
-| Toaster/toast | ⬜ | avaliar sonner vs react-hot-toast |
+| SheetEntity (+ size wide) | ✅ | painel direito, stopPropagation, footer automático |
+| ModalConfirm / ModalDelete | ✅ | delete com modes simple/checkbox/input |
+| DropdownActions | ✅ | destructive com separador |
+| Toaster/toast | ✅ | react-hot-toast com superfície ds2 |
 
 ## Gráficos e AI
 | Componente | Status | Notas |

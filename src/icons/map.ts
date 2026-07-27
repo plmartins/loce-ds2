@@ -22,8 +22,11 @@ import {
     CalendarBlank,
     CaretDown,
     ClockCounterClockwise,
+    CursorClick,
     DownloadSimple,
+    HandGrabbing,
     Minus,
+    Mouse,
     Scales,
     CaretLeft,
     CaretRight,
@@ -190,6 +193,9 @@ export const IconBalance = /*#__PURE__*/ createIcon(Scales);
 export const IconCalendar = /*#__PURE__*/ createIcon(CalendarBlank);
 export const IconBarcode = /*#__PURE__*/ createIcon(Barcode);
 export const IconHistory = /*#__PURE__*/ createIcon(ClockCounterClockwise, "bold");
+export const IconCursorClick = /*#__PURE__*/ createIcon(CursorClick);
+export const IconMouse = /*#__PURE__*/ createIcon(Mouse);
+export const IconHandGrab = /*#__PURE__*/ createIcon(HandGrabbing);
 
 /* ─── Estados e feedback ─── */
 export const IconSuccess = /*#__PURE__*/ createIcon(CheckCircle);

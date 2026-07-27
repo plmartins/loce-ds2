@@ -54,7 +54,7 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 | ConfigCard / SectionCard | ⬜ | |
 | MetricCard | ⬜ | |
 | Timeline | ⬜ | |
-| EmptyState | ⬜ | |
+| EmptyState | ✅ | superfície própria com tile, descrição e ação |
 | Skeleton (+Text/Table) | ✅ | shimmer próprio do pacote, SkeletonTable pra listagens |
 | Avatar | ✅ | gradiente determinístico por nome + foto com fallback |
 | Separator | ⬜ | |

@@ -10,6 +10,8 @@ export type PlatformRailItem = {
     href?: string;
     available?: boolean;
     active?: boolean;
+    /** Logo real da plataforma (imagem preenche o tile). Sem ela, cai no tile de gradiente + glifo. */
+    logoSrc?: string;
 };
 
 /*
@@ -63,14 +65,25 @@ function RailTile({ item }: { item: PlatformRailItem }) {
     const tile = (
         <span
             className={cn(
-                "relative flex size-10 items-center justify-center rounded-[12px] transition-all duration-150 ease-out",
-                available && cn(meta.tileClass, "text-white"),
+                "relative flex size-10 items-center justify-center overflow-visible rounded-[12px] transition-all duration-150 ease-out",
+                !item.logoSrc && available && cn(meta.tileClass, "text-white"),
+                !item.logoSrc && !available && "bg-surface-2 text-muted-foreground/50",
                 item.active && cn(meta.glowClass, "ring-2 ring-white/25"),
-                !item.active && available && "opacity-75 saturate-[0.85] group-hover:opacity-100 group-hover:saturate-100 group-hover:scale-[1.07] group-hover:-translate-y-px group-active:scale-95",
-                !available && "bg-surface-2 text-muted-foreground/50"
+                !item.active && available && "opacity-80 saturate-[0.9] group-hover:opacity-100 group-hover:saturate-100 group-hover:scale-[1.07] group-hover:-translate-y-px group-active:scale-95"
             )}
         >
-            <Icon size={19} />
+            {item.logoSrc ? (
+                <img
+                    src={item.logoSrc}
+                    alt=""
+                    className={cn(
+                        "size-10 rounded-[12px] object-cover",
+                        !available && "opacity-45 grayscale"
+                    )}
+                />
+            ) : (
+                <Icon size={19} />
+            )}
             {!available && (
                 <span className="absolute -right-1 -bottom-1 flex size-4 items-center justify-center rounded-full bg-surface-3 text-muted-foreground ring-2 ring-surface-0">
                     <IconLock size={9} />

@@ -20,6 +20,7 @@ import {
     CaretLeft,
     CaretRight,
     CaretUp,
+    CaretUpDown,
     ChatCircleDots,
     Check,
     CheckCircle,
@@ -29,6 +30,7 @@ import {
     CreditCard,
     Cube,
     CurrencyCircleDollar,
+    DotsThree,
     EnvelopeSimple,
     Eye,
     EyeSlash,
@@ -145,6 +147,8 @@ export const IconArrowRight = /*#__PURE__*/ createIcon(ArrowRight, "bold");
 export const IconExternal = /*#__PURE__*/ createIcon(ArrowSquareOut, "bold");
 export const IconFilters = /*#__PURE__*/ createIcon(SlidersHorizontal, "bold");
 export const IconChevronDown = /*#__PURE__*/ createIcon(CaretDown, "bold");
+export const IconSort = /*#__PURE__*/ createIcon(CaretUpDown, "bold");
+export const IconMore = /*#__PURE__*/ createIcon(DotsThree, "bold");
 export const IconChevronUp = /*#__PURE__*/ createIcon(CaretUp, "bold");
 export const IconChevronLeft = /*#__PURE__*/ createIcon(CaretLeft, "bold");
 export const IconChevronRight = /*#__PURE__*/ createIcon(CaretRight, "bold");

@@ -127,7 +127,7 @@ export function PlatformRail({ platforms, logo, footer, className }: PlatformRai
     return (
         <div
             className={cn(
-                "flex h-full w-[60px] shrink-0 flex-col items-center gap-1 bg-surface-0 py-3",
+                "flex h-full w-[60px] shrink-0 flex-col items-center gap-1 border-r border-border bg-surface-0 py-3",
                 className
             )}
         >

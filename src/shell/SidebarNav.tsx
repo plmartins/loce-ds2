@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type ComponentType, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType, type ReactNode } from "react";
 import { cn } from "../lib/utils";
 import { IconChevronRight, IconPin, type IconProps } from "../icons";
 
@@ -30,6 +30,8 @@ export type SidebarNavProps = {
 
 const COLLAPSED_W = 68;
 const EXPANDED_W = 260;
+/* Tolerância antes de recolher no mouseleave: mata o flicker de passagem. */
+const HOVER_CLOSE_DELAY = 220;
 
 function Label({ open, children }: { open: boolean; children: ReactNode }) {
     return (
@@ -52,6 +54,7 @@ export function SidebarNav({
     className,
 }: SidebarNavProps) {
     const [hoverOpen, setHoverOpen] = useState(false);
+    const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [pinned, setPinned] = useState(() => {
         try {
             return localStorage.getItem(storageKey) === "true";
@@ -60,6 +63,20 @@ export function SidebarNav({
         }
     });
     const open = expanded || hoverOpen || pinned;
+
+    const handleEnter = () => {
+        if (expanded) return;
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setHoverOpen(true);
+    };
+    const handleLeave = () => {
+        if (expanded) return;
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        closeTimer.current = setTimeout(() => setHoverOpen(false), HOVER_CLOSE_DELAY);
+    };
+    useEffect(() => () => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+    }, []);
 
     const isSubActive = useCallback(
         (path: string) => {
@@ -84,7 +101,7 @@ export function SidebarNav({
             try {
                 localStorage.setItem(storageKey, String(next));
             } catch {
-                /* storage indisponível (SSR/iframe): pin só não persiste */
+                /* storage indisponível: pin só não persiste */
             }
             return next;
         });
@@ -93,85 +110,97 @@ export function SidebarNav({
     return (
         <div
             className={cn(
-                "relative flex h-full select-none flex-col overflow-hidden border-r border-border bg-surface-1 transition-[width] duration-[250ms] ease-out",
+                "relative flex h-full select-none flex-col overflow-hidden bg-surface-1 transition-[width] duration-[250ms] ease-out",
+                "border-r border-border",
                 className
             )}
             style={{ width: open ? EXPANDED_W : COLLAPSED_W }}
-            onMouseEnter={() => !expanded && setHoverOpen(true)}
-            onMouseLeave={() => !expanded && setHoverOpen(false)}
+            onMouseEnter={handleEnter}
+            onMouseLeave={handleLeave}
         >
             <nav className="scrollbar-hide flex flex-1 flex-col gap-0.5 overflow-y-auto px-2 pt-3">
                 {items.map((item) => {
                     const Icon = item.icon;
                     const groupActive = item.label === activeGroupLabel;
                     const groupOpen = openGroup === item.label && open;
+                    const singleChild = item.subItems.length === 1;
 
                     return (
                         <div key={item.label}>
                             <button
                                 onClick={() => {
+                                    // Grupo de item único navega direto: accordion de 1 filho é fricção
+                                    if (singleChild && item.subItems[0]) {
+                                        onNavigate(item.subItems[0].endPoint);
+                                        return;
+                                    }
                                     if (open) {
                                         setOpenGroup((prev) => (prev === item.label ? "" : item.label));
                                     } else if (item.subItems[0]) {
                                         onNavigate(item.subItems[0].endPoint);
                                     }
                                 }}
+                                title={!open ? item.label : undefined}
                                 className={cn(
                                     "relative flex h-10 w-full cursor-pointer items-center rounded-xl px-4 transition-colors duration-150",
                                     groupActive && [
                                         "bg-brand/[0.08] font-bold text-brand",
                                         "before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[3px] before:rounded-r-full before:bg-brand",
                                     ],
-                                    !groupActive && "text-foreground/75 hover:bg-foreground/[0.04] hover:text-foreground"
+                                    !groupActive && "text-foreground/70 hover:bg-foreground/[0.045] hover:text-foreground"
                                 )}
                             >
                                 <span className="flex size-5 shrink-0 items-center justify-center">
                                     <Icon size={20} />
                                 </span>
                                 <Label open={open}>{item.label}</Label>
-                                <IconChevronRight
-                                    size={13}
-                                    className={cn(
-                                        "ml-auto shrink-0 transition-all duration-200",
-                                        groupOpen ? "rotate-90" : "rotate-0",
-                                        groupActive ? "text-brand" : "text-foreground/40",
-                                        !open && "opacity-0"
-                                    )}
-                                />
+                                {!singleChild && (
+                                    <IconChevronRight
+                                        size={12}
+                                        className={cn(
+                                            "ml-auto shrink-0 transition-all duration-200 ease-out",
+                                            groupOpen ? "rotate-90" : "rotate-0",
+                                            groupActive ? "text-brand/70" : "text-foreground/35",
+                                            !open && "opacity-0"
+                                        )}
+                                    />
+                                )}
                             </button>
 
-                            {groupOpen && (
-                                <div className="ml-[26px] mt-0.5 mb-1">
-                                    {item.subItems.map((sub, idx) => {
-                                        const subActive = isSubActive(sub.endPoint);
-                                        const isLast = idx === item.subItems.length - 1;
-
-                                        return (
-                                            <div key={sub.endPoint} className="relative">
-                                                {isLast ? (
-                                                    <span className="pointer-events-none absolute left-0 top-0 h-1/2 w-4 rounded-bl-lg border-b-2 border-l-2 border-border" />
-                                                ) : (
-                                                    <>
-                                                        <span className="pointer-events-none absolute left-0 top-0 bottom-0 border-l-2 border-border" />
-                                                        <span className="pointer-events-none absolute left-0 top-1/2 w-4 border-b-2 border-border" />
-                                                    </>
-                                                )}
-                                                {subActive && (
-                                                    <span className="absolute left-[13px] top-1/2 z-10 size-1.5 -translate-y-1/2 rounded-full bg-brand ring-2 ring-brand/20" />
-                                                )}
-                                                <button
-                                                    onClick={() => onNavigate(sub.endPoint)}
-                                                    className={cn(
-                                                        "relative flex h-8 w-full cursor-pointer items-center truncate whitespace-nowrap rounded-xl pl-7 pr-4 text-[13px] transition-[color,background-color,transform] duration-150",
-                                                        subActive && "font-semibold text-brand",
-                                                        !subActive && "font-medium text-foreground/50 hover:translate-x-[2px] hover:bg-foreground/[0.04] hover:text-foreground"
-                                                    )}
-                                                >
-                                                    {sub.label}
-                                                </button>
-                                            </div>
-                                        );
-                                    })}
+                            {/* Accordion com animação de altura via grid-rows */}
+                            {!singleChild && (
+                                <div
+                                    className={cn(
+                                        "grid transition-[grid-template-rows,opacity] duration-200 ease-out",
+                                        groupOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                                    )}
+                                >
+                                    <div className="overflow-hidden">
+                                        <div className="relative ml-[30px] mt-0.5 mb-1 flex flex-col gap-px border-l border-border pl-2">
+                                            {item.subItems.map((sub) => {
+                                                const subActive = isSubActive(sub.endPoint);
+                                                return (
+                                                    <button
+                                                        key={sub.endPoint}
+                                                        onClick={() => onNavigate(sub.endPoint)}
+                                                        tabIndex={groupOpen ? 0 : -1}
+                                                        className={cn(
+                                                            "relative flex h-8 w-full cursor-pointer items-center truncate whitespace-nowrap rounded-lg px-3 text-[13px]",
+                                                            "transition-[color,background-color,transform] duration-150",
+                                                            subActive && [
+                                                                "bg-brand/[0.07] font-semibold text-brand",
+                                                                "before:absolute before:-left-[9px] before:top-1/2 before:size-1.5 before:-translate-y-1/2 before:rounded-full before:bg-brand",
+                                                            ],
+                                                            !subActive &&
+                                                                "font-medium text-foreground/55 hover:translate-x-[2px] hover:bg-foreground/[0.04] hover:text-foreground"
+                                                        )}
+                                                    >
+                                                        {sub.label}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -185,9 +214,10 @@ export function SidebarNav({
                 {footer}
                 <button
                     onClick={togglePin}
+                    title={!open ? (pinned ? "Menu fixado" : "Fixar menu") : undefined}
                     className={cn(
                         "relative flex h-10 w-full cursor-pointer items-center rounded-xl px-4 transition-colors duration-150",
-                        pinned ? "bg-brand/[0.06] text-brand" : "text-foreground/75 hover:bg-foreground/[0.04] hover:text-foreground"
+                        pinned ? "bg-brand/[0.06] text-brand" : "text-foreground/70 hover:bg-foreground/[0.045] hover:text-foreground"
                     )}
                 >
                     <span className="flex size-5 shrink-0 items-center justify-center">

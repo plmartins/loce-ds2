@@ -14,5 +14,18 @@ export {
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuLabel,
     DropdownMenuSeparator,
 } from "./primitives/dropdown-menu";
+export {
+    Dialog,
+    DialogTrigger,
+    DialogClose,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogBody,
+    DialogFooter,
+} from "./primitives/dialog";
+export { Tooltip, type TooltipProps } from "./components/Tooltip";

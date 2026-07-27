@@ -41,6 +41,18 @@ export function DropdownMenuItem({
     );
 }
 
+export function DropdownMenuLabel({
+    className,
+    ...props
+}: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>) {
+    return (
+        <DropdownMenuPrimitive.Label
+            className={cn("px-2.5 pb-1 pt-1.5 text-[11px] font-semibold uppercase tracking-[0.07em] text-muted-foreground", className)}
+            {...props}
+        />
+    );
+}
+
 export function DropdownMenuSeparator({
     className,
     ...props

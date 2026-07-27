@@ -9,4 +9,5 @@ const css = files
     .join("\n");
 
 writeFileSync(join(root, "dist/styles.css"), css);
-console.log(`dist/styles.css gerado (${files.join(" + ")})`);
+writeFileSync(join(root, "dist/compat.css"), readFileSync(join(root, "src/styles/compat.css"), "utf8"));
+console.log(`dist/styles.css gerado (${files.join(" + ")}) + dist/compat.css`);

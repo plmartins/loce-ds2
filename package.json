@@ -1,6 +1,6 @@
 {
     "name": "loce-ds2",
-    "version": "0.6.3",
+    "version": "0.6.4",
     "description": "Design system da suíte Loce (v2): tokens, componentes, shell e ícones",
     "type": "module",
     "license": "UNLICENSED",
@@ -25,7 +25,8 @@
         "./charts": {
             "types": "./dist/charts/index.d.ts",
             "import": "./dist/charts/index.js"
-        }
+        },
+        "./compat.css": "./dist/compat.css"
     },
     "scripts": {
         "build": "tsup && node scripts/build-css.mjs",

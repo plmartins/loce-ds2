@@ -16,11 +16,15 @@ export type Column<T = any> = {
 export type Action<T = any> = {
     label: string;
     icon: ReactNode;
-    onClick: (row: T) => void;
+    onClick?: (row: T) => void;
     color?: string;
     condition?: (row: T) => boolean;
     disabled?: (row: T) => boolean;
+    /** Com items, a ação principal vira um dropdown (ex.: botão de imprimir com 2 formas). */
+    items?: { label: string; icon?: ReactNode; onClick: (row: T) => void; disabled?: (row: T) => boolean }[];
 };
+
+export type SortState = { accessor: string; direction: "asc" | "desc" } | null;
 
 export type DataTableProps<T = any> = {
     data: T[];
@@ -32,6 +36,10 @@ export type DataTableProps<T = any> = {
     onRowClick?: (row: T) => void;
     rowDisabled?: (row: T) => boolean;
     className?: string;
+    /** Modo servidor: estado de ordenação controlado pelo pai (null = sem ordenação). */
+    sort?: SortState;
+    /** Modo servidor: recebe o próximo estado (asc -> desc -> null). Desativa o sort client-side. */
+    onSortChange?: (sort: SortState) => void;
 };
 
 const ALIGN_CLASS = { left: "text-left", center: "text-center", right: "text-right" } as const;
@@ -46,18 +54,27 @@ export function DataTable<T extends Record<string, any>>({
     onRowClick,
     rowDisabled,
     className,
+    sort,
+    onSortChange,
 }: DataTableProps<T>) {
-    const [sortConfig, setSortConfig] = useState<{ accessor: string; direction: "asc" | "desc" } | null>(null);
+    const [internalSort, setInternalSort] = useState<SortState>(null);
+    const isServerSort = onSortChange !== undefined;
+    const sortConfig = isServerSort ? (sort ?? null) : internalSort;
 
+    // Ciclo tri-state: sem ordenação -> asc -> desc -> sem ordenação (removível)
     const handleSort = (accessor: string) => {
-        setSortConfig((prev) => {
-            if (prev?.accessor === accessor) return { accessor, direction: prev.direction === "asc" ? "desc" : "asc" };
-            return { accessor, direction: "asc" };
-        });
+        const next: SortState =
+            sortConfig?.accessor !== accessor
+                ? { accessor, direction: "asc" }
+                : sortConfig.direction === "asc"
+                    ? { accessor, direction: "desc" }
+                    : null;
+        if (isServerSort) onSortChange(next);
+        else setInternalSort(next);
     };
 
     const sortedData = useMemo(() => {
-        if (!sortConfig) return data;
+        if (isServerSort || !sortConfig) return data;
         return [...data].sort((a, b) => {
             const aVal = a[sortConfig.accessor];
             const bVal = b[sortConfig.accessor];
@@ -68,7 +85,7 @@ export function DataTable<T extends Record<string, any>>({
                 return sortConfig.direction === "asc" ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
             return sortConfig.direction === "asc" ? (aVal < bVal ? -1 : 1) : (aVal > bVal ? -1 : 1);
         });
-    }, [data, sortConfig]);
+    }, [data, sortConfig, isServerSort]);
 
     const hasActions = actions.length > 0 || mainActions.length > 0;
     const getKey = (row: T, idx: number) => (rowKey ? rowKey(row, idx) : idx);
@@ -81,6 +98,36 @@ export function DataTable<T extends Record<string, any>>({
             <div className="flex items-center justify-end gap-0.5">
                 {visibleMain.map((action) => {
                     const isDisabled = action.disabled?.(row);
+                    const btnClass = "flex size-8 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors duration-100 hover:bg-foreground/[0.06] hover:text-foreground disabled:pointer-events-none disabled:opacity-35 data-[state=open]:bg-foreground/[0.06] data-[state=open]:text-foreground";
+                    if (action.items?.length) {
+                        return (
+                            <DropdownMenu key={action.label}>
+                                <DropdownMenuTrigger asChild>
+                                    <button type="button" title={action.label} disabled={isDisabled} onClick={(e) => e.stopPropagation()} className={btnClass}>
+                                        {action.icon}
+                                    </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                                    {action.items.map((item) => {
+                                        const itemDisabled = item.disabled?.(row);
+                                        return (
+                                            <DropdownMenuItem
+                                                key={item.label}
+                                                disabled={itemDisabled}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    if (!itemDisabled) item.onClick(row);
+                                                }}
+                                            >
+                                                {item.icon}
+                                                <span>{item.label}</span>
+                                            </DropdownMenuItem>
+                                        );
+                                    })}
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        );
+                    }
                     return (
                         <button
                             key={action.label}
@@ -89,9 +136,9 @@ export function DataTable<T extends Record<string, any>>({
                             disabled={isDisabled}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                if (!isDisabled) action.onClick(row);
+                                if (!isDisabled) action.onClick?.(row);
                             }}
-                            className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors duration-100 hover:bg-foreground/[0.06] hover:text-foreground disabled:pointer-events-none disabled:opacity-35"
+                            className={btnClass}
                         >
                             {action.icon}
                         </button>
@@ -118,7 +165,7 @@ export function DataTable<T extends Record<string, any>>({
                                         disabled={isDisabled}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            if (!isDisabled) action.onClick(row);
+                                            if (!isDisabled) action.onClick?.(row);
                                         }}
                                         className={action.color}
                                     >

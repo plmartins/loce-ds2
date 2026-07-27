@@ -7,7 +7,7 @@ export { SearchInput, type SearchInputProps } from "./components/SearchInput";
 export { Select, NativeSelect, type SelectProps, type NativeSelectProps, type SelectOption } from "./components/Select";
 export { Switch, type SwitchProps } from "./components/Switch";
 export { Badge, badgeVariants, type BadgeProps } from "./components/Badge";
-export { DataTable, type DataTableProps, type Column, type Action } from "./components/DataTable";
+export { DataTable, type DataTableProps, type Column, type Action, type SortState } from "./components/DataTable";
 export { PaginationBar, type PaginationBarProps } from "./components/PaginationBar";
 export {
     DropdownMenu,

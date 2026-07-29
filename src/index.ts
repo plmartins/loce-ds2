@@ -32,6 +32,7 @@ export { Tooltip, type TooltipProps } from "./components/Tooltip";
 export { Avatar, type AvatarProps } from "./components/Avatar";
 export { FaceAvatar, type FaceAvatarProps } from "./components/FaceAvatar";
 export { IconTile, type IconTileProps, type IconTileTone } from "./components/IconTile";
+export { SplashScreen, type SplashScreenProps } from "./components/SplashScreen";
 export { Skeleton, SkeletonText, SkeletonTable, type SkeletonProps } from "./components/Skeleton";
 export { SkeletonForm } from "./components/SkeletonForm";
 export { TagsInput, type TagsInputProps } from "./components/TagsInput";

@@ -26,6 +26,8 @@ export type SidebarNavProps = {
     onNavigate: (endPoint: string) => void;
     /** Força aberto (overlay mobile). */
     expanded?: boolean;
+    /** false: todos os grupos ficam abertos de uma vez, sem sanfona (menus curtos). */
+    accordion?: boolean;
     /** Slot no rodapé (acima do controle de fixar). */
     footer?: ReactNode;
     /** Chave do localStorage do pin. */
@@ -54,6 +56,7 @@ export function SidebarNav({
     activePath,
     onNavigate,
     expanded = false,
+    accordion = true,
     footer,
     storageKey = "sidebar-pinned",
     className,
@@ -139,7 +142,7 @@ export function SidebarNav({
                 {items.map((item) => {
                     const Icon = item.icon;
                     const groupActive = item.label === activeGroupLabel;
-                    const groupOpen = openGroup === item.label && open;
+                    const groupOpen = (!accordion || openGroup === item.label) && open;
                     const singleChild = item.subItems.length === 1;
 
                     return (
@@ -153,7 +156,7 @@ export function SidebarNav({
                                         onNavigate(firstNavigable.endPoint);
                                         return;
                                     }
-                                    if (open) {
+                                    if (open && accordion) {
                                         setOpenGroup((prev) => (prev === item.label ? "" : item.label));
                                     } else if (firstNavigable) {
                                         onNavigate(firstNavigable.endPoint);
@@ -173,7 +176,7 @@ export function SidebarNav({
                                     <Icon size={20} />
                                 </span>
                                 <Label open={open}>{item.label}</Label>
-                                {!singleChild && (
+                                {!singleChild && accordion && (
                                     <IconChevronRight
                                         size={12}
                                         className={cn(

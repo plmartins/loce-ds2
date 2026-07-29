@@ -147,7 +147,7 @@ import {
     WarningCircle,
     X,
     XCircle,
-    BracketsCurly, Broadcast, CalendarDots, CircleDashed, Clover, Crown, DeviceMobile, Fire, House, ImageBroken, Lightbulb, Monitor, Palette, Play, Pulse, Rocket, ShareNetwork, Sparkle, Timer, Trophy, UserPlus,
+    BracketsCurly, Broadcast, CalendarDots, CircleDashed, Clover, Crown, DeviceMobile, Fire, House, ImageBroken, Lightbulb, Monitor, Palette, Play, Pulse, Rocket, ShareNetwork, Timer, Trophy, UserPlus,
 } from "@phosphor-icons/react";
 import { createIcon } from "./create-icon";
 

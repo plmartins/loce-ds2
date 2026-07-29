@@ -148,6 +148,7 @@ import {
     X,
     XCircle,
     BracketsCurly, Broadcast, CalendarDots, Circle, CircleDashed, Clover, Crown, DeviceMobile, Fire, House, ImageBroken, Lightbulb, Monitor, MusicNote, PaintBrush, Palette, Pause, Play, Plug, Pulse, Rocket, ShareNetwork, SpinnerBall, Target, Timer, Trophy, UserPlus,
+    AppleLogo, GooglePlayLogo,
 } from "@phosphor-icons/react";
 import { createIcon } from "./create-icon";
 
@@ -308,6 +309,8 @@ export const IconSpinner = /*#__PURE__*/ createIcon(Spinner, "bold");
 
 /* ─── Leva do painel do ecommerce (Fase 2): paridade com os usos do lucide ─── */
 export const IconMobile = /*#__PURE__*/ createIcon(DeviceMobile);
+export const IconAppleLogo = /*#__PURE__*/ createIcon(AppleLogo);
+export const IconGooglePlayLogo = /*#__PURE__*/ createIcon(GooglePlayLogo);
 export const IconClover = /*#__PURE__*/ createIcon(Clover);
 export const IconCrown = /*#__PURE__*/ createIcon(Crown);
 export const IconTrophy = /*#__PURE__*/ createIcon(Trophy);

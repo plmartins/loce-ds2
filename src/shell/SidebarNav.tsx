@@ -200,16 +200,20 @@ export function SidebarNav({
                                                 const subActive = isSubActive(sub.endPoint);
                                                 if (sub.locked) {
                                                     return (
-                                                        <Tooltip key={sub.endPoint} content={sub.lockedHint ?? "Chega em breve"} side="right" wrap>
-                                                            <span
-                                                                tabIndex={-1}
-                                                                aria-disabled
-                                                                className="relative flex h-8 w-full cursor-default items-center gap-1.5 truncate whitespace-nowrap rounded-lg px-3 text-[13px] font-medium text-foreground/35"
-                                                            >
-                                                                <span className="min-w-0 truncate">{sub.label}</span>
-                                                                <IconLock size={11} className="shrink-0 text-foreground/30" />
-                                                            </span>
-                                                        </Tooltip>
+                                                        <span
+                                                            key={sub.endPoint}
+                                                            tabIndex={-1}
+                                                            aria-disabled
+                                                            className="relative flex h-8 w-full cursor-default items-center whitespace-nowrap rounded-lg px-3 text-[13px] font-medium text-foreground/35"
+                                                        >
+                                                            {/* Tooltip ancorado no conteúdo: na linha inteira ele nasceria na borda da sidebar, longe do texto */}
+                                                            <Tooltip content={sub.lockedHint ?? "Chega em breve"} side="right" wrap>
+                                                                <span className="inline-flex min-w-0 items-center gap-1.5">
+                                                                    <span className="min-w-0 truncate">{sub.label}</span>
+                                                                    <IconLock size={11} className="shrink-0 text-foreground/30" />
+                                                                </span>
+                                                            </Tooltip>
+                                                        </span>
                                                     );
                                                 }
                                                 return (

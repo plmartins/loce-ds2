@@ -147,6 +147,7 @@ import {
     WarningCircle,
     X,
     XCircle,
+    BracketsCurly, Broadcast, CalendarDots, CircleDashed, Clover, Crown, DeviceMobile, Fire, House, ImageBroken, Lightbulb, Monitor, Palette, Play, Pulse, Rocket, ShareNetwork, Sparkle, Timer, Trophy, UserPlus,
 } from "@phosphor-icons/react";
 import { createIcon } from "./create-icon";
 
@@ -304,3 +305,26 @@ export const IconInfo = /*#__PURE__*/ createIcon(Info);
 export const IconBlocked = /*#__PURE__*/ createIcon(Prohibit);
 /** Girar no consumidor com a classe animate-spin. */
 export const IconSpinner = /*#__PURE__*/ createIcon(Spinner, "bold");
+
+/* ─── Leva do painel do ecommerce (Fase 2): paridade com os usos do lucide ─── */
+export const IconMobile = /*#__PURE__*/ createIcon(DeviceMobile);
+export const IconClover = /*#__PURE__*/ createIcon(Clover);
+export const IconCrown = /*#__PURE__*/ createIcon(Crown);
+export const IconTrophy = /*#__PURE__*/ createIcon(Trophy);
+export const IconTimer = /*#__PURE__*/ createIcon(Timer);
+export const IconPalette = /*#__PURE__*/ createIcon(Palette);
+export const IconMonitor = /*#__PURE__*/ createIcon(Monitor);
+export const IconUserAdd = /*#__PURE__*/ createIcon(UserPlus);
+export const IconSparkle = /*#__PURE__*/ createIcon(Sparkle);
+export const IconShare = /*#__PURE__*/ createIcon(ShareNetwork);
+export const IconRocket = /*#__PURE__*/ createIcon(Rocket);
+export const IconBroadcast = /*#__PURE__*/ createIcon(Broadcast);
+export const IconPlay = /*#__PURE__*/ createIcon(Play);
+export const IconLightbulb = /*#__PURE__*/ createIcon(Lightbulb);
+export const IconHome = /*#__PURE__*/ createIcon(House);
+export const IconFire = /*#__PURE__*/ createIcon(Fire);
+export const IconCircleDashed = /*#__PURE__*/ createIcon(CircleDashed);
+export const IconBraces = /*#__PURE__*/ createIcon(BracketsCurly);
+export const IconPulse = /*#__PURE__*/ createIcon(Pulse);
+export const IconImageOff = /*#__PURE__*/ createIcon(ImageBroken);
+export const IconCalendarClock = /*#__PURE__*/ createIcon(CalendarDots);

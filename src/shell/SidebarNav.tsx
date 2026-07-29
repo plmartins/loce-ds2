@@ -245,7 +245,8 @@ export function SidebarNav({
 
             <div className="flex shrink-0 flex-col gap-px px-2 py-2">
                 {footer}
-                <button
+                {/* Sidebar forçada aberta (expanded) não tem o que fixar */}
+                {!expanded && <button
                     onClick={togglePin}
                     title={!open ? (pinned ? "Menu fixado" : "Fixar menu") : undefined}
                     className={cn(
@@ -257,7 +258,7 @@ export function SidebarNav({
                         <IconPin size={19} weight={pinned ? "fill" : "regular"} />
                     </span>
                     <Label open={open}>{pinned ? "Menu fixado" : "Fixar menu"}</Label>
-                </button>
+                </button>}
             </div>
         </div>
     );

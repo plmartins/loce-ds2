@@ -83,13 +83,25 @@ export function SidebarNav({
         if (closeTimer.current) clearTimeout(closeTimer.current);
     }, []);
 
+    /* O ativo é o MELHOR match, não qualquer prefixo: um hub "/x" não pode
+       acender junto do filho "/x/cupons". */
+    const activeEndPoint = useMemo(() => {
+        const current = activePath.replace(/\/+$/, "");
+        let best = "";
+        for (const item of items) {
+            for (const sub of item.subItems) {
+                const base = sub.endPoint.replace(/\/+$/, "");
+                if ((current === base || current.startsWith(`${base}/`)) && base.length > best.length) {
+                    best = base;
+                }
+            }
+        }
+        return best;
+    }, [items, activePath]);
+
     const isSubActive = useCallback(
-        (path: string) => {
-            const current = activePath.replace(/\/+$/, "");
-            const base = path.replace(/\/+$/, "");
-            return current === base || current.startsWith(`${base}/`);
-        },
-        [activePath]
+        (path: string) => path.replace(/\/+$/, "") === activeEndPoint && activeEndPoint !== "",
+        [activeEndPoint]
     );
 
     const activeGroupLabel = useMemo(

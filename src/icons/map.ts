@@ -147,7 +147,7 @@ import {
     WarningCircle,
     X,
     XCircle,
-    BracketsCurly, Broadcast, CalendarDots, Circle, CircleDashed, Clover, Crown, DeviceMobile, Fire, House, ImageBroken, Lightbulb, Monitor, MusicNote, PaintBrush, Palette, Pause, Play, Plug, Pulse, Rocket, ShareNetwork, Target, Timer, Trophy, UserPlus,
+    BracketsCurly, Broadcast, CalendarDots, Circle, CircleDashed, Clover, Crown, DeviceMobile, Fire, House, ImageBroken, Lightbulb, Monitor, MusicNote, PaintBrush, Palette, Pause, Play, Plug, Pulse, Rocket, ShareNetwork, SpinnerBall, Target, Timer, Trophy, UserPlus,
 } from "@phosphor-icons/react";
 import { createIcon } from "./create-icon";
 
@@ -336,3 +336,4 @@ export const IconPlug = /*#__PURE__*/ createIcon(Plug);
 export const IconPause = /*#__PURE__*/ createIcon(Pause);
 export const IconTarget = /*#__PURE__*/ createIcon(Target);
 export const IconCircle = /*#__PURE__*/ createIcon(Circle);
+export const IconRoulette = /*#__PURE__*/ createIcon(SpinnerBall);

@@ -1,4 +1,5 @@
 import type { ComponentType, ReactNode } from "react";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { cn } from "../lib/utils";
 import { IconApps, IconCart, IconChat, IconLock, IconMarketing, type IconProps } from "../icons";
 
@@ -20,28 +21,32 @@ export type PlatformRailItem = {
  */
 const PLATFORM_META: Record<
     PlatformId,
-    { label: string; icon: ComponentType<IconProps>; tileClass: string; glowClass: string }
+    { label: string; description: string; icon: ComponentType<IconProps>; tileClass: string; glowClass: string }
 > = {
     erp: {
         label: "Loce ERP",
+        description: "Vendas, estoque, fiscal, caixa e entregas da operação inteira num só painel.",
         icon: IconApps,
         tileClass: "bg-gradient-to-br from-[#3ba2ff] to-[#0864d8]",
         glowClass: "shadow-[0_2px_14px_rgba(8,130,255,0.5)]",
     },
     ecommerce: {
         label: "Loce Ecommerce",
+        description: "Sua loja online integrada em tempo real ao estoque e às vendas do ERP.",
         icon: IconCart,
         tileClass: "bg-gradient-to-br from-[#12d68d] to-[#079457]",
         glowClass: "shadow-[0_2px_14px_rgba(8,174,105,0.5)]",
     },
     marketing: {
         label: "Loce Marketing",
+        description: "Campanhas, cupons e automações para trazer o cliente de volta.",
         icon: IconMarketing,
         tileClass: "bg-gradient-to-br from-[#ff64a5] to-[#d61668]",
         glowClass: "shadow-[0_2px_14px_rgba(238,42,123,0.5)]",
     },
     talkbia: {
         label: "Talkbia",
+        description: "Atendimento com IA nos canais da loja, conectado aos seus pedidos.",
         icon: IconChat,
         tileClass: "bg-gradient-to-br from-[#a78bfa] to-[#6d28d9]",
         glowClass: "shadow-[0_2px_14px_rgba(124,58,237,0.5)]",
@@ -56,6 +61,61 @@ export type PlatformRailProps = {
     footer?: ReactNode;
     className?: string;
 };
+
+/** Card de preview da plataforma ao passar o mouse no tile do rail. */
+function PlatformPreview({ item, children }: { item: PlatformRailItem; children: ReactNode }) {
+    const meta = PLATFORM_META[item.id];
+    const Icon = meta.icon;
+    const available = item.available ?? false;
+
+    const status = item.active
+        ? { label: "Você está aqui", className: "bg-brand/10 text-brand" }
+        : available
+            ? { label: "Disponível", className: "bg-success/12 text-success" }
+            : { label: "Em breve", className: "bg-surface-2 text-muted-foreground" };
+
+    return (
+        <TooltipPrimitive.Provider delayDuration={350}>
+            <TooltipPrimitive.Root>
+                <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+                <TooltipPrimitive.Portal>
+                    <TooltipPrimitive.Content side="right" align="start" sideOffset={12} className="z-50 animate-rail-preview">
+                        <div className="flex w-64 flex-col gap-2.5 rounded-2xl border border-border bg-popover p-3.5 text-popover-foreground shadow-xl">
+                            <div className="flex items-center gap-2.5">
+                                {item.logoSrc ? (
+                                    <img
+                                        src={item.logoSrc}
+                                        alt=""
+                                        className={cn("size-9 rounded-[10px] object-cover", !available && "opacity-60 grayscale")}
+                                    />
+                                ) : (
+                                    <span className={cn("flex size-9 items-center justify-center rounded-[10px] text-white", meta.tileClass)}>
+                                        <Icon size={17} />
+                                    </span>
+                                )}
+                                <div className="flex min-w-0 flex-1 flex-col">
+                                    <span className="text-[13px] font-bold leading-tight">{meta.label}</span>
+                                    <span className={cn("mt-0.5 self-start rounded-full px-1.5 py-px text-[10px] font-bold", status.className)}>
+                                        {status.label}
+                                    </span>
+                                </div>
+                            </div>
+                            <p className="text-[12px] leading-relaxed text-muted-foreground">{meta.description}</p>
+                            {available && item.href && !item.active && (
+                                <span className="text-[11px] font-bold text-brand">Clique para abrir</span>
+                            )}
+                            {!available && (
+                                <span className="text-[11px] font-medium text-muted-foreground">
+                                    Será liberada em breve, integrada ao ecossistema Loce.
+                                </span>
+                            )}
+                        </div>
+                    </TooltipPrimitive.Content>
+                </TooltipPrimitive.Portal>
+            </TooltipPrimitive.Root>
+        </TooltipPrimitive.Provider>
+    );
+}
 
 function RailTile({ item }: { item: PlatformRailItem }) {
     const meta = PLATFORM_META[item.id];
@@ -105,22 +165,21 @@ function RailTile({ item }: { item: PlatformRailItem }) {
         </span>
     );
 
-    if (available && item.href && !item.active) {
-        return (
-            <a href={item.href} title={meta.label} aria-label={meta.label} className="group block w-full cursor-pointer">
-                {wrapped}
-            </a>
-        );
-    }
-    return (
+    // O preview no hover substitui o title nativo em todos os estados.
+    const trigger = available && item.href && !item.active ? (
+        <a href={item.href} aria-label={meta.label} className="group block w-full cursor-pointer">
+            {wrapped}
+        </a>
+    ) : (
         <span
-            title={available ? meta.label : `${meta.label} · em breve`}
-            aria-label={meta.label}
-            className="group block w-full"
+            aria-label={available ? meta.label : `${meta.label} (em breve)`}
+            className={cn("group block w-full", !available && "cursor-default")}
         >
             {wrapped}
         </span>
     );
+
+    return <PlatformPreview item={item}>{trigger}</PlatformPreview>;
 }
 
 export function PlatformRail({ platforms, logo, footer, className }: PlatformRailProps) {

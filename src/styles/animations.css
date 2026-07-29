@@ -264,3 +264,10 @@
         animation: none;
     }
 }
+
+/* Preview das plataformas no rail: entra deslizando do tile com leve zoom. */
+@keyframes rail-preview-in {
+    from { opacity: 0; transform: translateX(-6px) scale(0.96); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+.animate-rail-preview { animation: rail-preview-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }

@@ -38,15 +38,15 @@ const PLATFORM_META: Record<
         glowClass: "shadow-[0_2px_14px_rgba(8,174,105,0.5)]",
     },
     marketing: {
-        label: "Loce Marketing",
-        description: "Campanhas, cupons e automações para trazer o cliente de volta.",
+        label: "Loce Agency",
+        description: "IA que aprende a sua marca e cria posts profissionais para o Instagram, prontos no melhor horário.",
         icon: IconMarketing,
         tileClass: "bg-gradient-to-br from-[#ff64a5] to-[#d61668]",
         glowClass: "shadow-[0_2px_14px_rgba(238,42,123,0.5)]",
     },
     talkbia: {
         label: "Talkbia",
-        description: "Atendimento com IA nos canais da loja, conectado aos seus pedidos.",
+        description: "CRM com IA para vender mais no WhatsApp e Instagram, com atendimento e disparos integrados.",
         icon: IconChat,
         tileClass: "bg-gradient-to-br from-[#a78bfa] to-[#6d28d9]",
         glowClass: "shadow-[0_2px_14px_rgba(124,58,237,0.5)]",

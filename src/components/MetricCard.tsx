@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "../lib/utils";
 import { IconArrowRight } from "../icons";
+import { Skeleton } from "./Skeleton";
 
 export type MetricDeltaTone = "positive" | "negative" | "neutral";
 
@@ -14,6 +15,8 @@ export type MetricCardProps = {
     icon?: ReactNode;
     /** Cor do chip do ícone e do brilho do card. */
     accent?: MetricAccent;
+    /** Troca o card inteiro por um skeleton do mesmo tamanho. */
+    loading?: boolean;
     className?: string;
 };
 
@@ -43,7 +46,9 @@ const DELTA_CLASS: Record<MetricDeltaTone, string> = {
     neutral: "bg-surface-2 text-foreground/60",
 };
 
-export function MetricCard({ label, value, helper, delta, icon, accent = "brand", className }: MetricCardProps) {
+export function MetricCard({ label, value, helper, delta, icon, accent = "brand", loading, className }: MetricCardProps) {
+    if (loading) return <Skeleton className={cn("h-[104px] rounded-2xl", className)} />;
+
     return (
         <div
             className={cn(

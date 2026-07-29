@@ -18,6 +18,11 @@ export function SkeletonText({ lines = 3, className }: { lines?: number; classNa
     );
 }
 
+/** Placeholder de card genérico (mesmo raio/superfície do Card). Listagens preferem SkeletonTable. */
+export function SkeletonCard({ className }: SkeletonProps) {
+    return <Skeleton className={cn("h-40 w-full rounded-2xl", className)} />;
+}
+
 /** Skeleton de listagem no formato do DataTable: header + linhas com thumb, textos e pills. */
 export function SkeletonTable({ rows = 8, className }: { rows?: number; className?: string }) {
     return (

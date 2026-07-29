@@ -1,15 +1,19 @@
+import type { ReactNode } from "react";
 import { cn } from "../lib/utils";
 
 export type SwitchProps = {
     checked: boolean;
     onCheckedChange: (checked: boolean) => void;
     disabled?: boolean;
+    /** Título ao lado do toggle (o toggle fica à esquerda do texto, padrão da suíte). */
+    label?: ReactNode;
+    description?: ReactNode;
     className?: string;
     "aria-label"?: string;
 };
 
-export function Switch({ checked, onCheckedChange, disabled, className, ...props }: SwitchProps) {
-    return (
+export function Switch({ checked, onCheckedChange, disabled, label, description, className, ...props }: SwitchProps) {
+    const control = (
         <button
             type="button"
             role="switch"
@@ -21,7 +25,7 @@ export function Switch({ checked, onCheckedChange, disabled, className, ...props
                 "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand/30",
                 "disabled:cursor-not-allowed disabled:opacity-50",
                 checked ? "bg-brand" : "bg-surface-3",
-                className
+                !label && !description && className
             )}
             {...props}
         >
@@ -32,5 +36,17 @@ export function Switch({ checked, onCheckedChange, disabled, className, ...props
                 )}
             />
         </button>
+    );
+
+    if (!label && !description) return control;
+
+    return (
+        <div className={cn("flex items-start gap-3", className)}>
+            <span className="mt-0.5 flex shrink-0">{control}</span>
+            <span className="flex min-w-0 flex-col gap-0.5">
+                {label && <span className="text-sm font-semibold text-foreground">{label}</span>}
+                {description && <span className="text-xs leading-snug text-muted-foreground">{description}</span>}
+            </span>
+        </div>
     );
 }

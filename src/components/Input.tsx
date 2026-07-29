@@ -16,6 +16,8 @@ export const fieldClass = cn(
 export type InputProps = ComponentProps<"input"> & {
     label?: string;
     error?: string;
+    /** Texto de apoio abaixo do campo; quando há `error`, o erro o substitui. */
+    hint?: ReactNode;
     /** Ação inline ao lado do label (ex.: "Gerar automático"). */
     labelAction?: { label: string; onClick: () => void };
     /** Rótulo curto dentro do campo, à direita (ex.: "R$", "un"). */
@@ -25,7 +27,7 @@ export type InputProps = ComponentProps<"input"> & {
     loading?: boolean;
 };
 
-export function Input({ className, label, error, labelAction, suffix, onClear, loading, id, ...props }: InputProps) {
+export function Input({ className, label, error, hint, labelAction, suffix, onClear, loading, id, ...props }: InputProps) {
     const hasAdornment = suffix || onClear || loading;
 
     const input = (
@@ -65,7 +67,7 @@ export function Input({ className, label, error, labelAction, suffix, onClear, l
         input
     );
 
-    if (!label && !error) return field;
+    if (!label && !error && !hint) return field;
 
     return (
         <div className="flex w-full min-w-0 flex-col gap-1.5">
@@ -86,7 +88,11 @@ export function Input({ className, label, error, labelAction, suffix, onClear, l
                 </div>
             )}
             {field}
-            {error && <span className="text-[12px] font-medium text-destructive">{error}</span>}
+            {error ? (
+                <span className="text-[12px] font-medium text-destructive">{error}</span>
+            ) : hint ? (
+                <span className="text-[12px] text-muted-foreground">{hint}</span>
+            ) : null}
         </div>
     );
 }

@@ -1,10 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType, type ReactNode } from "react";
 import { cn } from "../lib/utils";
-import { IconChevronRight, IconPin, type IconProps } from "../icons";
+import { Tooltip } from "../components/Tooltip";
+import { IconChevronRight, IconLock, IconPin, type IconProps } from "../icons";
 
 export type SidebarNavSubItem = {
     label: string;
     endPoint: string;
+    /** Item visível mas indisponível: cadeado + tooltip, sem navegação. */
+    locked?: boolean;
+    /** Texto do tooltip do item travado (default: "Chega em breve"). */
+    lockedHint?: string;
 };
 
 export type SidebarNavGroup = {
@@ -129,15 +134,17 @@ export function SidebarNav({
                         <div key={item.label}>
                             <button
                                 onClick={() => {
+                                    // Navegação direta pula itens travados
+                                    const firstNavigable = item.subItems.find((sub) => !sub.locked);
                                     // Grupo de item único navega direto: accordion de 1 filho é fricção
-                                    if (singleChild && item.subItems[0]) {
-                                        onNavigate(item.subItems[0].endPoint);
+                                    if (singleChild && firstNavigable) {
+                                        onNavigate(firstNavigable.endPoint);
                                         return;
                                     }
                                     if (open) {
                                         setOpenGroup((prev) => (prev === item.label ? "" : item.label));
-                                    } else if (item.subItems[0]) {
-                                        onNavigate(item.subItems[0].endPoint);
+                                    } else if (firstNavigable) {
+                                        onNavigate(firstNavigable.endPoint);
                                     }
                                 }}
                                 title={!open ? item.label : undefined}
@@ -179,6 +186,20 @@ export function SidebarNav({
                                         <div className="relative ml-[30px] mt-0.5 mb-1 flex flex-col gap-px border-l border-border pl-2">
                                             {item.subItems.map((sub) => {
                                                 const subActive = isSubActive(sub.endPoint);
+                                                if (sub.locked) {
+                                                    return (
+                                                        <Tooltip key={sub.endPoint} content={sub.lockedHint ?? "Chega em breve"} side="right" wrap>
+                                                            <span
+                                                                tabIndex={-1}
+                                                                aria-disabled
+                                                                className="relative flex h-8 w-full cursor-default items-center gap-1.5 truncate whitespace-nowrap rounded-lg px-3 text-[13px] font-medium text-foreground/35"
+                                                            >
+                                                                <span className="min-w-0 truncate">{sub.label}</span>
+                                                                <IconLock size={11} className="shrink-0 text-foreground/30" />
+                                                            </span>
+                                                        </Tooltip>
+                                                    );
+                                                }
                                                 return (
                                                     <button
                                                         key={sub.endPoint}

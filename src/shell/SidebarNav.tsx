@@ -142,8 +142,30 @@ export function SidebarNav({
                 {items.map((item) => {
                     const Icon = item.icon;
                     const groupActive = item.label === activeGroupLabel;
-                    const groupOpen = (!accordion || openGroup === item.label) && open;
+                    const groupLocked = item.subItems.length > 0 && item.subItems.every((sub) => sub.locked);
+                    const groupOpen = (!accordion || openGroup === item.label) && open && !groupLocked;
                     const singleChild = item.subItems.length === 1;
+
+                    if (groupLocked) {
+                        // Grupo inteiro indisponível: botão grande travado, sem navegação
+                        return (
+                            <span
+                                key={item.label}
+                                aria-disabled
+                                className="relative flex h-10 w-full cursor-default items-center rounded-xl px-4 text-foreground/35"
+                            >
+                                <Tooltip content={item.subItems[0]?.lockedHint ?? "Chega em breve"} side="right" wrap>
+                                    <span className="inline-flex min-w-0 items-center">
+                                        <span className="flex size-5 shrink-0 items-center justify-center">
+                                            <Icon size={20} />
+                                        </span>
+                                        <Label open={open}>{item.label}</Label>
+                                        {open && <IconLock size={12} className="ml-2 shrink-0 text-foreground/30" />}
+                                    </span>
+                                </Tooltip>
+                            </span>
+                        );
+                    }
 
                     return (
                         <div key={item.label}>

@@ -36,6 +36,7 @@ import {
     CaretDown,
     ClockCounterClockwise,
     Clock,
+    Code,
     Command,
     CurrencyDollar,
     CursorClick,
@@ -227,6 +228,7 @@ export const IconChevronRight = /*#__PURE__*/ createIcon(CaretRight, "bold");
 export const IconApps = /*#__PURE__*/ createIcon(SquaresFour);
 export const IconMarketing = /*#__PURE__*/ createIcon(Megaphone);
 export const IconChat = /*#__PURE__*/ createIcon(ChatCircleDots);
+export const IconCode = /*#__PURE__*/ createIcon(Code, "bold");
 export const IconPin = /*#__PURE__*/ createIcon(PushPin);
 export const IconMenu = /*#__PURE__*/ createIcon(List, "bold");
 export const IconMoon = /*#__PURE__*/ createIcon(Moon);

@@ -113,6 +113,11 @@ export function DateRangePicker({
         setPending(undefined);
     };
 
+    // O período ATUAL aparece como destaque fantasma (modifier, não seleção):
+    // dá a referência visual sem o efeito colateral de o primeiro clique
+    // "esticar" o range antigo. Some assim que a marcação nova começa.
+    const showCurrent = !pending?.from && !!value?.from && !!value?.to;
+
     useEffect(() => {
         if (!open) return;
         updateCoords();
@@ -203,6 +208,14 @@ export function DateRangePicker({
                             mode="range"
                             numberOfMonths={numberOfMonths}
                             defaultMonth={value?.from}
+                            modifiers={showCurrent ? {
+                                current_range: { from: value!.from!, to: value!.to! },
+                                current_edge: [value!.from!, value!.to!],
+                            } : undefined}
+                            modifiersClassNames={{
+                                current_range: "bg-brand/10",
+                                current_edge: "rounded-lg bg-brand/25",
+                            }}
                             // Sempre abre limpo (pending): se o valor atual entrasse como
                             // selected, o primeiro clique MESCLARIA com o range antigo em
                             // vez de iniciar um novo.
@@ -237,7 +250,9 @@ export function DateRangePicker({
                             <span>
                                 {pending?.from && !pending.to
                                     ? `Início: ${fmt(pending.from)}. Agora clique no fim.`
-                                    : "Clique no início e depois no fim do período"}
+                                    : showCurrent
+                                        ? "Período atual destacado. Clique no início do novo período."
+                                        : "Clique no início e depois no fim do período"}
                             </span>
                         </div>
                     </div>,

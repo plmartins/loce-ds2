@@ -1,0 +1,54 @@
+/*
+ * loce-ds2/compat.css — camada de transição ds1 -> ds2.
+ *
+ * Upgrade visual dos componentes LEGADOS do loce-ds v0.4 (e uiLoce) enquanto
+ * os módulos migram: mira os combos de classe exatos do ds1. Fora de layer
+ * de propósito, pra vencer as utilities antigas.
+ *
+ * Importar no app junto do styles.css:
+ *   @import "loce-ds2/styles.css";
+ *   @import "loce-ds2/compat.css";
+ *
+ * MORRE NO M9 (quando uiLoce e loce-ds saírem do app).
+ */
+
+/* ── Campos (Input/Select/Textarea do ds1: bg-neutral-100 + ring-1) ── */
+input.bg-neutral-100.ring-1,
+textarea.bg-neutral-100.ring-1,
+button.bg-neutral-100.ring-1 {
+    background-color: var(--card);
+    --tw-ring-color: var(--border);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05), var(--tw-ring-shadow, 0 0 #0000);
+    transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+input.bg-neutral-100.ring-1:focus,
+textarea.bg-neutral-100.ring-1:focus,
+button.bg-neutral-100.ring-1:focus-visible {
+    --tw-ring-color: color-mix(in srgb, var(--accent-brand) 45%, transparent);
+}
+
+/* ── Botão primário (ds1: bg-loce): espelho da receita .ds-btn-3d ──
+   O box-shadow direto também engole o ring-loceSec antigo, de propósito. */
+button.bg-loce {
+    background-image: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--accent-brand) 84%, white 10%),
+        color-mix(in srgb, var(--accent-brand) 94%, black 6%)
+    );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        inset 0 -1.5px 0 rgba(0, 0, 0, 0.2),
+        0 1px 2px rgba(0, 0, 0, 0.22);
+}
+
+button.bg-loce:hover {
+    filter: brightness(1.06);
+}
+
+button.bg-loce:active {
+    filter: brightness(0.97);
+    box-shadow:
+        inset 0 1.5px 3px rgba(0, 0, 0, 0.24),
+        0 1px 1px rgba(0, 0, 0, 0.12);
+}

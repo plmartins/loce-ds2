@@ -169,6 +169,7 @@ export function ShellDemo() {
                             { id: "ecommerce", available: true, href: "#" },
                             { id: "marketing" },
                             { id: "talkbia" },
+                            { id: "tickets", available: true, href: "#" },
                         ]}
                         footer={<ThemeToggle />}
                     />

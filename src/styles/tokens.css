@@ -40,6 +40,9 @@
     --platform-marketing-sec: #f25a99;
     --platform-talkbia: #7c3aed;
     --platform-talkbia-sec: #a78bfa;
+    /* Central de chamados (tickets.loce.io): âmbar, único acento quente da suíte */
+    --platform-tickets: #f59e0b;
+    --platform-tickets-sec: #fbbf24;
     /* Interna (painel dev, dev.loce.io): vermelho da logo dev */
     --platform-dev: #dc2626;
     --platform-dev-sec: #ef4444;
@@ -108,6 +111,10 @@
     --accent-brand: var(--platform-talkbia);
     --accent-brand-sec: var(--platform-talkbia-sec);
 }
+[data-platform="tickets"] {
+    --accent-brand: var(--platform-tickets);
+    --accent-brand-sec: var(--platform-tickets-sec);
+}
 [data-platform="dev"] {
     --accent-brand: var(--platform-dev);
     --accent-brand-sec: var(--platform-dev-sec);
@@ -167,6 +174,7 @@
     --color-platform-ecommerce: var(--platform-ecommerce);
     --color-platform-marketing: var(--platform-marketing);
     --color-platform-talkbia: var(--platform-talkbia);
+    --color-platform-tickets: var(--platform-tickets);
     --color-platform-dev: var(--platform-dev);
 
     --color-background: var(--background);

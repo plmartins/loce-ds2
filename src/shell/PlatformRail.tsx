@@ -1,9 +1,9 @@
 import type { ComponentType, ReactNode } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { cn } from "../lib/utils";
-import { IconApps, IconCart, IconChat, IconCode, IconLock, IconMarketing, type IconProps } from "../icons";
+import { IconApps, IconCart, IconChat, IconCode, IconLock, IconMarketing, IconTicket, type IconProps } from "../icons";
 
-export type PlatformId = "erp" | "ecommerce" | "marketing" | "talkbia" | "dev";
+export type PlatformId = "erp" | "ecommerce" | "marketing" | "talkbia" | "dev" | "tickets";
 
 export type PlatformRailItem = {
     id: PlatformId;
@@ -50,6 +50,13 @@ const PLATFORM_META: Record<
         icon: IconChat,
         tileClass: "bg-gradient-to-br from-[#a78bfa] to-[#6d28d9]",
         glowClass: "shadow-[0_2px_14px_rgba(124,58,237,0.5)]",
+    },
+    tickets: {
+        label: "Loce Chamados",
+        description: "Fale direto com o time Loce: abra chamados, envie prints e vídeos e acompanhe cada etapa até a correção no ar.",
+        icon: IconTicket,
+        tileClass: "bg-gradient-to-br from-[#fbbf24] to-[#d97706]",
+        glowClass: "shadow-[0_2px_14px_rgba(245,158,11,0.5)]",
     },
     // Interna: só entra no rail quando o app confirma que o usuário é dev.
     dev: {

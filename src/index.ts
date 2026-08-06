@@ -62,6 +62,7 @@ export { TimeInput, type TimeInputProps } from "./components/TimeInput";
 export { ImageWithZoom, type ImageWithZoomProps } from "./components/ImageWithZoom";
 export { ImageUpload, type ImageUploadProps } from "./components/ImageUpload";
 export { DatePicker, type DatePickerProps } from "./components/DatePicker";
+export { DateRangePicker, type DateRangePickerProps, type DateRange } from "./components/DateRangePicker";
 export { Calendar } from "./primitives/calendar";
 export { Toaster } from "./components/Toaster";
 export { toast } from "react-hot-toast";

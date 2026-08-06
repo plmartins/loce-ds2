@@ -90,10 +90,17 @@ function CalendarDayButton({ className, day, modifiers, ...props }: ComponentPro
             type="button"
             data-day={day.date.toLocaleDateString()}
             data-selected-single={modifiers.selected && !modifiers.range_start && !modifiers.range_end && !modifiers.range_middle}
+            data-range-start={modifiers.range_start}
+            data-range-end={modifiers.range_end}
+            data-range-middle={modifiers.range_middle}
             className={cn(
                 "flex aspect-square size-auto w-full min-w-(--cell-size) cursor-pointer select-none flex-col items-center justify-center gap-1 rounded-lg text-[13px] font-medium leading-none text-foreground transition-colors",
                 "hover:bg-foreground/[0.06]",
                 "data-[selected-single=true]:bg-brand data-[selected-single=true]:font-semibold data-[selected-single=true]:text-white",
+                // Range (DateRangePicker): pontas cheias, miolo translúcido
+                "data-[range-start=true]:bg-brand data-[range-start=true]:font-semibold data-[range-start=true]:text-white",
+                "data-[range-end=true]:bg-brand data-[range-end=true]:font-semibold data-[range-end=true]:text-white",
+                "data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-brand/12 data-[range-middle=true]:text-foreground",
                 className
             )}
             {...props}

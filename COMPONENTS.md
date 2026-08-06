@@ -35,7 +35,7 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 | MultiSelect | ✅ | chips com avatar, popover próprio |
 | ComboBox | ✅ | busca digitável, opções com descrição/ícone, server-side (isLoading), teclado, flip-up, clear |
 | DatePicker / TimeInput | ✅ | calendar react-day-picker tematizado, pt-BR |
-| DateRangePicker | ✅ | período num popover só (estilo reserva): clique início e fim, onChange só com range completo |
+| DateRangePicker | ✅ | período num popover só (estilo reserva): presets + calendário, primeiro clique marca o início, onChange só com range completo |
 | SelectCard | ✅ | horizontal/vertical, seleção com ring brand |
 | ImageUpload | ⬜ | |
 | FileDropzone (uiLoce) | ⬜ | |

@@ -15,6 +15,12 @@ function getPortalContainer(trigger: HTMLElement | null): HTMLElement {
 
 export type { DateRange };
 
+/** Atalho de período exibido dentro do popover, acima do calendário. */
+export type DateRangePreset = {
+    key: string;
+    label: string;
+};
+
 export type DateRangePickerProps = {
     label?: string;
     /** Intervalo completo (from e to). Parciais nunca vazam pelo onChange. */
@@ -29,6 +35,20 @@ export type DateRangePickerProps = {
     maxDate?: Date;
     /** Meses lado a lado no popover (2 = estilo reserva de hotel, padrão). */
     numberOfMonths?: 1 | 2;
+    /** Abre o calendário já na montagem (ex.: logo após escolher "Personalizado"). */
+    defaultOpen?: boolean;
+    /**
+     * Atalhos de período no popover (Hoje, Últimos 7 dias...). Quem resolve o
+     * range do atalho é o consumidor, no onPresetSelect; o popover só fecha.
+     * Com presets, o controle vira o filtro de período completo da tela: um
+     * botão só, sem reflow na barra de filtros.
+     */
+    presets?: DateRangePreset[];
+    /** Atalho ativo (pinta o chip). Ignorado sem `presets`. */
+    activePresetKey?: string;
+    /** Texto do gatilho quando um atalho está ativo (ex.: "Hoje"). */
+    displayLabel?: string;
+    onPresetSelect?: (preset: DateRangePreset) => void;
 };
 
 const fmt = (date: Date) =>
@@ -53,9 +73,14 @@ export function DateRangePicker({
     minDate,
     maxDate,
     numberOfMonths = 2,
+    defaultOpen = false,
+    presets,
+    activePresetKey,
+    displayLabel,
+    onPresetSelect,
 }: DateRangePickerProps) {
-    const [open, setOpen] = useState(false);
-    const [pending, setPending] = useState<DateRange | undefined>(value);
+    const [open, setOpen] = useState(defaultOpen);
+    const [pending, setPending] = useState<DateRange | undefined>(undefined);
     const [coords, setCoords] = useState({ top: 0, left: 0 });
     const triggerRef = useRef<HTMLButtonElement>(null);
     const calRef = useRef<HTMLDivElement>(null);
@@ -65,6 +90,7 @@ export function DateRangePicker({
             ? `${fmt(value.from)} até ${fmt(value.to)}`
             : fmt(value.from)
         : "";
+    const triggerText = displayLabel || formatted || placeholder;
 
     const updateCoords = () => {
         const el = triggerRef.current;
@@ -128,7 +154,7 @@ export function DateRangePicker({
                 )}
             >
                 <IconCalendar size={15} className="shrink-0 text-muted-foreground" />
-                <span className="flex-1 truncate">{formatted || placeholder}</span>
+                <span className={cn("flex-1 truncate", displayLabel && "text-foreground")}>{triggerText}</span>
                 {value?.from && clearable && (
                     <span
                         role="button"
@@ -151,12 +177,50 @@ export function DateRangePicker({
                         style={{ top: coords.top, left: coords.left }}
                         className="fixed z-[100] overflow-hidden rounded-2xl border border-border bg-popover p-1 shadow-xl shadow-black/5 animate-slide-up dark:shadow-black/30"
                     >
+                        {presets && presets.length > 0 && (
+                            <div className="flex flex-wrap items-center gap-1 border-b border-border px-2 pb-2 pt-1.5">
+                                {presets.map((preset) => (
+                                    <button
+                                        key={preset.key}
+                                        type="button"
+                                        onClick={() => {
+                                            onPresetSelect?.(preset);
+                                            close();
+                                        }}
+                                        className={cn(
+                                            "h-6 cursor-pointer select-none rounded-full px-2.5 text-[11px] font-semibold transition-colors",
+                                            preset.key === activePresetKey
+                                                ? "bg-brand text-white"
+                                                : "bg-surface-2 text-muted-foreground hover:bg-foreground/[0.08] hover:text-foreground"
+                                        )}
+                                    >
+                                        {preset.label}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                         <Calendar
                             mode="range"
                             numberOfMonths={numberOfMonths}
                             defaultMonth={value?.from}
-                            selected={pending ?? value}
+                            // Sempre abre limpo (pending): se o valor atual entrasse como
+                            // selected, o primeiro clique MESCLARIA com o range antigo em
+                            // vez de iniciar um novo.
+                            selected={pending}
                             onSelect={(range) => {
+                                // Primeiro clique: o react-day-picker devolve {from, to: from}
+                                // (range "completo" de 1 dia). Vira seleção parcial: é o
+                                // SEGUNDO clique que define o fim, inclusive no mesmo dia
+                                // pra período de um dia só.
+                                if (
+                                    !pending?.from &&
+                                    range?.from &&
+                                    range.to &&
+                                    range.from.getTime() === range.to.getTime()
+                                ) {
+                                    setPending({ from: range.from, to: undefined });
+                                    return;
+                                }
                                 setPending(range);
                                 if (range?.from && range.to) {
                                     onChange?.(range);

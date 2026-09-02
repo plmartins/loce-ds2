@@ -35,7 +35,7 @@ export function ModalConfirm({
                     <DialogTitle>{title}</DialogTitle>
                     {description && <DialogDescription>{description}</DialogDescription>}
                 </DialogHeader>
-                {children && <div className="py-1">{children}</div>}
+                {children && <div className="-mx-6 min-h-0 flex-1 overflow-y-auto px-6 py-1">{children}</div>}
                 <DialogFooter>
                     {!isLoading && (
                         <Button variant="secondary" className="px-6" onClick={onClose}>

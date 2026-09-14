@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { cn } from "../lib/utils";
 
 export type FaceAvatarProps = {
@@ -5,6 +6,8 @@ export type FaceAvatarProps = {
     seed: string;
     /** Glifo central (letra/número). Sem ele, usa o primeiro caractere alfanumérico da seed. */
     glyph?: string;
+    /** Foto da pessoa; com erro de carregamento (ou sem src) cai na carinha. */
+    src?: string | null;
     size?: number;
     className?: string;
     title?: string;
@@ -78,7 +81,29 @@ function Eyes({ variant, fg }: { variant: number; fg: string }) {
  * forte (visitantes do Talkbia, clientes anônimos, filas), onde as iniciais
  * do Avatar ficariam repetitivas.
  */
-export function FaceAvatar({ seed, glyph, size = 32, className, title }: FaceAvatarProps) {
+export function FaceAvatar({ seed, glyph, src, size = 32, className, title }: FaceAvatarProps) {
+    const [imgError, setImgError] = useState(false);
+    // Uma URL nova (troca de foto) merece nova tentativa.
+    useEffect(() => setImgError(false), [src]);
+
+    if (src && !imgError) {
+        return (
+            <img
+                src={src}
+                alt={title ?? ""}
+                title={title}
+                width={size}
+                height={size}
+                onError={() => setImgError(true)}
+                className={cn(
+                    "shrink-0 select-none rounded-full object-cover ring-1 ring-black/5 dark:ring-white/10",
+                    className
+                )}
+                style={{ width: size, height: size }}
+            />
+        );
+    }
+
     const hash = hashString(seed || "?");
     const face = FACES[hash % FACES.length];
     const eyes = (hash >> 4) % 5;

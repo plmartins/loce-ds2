@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cn } from "../lib/utils";
 
 export type FaceAvatarProps = {
@@ -83,31 +83,59 @@ function Eyes({ variant, fg }: { variant: number; fg: string }) {
  */
 export function FaceAvatar({ seed, glyph, src, size = 32, className, title }: FaceAvatarProps) {
     const [imgError, setImgError] = useState(false);
-    // Uma URL nova (troca de foto) merece nova tentativa.
-    useEffect(() => setImgError(false), [src]);
+    const [loaded, setLoaded] = useState(false);
+    const imgRef = useRef<HTMLImageElement>(null);
 
-    if (src && !imgError) {
-        return (
-            <img
-                src={src}
-                alt={title ?? ""}
-                title={title}
-                width={size}
-                height={size}
-                onError={() => setImgError(true)}
-                className={cn(
-                    "shrink-0 select-none rounded-full object-cover ring-1 ring-black/5 dark:ring-white/10",
-                    className
-                )}
-                style={{ width: size, height: size }}
-            />
-        );
-    }
+    // Uma URL nova (troca de foto) merece nova tentativa e novo loading.
+    useEffect(() => {
+        setImgError(false);
+        setLoaded(false);
+    }, [src]);
+
+    // Imagem já em cache pode completar antes do onLoad ser ligado.
+    useEffect(() => {
+        const img = imgRef.current;
+        if (img && img.complete && img.naturalWidth > 0) setLoaded(true);
+    }, [src]);
 
     const hash = hashString(seed || "?");
     const face = FACES[hash % FACES.length];
     const eyes = (hash >> 4) % 5;
     const centerGlyph = (glyph ?? seed.replace(/[^a-zA-Z0-9]/g, "").charAt(0) ?? "?").toUpperCase() || "?";
+
+    if (src && !imgError) {
+        return (
+            <span
+                title={title}
+                className={cn(
+                    "relative inline-flex shrink-0 select-none overflow-hidden rounded-full ring-1 ring-black/5 dark:ring-white/10",
+                    className
+                )}
+                style={{ width: size, height: size }}
+            >
+                {/* Placeholder na cor da carinha da pessoa enquanto a foto baixa. */}
+                {!loaded && (
+                    <span
+                        className="ds-avatar-loading"
+                        style={{ "--ds-avatar-tint": face.bg } as CSSProperties}
+                        aria-hidden
+                    />
+                )}
+                <img
+                    ref={imgRef}
+                    src={src}
+                    alt={title ?? ""}
+                    width={size}
+                    height={size}
+                    decoding="async"
+                    onLoad={() => setLoaded(true)}
+                    onError={() => setImgError(true)}
+                    data-loaded={loaded}
+                    className="ds-avatar-img absolute inset-0 size-full object-cover"
+                />
+            </span>
+        );
+    }
 
     return (
         <svg

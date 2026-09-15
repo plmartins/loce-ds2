@@ -88,6 +88,56 @@
     }
 }
 
+/* ─── Avatar: placeholder enquanto a foto baixa + entrada da foto ─── */
+
+@keyframes ds-avatar-breathe {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+}
+
+@keyframes ds-avatar-in {
+    from { opacity: 0; transform: scale(1.06); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Tint vem da cor da carinha da pessoa (--ds-avatar-tint); sem ela, neutro. */
+.ds-avatar-loading {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    background: color-mix(in oklab, var(--ds-avatar-tint, var(--foreground)) 22%, transparent);
+    animation: ds-avatar-breathe 1.8s ease-in-out infinite;
+}
+
+.ds-avatar-loading::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(100deg, transparent 30%, color-mix(in oklab, white 55%, transparent) 50%, transparent 70%);
+    animation: ds-shimmer 1.4s ease-in-out infinite;
+}
+
+.ds-avatar-img {
+    opacity: 0;
+}
+
+.ds-avatar-img[data-loaded="true"] {
+    animation: ds-avatar-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ds-avatar-loading,
+    .ds-avatar-loading::after {
+        animation: none;
+    }
+    .ds-avatar-img[data-loaded="true"] {
+        animation: none;
+        opacity: 1;
+    }
+}
+
 /* ─── AI ─── */
 
 @keyframes ai-gradient {

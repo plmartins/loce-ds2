@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { cn } from "../lib/utils";
+import { useAvatarImage } from "./use-avatar-image";
 
 export type FaceAvatarProps = {
     /** Semente do desenho: mesma seed, mesma carinha (id do visitante, e-mail, nome...). */
@@ -84,21 +85,7 @@ function Eyes({ variant, fg }: { variant: number; fg: string }) {
  * do Avatar ficariam repetitivas.
  */
 export function FaceAvatar({ seed, glyph, src, loading, size = 32, className, title }: FaceAvatarProps) {
-    const [imgError, setImgError] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-    const imgRef = useRef<HTMLImageElement>(null);
-
-    // Uma URL nova (troca de foto) merece nova tentativa e novo loading.
-    useEffect(() => {
-        setImgError(false);
-        setLoaded(false);
-    }, [src]);
-
-    // Imagem já em cache pode completar antes do onLoad ser ligado.
-    useEffect(() => {
-        const img = imgRef.current;
-        if (img && img.complete && img.naturalWidth > 0) setLoaded(true);
-    }, [src]);
+    const { imgRef, imgError, ready, onLoad, onError } = useAvatarImage(src);
 
     const hash = hashString(seed || "?");
     const face = FACES[hash % FACES.length];
@@ -127,7 +114,7 @@ export function FaceAvatar({ seed, glyph, src, loading, size = 32, className, ti
                 style={{ width: size, height: size }}
             >
                 {/* Placeholder na cor da carinha da pessoa enquanto a foto baixa. */}
-                {!loaded && (
+                {!ready && (
                     <span
                         className="ds-avatar-loading"
                         style={{ "--ds-avatar-tint": face.bg } as CSSProperties}
@@ -141,9 +128,9 @@ export function FaceAvatar({ seed, glyph, src, loading, size = 32, className, ti
                     width={size}
                     height={size}
                     decoding="async"
-                    onLoad={() => setLoaded(true)}
-                    onError={() => setImgError(true)}
-                    data-loaded={loaded}
+                    onLoad={onLoad}
+                    onError={onError}
+                    data-loaded={ready}
                     className="ds-avatar-img absolute inset-0 size-full object-cover"
                 />
             </span>

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { cn } from "../lib/utils";
+import { useAvatarImage } from "./use-avatar-image";
 
 export type AvatarProps = {
     name?: string;
@@ -37,22 +37,7 @@ function initialsOf(name?: string) {
 }
 
 export function Avatar({ name, src, size = 32, className }: AvatarProps) {
-    const [imgError, setImgError] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-    const imgRef = useRef<HTMLImageElement>(null);
-
-    // Uma URL nova (troca de foto) merece nova tentativa e novo loading.
-    useEffect(() => {
-        setImgError(false);
-        setLoaded(false);
-    }, [src]);
-
-    // Imagem já em cache pode completar antes do onLoad ser ligado.
-    useEffect(() => {
-        const img = imgRef.current;
-        if (img && img.complete && img.naturalWidth > 0) setLoaded(true);
-    }, [src]);
-
+    const { imgRef, imgError, ready, onLoad, onError } = useAvatarImage(src);
     const showImage = src && !imgError;
     const gradient = GRADIENTS[hashString(name ?? "?") % GRADIENTS.length];
 
@@ -70,15 +55,15 @@ export function Avatar({ name, src, size = 32, className }: AvatarProps) {
             {showImage ? (
                 <>
                     {/* Placeholder enquanto a foto baixa. */}
-                    {!loaded && <span className="ds-avatar-loading" aria-hidden />}
+                    {!ready && <span className="ds-avatar-loading" aria-hidden />}
                     <img
                         ref={imgRef}
                         src={src}
                         alt={name ?? ""}
                         decoding="async"
-                        onLoad={() => setLoaded(true)}
-                        onError={() => setImgError(true)}
-                        data-loaded={loaded}
+                        onLoad={onLoad}
+                        onError={onError}
+                        data-loaded={ready}
                         className="ds-avatar-img absolute inset-0 size-full object-cover"
                     />
                 </>

@@ -8,6 +8,8 @@ export type FaceAvatarProps = {
     glyph?: string;
     /** Foto da pessoa; com erro de carregamento (ou sem src) cai na carinha. */
     src?: string | null;
+    /** Pessoa ainda desconhecida (query carregando): placeholder animado em vez da carinha. */
+    loading?: boolean;
     size?: number;
     className?: string;
     title?: string;
@@ -81,7 +83,7 @@ function Eyes({ variant, fg }: { variant: number; fg: string }) {
  * forte (visitantes do Talkbia, clientes anônimos, filas), onde as iniciais
  * do Avatar ficariam repetitivas.
  */
-export function FaceAvatar({ seed, glyph, src, size = 32, className, title }: FaceAvatarProps) {
+export function FaceAvatar({ seed, glyph, src, loading, size = 32, className, title }: FaceAvatarProps) {
     const [imgError, setImgError] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const imgRef = useRef<HTMLImageElement>(null);
@@ -103,14 +105,25 @@ export function FaceAvatar({ seed, glyph, src, size = 32, className, title }: Fa
     const eyes = (hash >> 4) % 5;
     const centerGlyph = (glyph ?? seed.replace(/[^a-zA-Z0-9]/g, "").charAt(0) ?? "?").toUpperCase() || "?";
 
+    const wrapperClass = cn(
+        "relative inline-flex shrink-0 select-none overflow-hidden rounded-full ring-1 ring-black/5 dark:ring-white/10",
+        className
+    );
+
+    // Sem saber quem é a pessoa ainda, não faz sentido desenhar carinha nem foto.
+    if (loading) {
+        return (
+            <span className={wrapperClass} style={{ width: size, height: size }} aria-busy>
+                <span className="ds-avatar-loading" aria-hidden />
+            </span>
+        );
+    }
+
     if (src && !imgError) {
         return (
             <span
                 title={title}
-                className={cn(
-                    "relative inline-flex shrink-0 select-none overflow-hidden rounded-full ring-1 ring-black/5 dark:ring-white/10",
-                    className
-                )}
+                className={wrapperClass}
                 style={{ width: size, height: size }}
             >
                 {/* Placeholder na cor da carinha da pessoa enquanto a foto baixa. */}

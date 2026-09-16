@@ -1,5 +1,5 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import type { ComponentPropsWithoutRef } from "react";
+import { useRef, type ComponentPropsWithoutRef } from "react";
 import { cn } from "../lib/utils";
 
 export const DropdownMenu = DropdownMenuPrimitive.Root;
@@ -8,8 +8,13 @@ export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 export function DropdownMenuContent({
     className,
     sideOffset = 6,
+    onPointerDownCapture,
+    onKeyDownCapture,
+    onCloseAutoFocus,
     ...props
 }: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>) {
+    const pointerInteraction = useRef(false);
+
     return (
         <DropdownMenuPrimitive.Portal>
             <DropdownMenuPrimitive.Content
@@ -20,6 +25,21 @@ export function DropdownMenuContent({
                     className
                 )}
                 {...props}
+                onPointerDownCapture={(event) => {
+                    pointerInteraction.current = true;
+                    onPointerDownCapture?.(event);
+                }}
+                onKeyDownCapture={(event) => {
+                    pointerInteraction.current = false;
+                    onKeyDownCapture?.(event);
+                }}
+                onCloseAutoFocus={(event) => {
+                    onCloseAutoFocus?.(event);
+                    // Pointer selection must not transfer the menu item's focus-visible
+                    // state to the trigger. Keyboard selection still restores focus.
+                    if (pointerInteraction.current) event.preventDefault();
+                    pointerInteraction.current = false;
+                }}
             />
         </DropdownMenuPrimitive.Portal>
     );

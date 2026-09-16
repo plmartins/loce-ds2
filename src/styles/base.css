@@ -72,3 +72,28 @@
 .dark input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
+
+/* Applied list filters. Opt-in keeps ordinary form controls unchanged.
+   Uniform border, no added row, no size change; errors retain priority. */
+[data-filter-active="true"]:not([aria-invalid="true"]) {
+    border-color: color-mix(in srgb, var(--accent-brand) 35%, var(--border));
+    background-color: color-mix(in srgb, var(--accent-brand) 5%, var(--card));
+    color: var(--accent-brand);
+}
+[data-filter-active="true"]:not([aria-invalid="true"]):hover {
+    border-color: var(--accent-brand);
+    background-color: color-mix(in srgb, var(--accent-brand) 8%, var(--card));
+}
+[data-filter-active="true"]:not([aria-invalid="true"]) > svg,
+[data-filter-active="true"]:not([aria-invalid="true"]) > span {
+    color: inherit;
+}
+.ds-filter-label {
+    flex-shrink: 0;
+    border-radius: 4px;
+    padding: 2px 4px;
+    background: color-mix(in srgb, var(--accent-brand) 13%, transparent);
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.2;
+}

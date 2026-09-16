@@ -63,3 +63,34 @@ src/
   charts/     (P1: wrappers Recharts)
 showcase/     playground Vite local
 ```
+
+### Filtros de listagem
+
+`Input`, `SearchInput`, `Select`, `NativeSelect`, `ComboBox`, `DatePicker` e
+`DateRangePicker` aceitam `filterActive?: boolean`. O estado aplicado muda o
+próprio campo: borda uniforme, fundo suave e identificação acessível. Não cria
+faixa, chips externos nem altera a altura do campo. Os tokens respeitam a marca
+ativa e o modo escuro. Erros de validação têm prioridade sobre o destaque.
+
+```tsx
+import { SearchInput, Select, isFilterActive } from "loce-ds2";
+
+<SearchInput value={draft} onChange={onDraftChange}
+  filterActive={!!filters.search} showClear={!!filters.search} onClear={clearSearch} />
+<Select options={statusOptions} value={filters.status} onChange={setStatus}
+  filterActive={isFilterActive(filters.status)} />
+```
+
+A tela informa o estado **aplicado**, não o texto ainda não submetido. Ordenação,
+paginação, escopo de acesso e valores de formulários não ativam esse estado.
+`isFilterActive` considera `undefined`, `null`, `""` e `"all"` neutros; `false`
+e `0` podem ser restrições válidas. Quando o domínio usa outro valor neutro,
+passe a expressão correspondente (por exemplo `filterActive={overdueOnly}`).
+
+O `Select` oferece “Limpar filtro” quando existe opção vazia/`all`. Para um valor
+neutro próprio, use `onClearFilter`. No calendário, o preset `all` vira “Limpar
+filtro · Todo período”. Controles usados em cadastros continuam iguais quando
+`filterActive` não é informado. Adapters legados podem usar
+`data-filter-active="true"` no campo real para herdar a mesma aparência.
+
+Validação: `npm run build && node --test tests/filter-state.test.mjs`.

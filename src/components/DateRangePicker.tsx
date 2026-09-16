@@ -1,3 +1,4 @@
+import type { FilterStateProps } from "../lib/filter";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { DateRange } from "react-day-picker";
@@ -21,7 +22,7 @@ export type DateRangePreset = {
     label: string;
 };
 
-export type DateRangePickerProps = {
+export type DateRangePickerProps = FilterStateProps & {
     label?: string;
     /** Intervalo completo (from e to). Parciais nunca vazam pelo onChange. */
     value?: DateRange;
@@ -70,6 +71,7 @@ export function DateRangePicker({
     disabled,
     clearable = true,
     className,
+    filterActive,
     minDate,
     maxDate,
     numberOfMonths = 2,
@@ -148,6 +150,9 @@ export function DateRangePicker({
             <button
                 ref={triggerRef}
                 type="button"
+                data-filter-active={filterActive || undefined}
+                aria-invalid={!!error || undefined}
+                aria-label={filterActive ? `Período: ${triggerText} — filtro ativo` : undefined}
                 disabled={disabled}
                 onClick={() => (open ? close() : openPicker())}
                 className={cn(
@@ -160,6 +165,7 @@ export function DateRangePicker({
             >
                 <IconCalendar size={15} className="shrink-0 text-muted-foreground" />
                 <span className={cn("flex-1 truncate", displayLabel && "text-foreground")}>{triggerText}</span>
+                {filterActive && <span className="ds-filter-label" aria-hidden="true">Filtrado</span>}
                 {value?.from && clearable && (
                     <span
                         role="button"
@@ -199,7 +205,7 @@ export function DateRangePicker({
                                                 : "bg-surface-2 text-muted-foreground hover:bg-foreground/[0.08] hover:text-foreground"
                                         )}
                                     >
-                                        {preset.label}
+                                        {filterActive && preset.key === "all" ? "Limpar filtro · Todo período" : preset.label}
                                     </button>
                                 ))}
                             </div>

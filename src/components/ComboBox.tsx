@@ -1,3 +1,4 @@
+import type { FilterStateProps } from "../lib/filter";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "../lib/utils";
 import { fieldClass } from "./Input";
@@ -12,7 +13,7 @@ export type ComboBoxOption = {
     icon?: ReactNode;
 };
 
-export type ComboBoxProps = {
+export type ComboBoxProps = FilterStateProps & {
     options: ComboBoxOption[];
     value: ComboBoxOption | null;
     onChange: (option: ComboBoxOption | null) => void;
@@ -61,6 +62,7 @@ export function ComboBox({
     showEmpty = true,
     autoFocus,
     className,
+    filterActive,
 }: ComboBoxProps) {
     const [uncontrolledInput, setUncontrolledInput] = useState(value?.label ?? "");
     const [open, setOpen] = useState(false);
@@ -146,6 +148,10 @@ export function ComboBox({
         <div ref={wrapperRef} className="relative w-full min-w-0">
             <input
                 type="text"
+                data-filter-active={filterActive || undefined}
+                aria-invalid={!!error || undefined}
+                aria-label={filterActive ? `${label ?? placeholder} — filtro ativo` : undefined}
+                title={filterActive ? `Filtro ativo: ${value?.label ?? "Selecionado"}` : undefined}
                 disabled={disabled}
                 placeholder={placeholder}
                 value={inputValue}

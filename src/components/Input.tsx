@@ -1,3 +1,4 @@
+import type { FilterStateProps } from "../lib/filter";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "../lib/utils";
 import { IconClose, IconSpinner } from "../icons";
@@ -13,7 +14,7 @@ export const fieldClass = cn(
     "disabled:pointer-events-none disabled:opacity-50"
 );
 
-export type InputProps = ComponentProps<"input"> & {
+export type InputProps = ComponentProps<"input"> & FilterStateProps & {
     label?: string;
     error?: string;
     /** Texto de apoio abaixo do campo; quando há `error`, o erro o substitui. */
@@ -27,12 +28,15 @@ export type InputProps = ComponentProps<"input"> & {
     loading?: boolean;
 };
 
-export function Input({ className, label, error, hint, labelAction, suffix, onClear, loading, id, ...props }: InputProps) {
+export function Input({ className, label, error, hint, labelAction, suffix, onClear, loading, id, filterActive, ...props }: InputProps) {
     const hasAdornment = suffix || onClear || loading;
 
     const input = (
         <input
             id={id}
+            data-filter-active={filterActive || undefined}
+            aria-invalid={!!error || undefined}
+            title={filterActive ? "Filtro ativo" : props.title}
             className={cn(
                 fieldClass,
                 hasAdornment && "pr-12",

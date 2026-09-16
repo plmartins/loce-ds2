@@ -1,3 +1,4 @@
+import type { FilterStateProps } from "../lib/filter";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "../lib/utils";
@@ -12,7 +13,7 @@ function getPortalContainer(trigger: HTMLElement | null): HTMLElement {
     return document.body;
 }
 
-export type DatePickerProps = {
+export type DatePickerProps = FilterStateProps & {
     label?: string;
     value?: Date;
     onChange?: (date: Date | undefined) => void;
@@ -25,7 +26,7 @@ export type DatePickerProps = {
     maxDate?: Date;
 };
 
-export function DatePicker({ label, value, onChange, placeholder = "Selecione uma data", error, disabled, clearable = true, className, minDate, maxDate }: DatePickerProps) {
+export function DatePicker({ label, value, onChange, placeholder = "Selecione uma data", error, disabled, clearable = true, className, minDate, maxDate, filterActive }: DatePickerProps) {
     const [open, setOpen] = useState(false);
     const [coords, setCoords] = useState({ top: 0, left: 0 });
     const triggerRef = useRef<HTMLButtonElement>(null);
@@ -68,6 +69,9 @@ export function DatePicker({ label, value, onChange, placeholder = "Selecione um
             <button
                 ref={triggerRef}
                 type="button"
+                data-filter-active={filterActive || undefined}
+                aria-invalid={!!error || undefined}
+                aria-label={filterActive ? `Período: ${formatted || placeholder} — filtro ativo` : undefined}
                 disabled={disabled}
                 onClick={() => {
                     updateCoords();
@@ -83,6 +87,7 @@ export function DatePicker({ label, value, onChange, placeholder = "Selecione um
             >
                 <IconCalendar size={15} className="shrink-0 text-muted-foreground" />
                 <span className="flex-1 truncate">{formatted || placeholder}</span>
+                {filterActive && <span className="ds-filter-label" aria-hidden="true">Filtrado</span>}
                 {value && clearable && (
                     <span
                         role="button"

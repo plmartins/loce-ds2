@@ -1,12 +1,15 @@
+import type { FilterStateProps } from "../lib/filter";
 import type { SelectHTMLAttributes } from "react";
 import { cn } from "../lib/utils";
 import { fieldClass } from "./Input";
-import { IconCheck, IconChevronDown, IconSpinner } from "../icons";
+import { IconCheck, IconChevronDown, IconSpinner, IconFilters, IconClose } from "../icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../primitives/dropdown-menu";
 
 export type SelectOption = { value: string | number; label: string };
 
-export type SelectProps = {
+export type SelectProps = FilterStateProps & {
+    /** Optional clear action for filters whose neutral value is not empty/all. */
+    onClearFilter?: () => void;
     options: SelectOption[];
     value?: string | number;
     onChange?: (value: string) => void;
@@ -22,7 +25,9 @@ export type SelectProps = {
 };
 
 /** Select com dropdown estilizado do DS (não usa o popup nativo do SO). */
-export function Select({ options, value, onChange, placeholder = "Selecionar", label, labelAction, error, loading, disabled, className }: SelectProps) {
+export function Select({ options, value, onChange, placeholder = "Selecionar", label, labelAction, error, loading, disabled, className, filterActive, onClearFilter }: SelectProps) {
+    const neutralOption = options.find((opt) => opt.value === "" || opt.value === "all");
+    const clearFilter = onClearFilter ?? (neutralOption && onChange ? () => onChange(String(neutralOption.value)) : undefined);
     const selected = options.find((opt) => String(opt.value) === String(value ?? ""));
 
     const control = (
@@ -30,6 +35,10 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", l
             <DropdownMenuTrigger asChild disabled={disabled || loading}>
                 <button
                     type="button"
+                    data-filter-active={filterActive || undefined}
+                    aria-invalid={!!error || undefined}
+                    aria-label={filterActive ? `${label ?? "Filtro"}: ${selected?.label ?? placeholder} — aplicado` : undefined}
+                    title={filterActive ? `Filtro ativo: ${selected?.label ?? placeholder}` : undefined}
                     className={cn(
                         fieldClass,
                         "flex cursor-pointer items-center justify-between gap-2 text-left",
@@ -39,7 +48,8 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", l
                         className
                     )}
                 >
-                    <span className="truncate">{selected?.label ?? placeholder}</span>
+                    {filterActive && <IconFilters size={14} className="shrink-0" aria-hidden="true" />}
+                    <span className="min-w-0 flex-1 truncate">{selected?.label ?? placeholder}</span>
                     {loading ? (
                         <IconSpinner size={13} className="shrink-0 animate-spin text-muted-foreground" />
                     ) : (
@@ -51,6 +61,9 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", l
                 align="start"
                 style={{ minWidth: "var(--radix-dropdown-menu-trigger-width)" }}
             >
+                {filterActive && clearFilter && <DropdownMenuItem onSelect={clearFilter} className="mb-1 gap-2 border-b border-border pb-2 font-semibold text-brand">
+                    <IconClose size={13} /> Limpar filtro
+                </DropdownMenuItem>}
                 {options.map((opt) => {
                     const isSelected = String(opt.value) === String(value ?? "");
                     return (
@@ -92,16 +105,16 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", l
     );
 }
 
-export type NativeSelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
+export type NativeSelectProps = SelectHTMLAttributes<HTMLSelectElement> & FilterStateProps & {
     options: SelectOption[];
     placeholder?: string;
 };
 
 /** Select nativo estilizado (popup do SO): útil em mobile e formulários longos. */
-export function NativeSelect({ className, options, placeholder, ...props }: NativeSelectProps) {
+export function NativeSelect({ className, options, placeholder, filterActive, ...props }: NativeSelectProps) {
     return (
         <div className={cn("relative flex items-center", className)}>
-            <select className={cn(fieldClass, "cursor-pointer appearance-none pr-8")} {...props}>
+            <select data-filter-active={filterActive || undefined} title={filterActive ? "Filtro ativo" : props.title} className={cn(fieldClass, "cursor-pointer appearance-none pr-8")} {...props}>
                 {placeholder && (
                     <option value="" disabled>
                         {placeholder}

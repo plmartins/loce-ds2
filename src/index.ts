@@ -67,3 +67,5 @@ export { Calendar } from "./primitives/calendar";
 export { Toaster } from "./components/Toaster";
 export { toast } from "react-hot-toast";
 export type { Toast, ToasterProps, ToastOptions, ToastPosition } from "react-hot-toast";
+
+export { isFilterActive, type FilterStateProps } from "./lib/filter";

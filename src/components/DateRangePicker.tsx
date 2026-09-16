@@ -156,10 +156,10 @@ export function DateRangePicker({
                 disabled={disabled}
                 onClick={() => (open ? close() : openPicker())}
                 className={cn(
-                    fieldClass,
+                    fieldClass, "select-none",
                     "flex cursor-pointer items-center gap-2 text-left",
                     open && "border-brand ring-2 ring-brand/25",
-                    error && "border-destructive focus:border-destructive focus:ring-destructive/20",
+                    error && "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20",
                     !value?.from && "text-muted-foreground/80"
                 )}
             >

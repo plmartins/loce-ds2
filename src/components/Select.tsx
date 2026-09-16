@@ -40,11 +40,11 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", l
                     aria-label={filterActive ? `${label ?? "Filtro"}: ${selected?.label ?? placeholder} — aplicado` : undefined}
                     title={filterActive ? `Filtro ativo: ${selected?.label ?? placeholder}` : undefined}
                     className={cn(
-                        fieldClass,
+                        fieldClass, "select-none",
                         "flex cursor-pointer items-center justify-between gap-2 text-left",
                         "data-[state=open]:border-brand data-[state=open]:ring-2 data-[state=open]:ring-brand/25",
                         !selected && "text-muted-foreground/80",
-                        error && "border-destructive focus:border-destructive focus:ring-destructive/20",
+                        error && "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20",
                         className
                     )}
                 >
@@ -114,7 +114,7 @@ export type NativeSelectProps = SelectHTMLAttributes<HTMLSelectElement> & Filter
 export function NativeSelect({ className, options, placeholder, filterActive, ...props }: NativeSelectProps) {
     return (
         <div className={cn("relative flex items-center", className)}>
-            <select data-filter-active={filterActive || undefined} title={filterActive ? "Filtro ativo" : props.title} className={cn(fieldClass, "cursor-pointer appearance-none pr-8")} {...props}>
+            <select data-filter-active={filterActive || undefined} title={filterActive ? "Filtro ativo" : props.title} className={cn(fieldClass, "select-none", "cursor-pointer appearance-none pr-8")} {...props}>
                 {placeholder && (
                     <option value="" disabled>
                         {placeholder}

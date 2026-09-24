@@ -1,7 +1,8 @@
 import type { FilterStateProps } from "../lib/filter";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "../lib/utils";
+import { anchoredLeft } from "../lib/popover";
 import { fieldClass } from "./Input";
 import { IconCalendar, IconClose } from "../icons";
 import { Calendar } from "../primitives/calendar";
@@ -37,12 +38,17 @@ export function DatePicker({ label, value, onChange, placeholder = "Selecione um
         const el = triggerRef.current;
         if (!el) return;
         const rect = el.getBoundingClientRect();
-        setCoords({ top: rect.bottom + 4, left: rect.left });
+        setCoords({ top: rect.bottom + 4, left: anchoredLeft(rect, calRef.current?.offsetWidth ?? 0, document.documentElement.clientWidth) });
     };
+
+    // Reposiciona já com o popover montado (largura medida) e antes da pintura:
+    // perto da borda direita ele abre alinhado à direita, sem cortar.
+    useLayoutEffect(() => {
+        if (open) updateCoords();
+    }, [open]);
 
     useEffect(() => {
         if (!open) return;
-        updateCoords();
         const handleClick = (e: MouseEvent) => {
             const t = e.target as HTMLElement;
             if (!triggerRef.current?.contains(t) && !calRef.current?.contains(t)) setOpen(false);

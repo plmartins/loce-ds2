@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { DateRange } from "react-day-picker";
 import { cn } from "../lib/utils";
-import { anchoredLeft } from "../lib/popover";
+import { anchoredPosition, naturalWidth, type AnchoredPosition } from "../lib/popover";
 import { fieldClass } from "./Input";
 import { IconCalendar, IconClose } from "../icons";
 import { Calendar } from "../primitives/calendar";
@@ -84,7 +84,7 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
     const [open, setOpen] = useState(defaultOpen);
     const [pending, setPending] = useState<DateRange | undefined>(undefined);
-    const [coords, setCoords] = useState({ top: 0, left: 0 });
+    const [coords, setCoords] = useState<AnchoredPosition>({ top: 0, left: 0 });
     const triggerRef = useRef<HTMLButtonElement>(null);
     const calRef = useRef<HTMLDivElement>(null);
 
@@ -98,8 +98,7 @@ export function DateRangePicker({
     const updateCoords = () => {
         const el = triggerRef.current;
         if (!el) return;
-        const rect = el.getBoundingClientRect();
-        setCoords({ top: rect.bottom + 4, left: anchoredLeft(rect, calRef.current?.offsetWidth ?? 0, document.documentElement.clientWidth) });
+        setCoords(anchoredPosition(el.getBoundingClientRect(), naturalWidth(calRef.current), document.documentElement.clientWidth));
     };
 
     const openPicker = () => {
@@ -191,7 +190,7 @@ export function DateRangePicker({
                     <div
                         ref={calRef}
                         data-ds-portal="daterangepicker"
-                        style={{ top: coords.top, left: coords.left }}
+                        style={coords}
                         className="fixed z-[100] overflow-hidden rounded-2xl border border-border bg-popover p-1 shadow-xl shadow-black/5 animate-slide-up dark:shadow-black/30"
                     >
                         {presets && presets.length > 0 && (

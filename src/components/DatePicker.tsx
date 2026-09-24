@@ -2,7 +2,7 @@ import type { FilterStateProps } from "../lib/filter";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "../lib/utils";
-import { anchoredLeft } from "../lib/popover";
+import { anchoredPosition, naturalWidth, type AnchoredPosition } from "../lib/popover";
 import { fieldClass } from "./Input";
 import { IconCalendar, IconClose } from "../icons";
 import { Calendar } from "../primitives/calendar";
@@ -29,7 +29,7 @@ export type DatePickerProps = FilterStateProps & {
 
 export function DatePicker({ label, value, onChange, placeholder = "Selecione uma data", error, disabled, clearable = true, className, minDate, maxDate, filterActive }: DatePickerProps) {
     const [open, setOpen] = useState(false);
-    const [coords, setCoords] = useState({ top: 0, left: 0 });
+    const [coords, setCoords] = useState<AnchoredPosition>({ top: 0, left: 0 });
     const triggerRef = useRef<HTMLButtonElement>(null);
     const calRef = useRef<HTMLDivElement>(null);
     const formatted = value ? value.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" }) : "";
@@ -37,8 +37,7 @@ export function DatePicker({ label, value, onChange, placeholder = "Selecione um
     const updateCoords = () => {
         const el = triggerRef.current;
         if (!el) return;
-        const rect = el.getBoundingClientRect();
-        setCoords({ top: rect.bottom + 4, left: anchoredLeft(rect, calRef.current?.offsetWidth ?? 0, document.documentElement.clientWidth) });
+        setCoords(anchoredPosition(el.getBoundingClientRect(), naturalWidth(calRef.current), document.documentElement.clientWidth));
     };
 
     // Reposiciona já com o popover montado (largura medida) e antes da pintura:
@@ -113,7 +112,7 @@ export function DatePicker({ label, value, onChange, placeholder = "Selecione um
                     <div
                         ref={calRef}
                         data-ds-portal="datepicker"
-                        style={{ top: coords.top, left: coords.left }}
+                        style={coords}
                         className="fixed z-[100] overflow-hidden rounded-2xl border border-border bg-popover p-1 shadow-xl shadow-black/5 animate-slide-up dark:shadow-black/30"
                     >
                         <Calendar

@@ -1,11 +1,12 @@
 import { cn } from "../lib/utils";
+import { AICard } from "./AICard";
 
 export type SelectCardOption<T extends string = string> = {
     value: T;
     label: string;
     description?: string;
     icon?: React.ReactNode;
-    /** "ai": a opção selecionada ganha o visual de IA (feixe em espectro na borda) em vez da cor da marca. */
+    /** "ai": selecionada, a opção vira um AICard (luz em espectro na borda) em vez da cor da marca. */
     tone?: "ai";
 };
 
@@ -43,7 +44,7 @@ export function SelectCard<T extends string = string>({ options, value, onChange
                         {option.icon}
                     </div>
                 );
-                return (
+                const button = (
                     <button
                         key={option.value}
                         type="button"
@@ -52,7 +53,7 @@ export function SelectCard<T extends string = string>({ options, value, onChange
                             "cursor-pointer rounded-2xl border p-4 transition-all duration-150 active:scale-[0.98]",
                             layout === "vertical" ? "flex flex-col items-center gap-2 text-center" : "flex items-center gap-3 text-left",
                             aiSelected
-                                ? "ds-ai-beam border-transparent bg-card shadow-xs"
+                                ? "w-full border-transparent bg-transparent"
                                 : isSelected
                                     ? "border-brand/50 bg-brand/5 ring-2 ring-brand/15"
                                     : "border-border bg-card shadow-xs hover:border-ring/50"
@@ -68,6 +69,13 @@ export function SelectCard<T extends string = string>({ options, value, onChange
                             )}
                         </div>
                     </button>
+                );
+                if (!aiSelected) return button;
+                // Selecionada por IA: o mesmo card de IA da suíte (luz na borda + contorno fino neutro).
+                return (
+                    <AICard key={option.value} as="section" animated borderRadius={16} className="ds-ai-card-outline min-w-0" surfaceClassName="p-0">
+                        {button}
+                    </AICard>
                 );
             })}
         </div>

@@ -65,6 +65,23 @@ Legenda: ✅ renasceu no ds2 · 🔨 em progresso · ⬜ pendente
 | ScrollFade | ✅ | fade nas bordas via mask |
 | ImageWithZoom | ✅ | lightbox com zoom/arraste |
 | Text | ✅ | type scale utilitária (mesma API do ds1) |
+| TableLoading | ✅ | esqueleto da tabela em toda carga/recarga de listagem; recebe `isLoading \|\| isPlaceholderData`, nunca `isFetching` |
+| TableHeading | ✅ | título de tabela em uma linha: título + ⓘ com hint no tooltip + controle à direita, alinhado ao padding da DataTable |
+| ErrorState | ✅ | erro de carregamento com tile de aviso e "Tentar de novo", mesma linguagem do EmptyState |
+| StatStrip | ✅ | faixa de KPIs num card só (porte compacto); `loading`, `delta`, célula clicável com seta |
+| WidgetCard | ✅ | casca de widget de dashboard: tile de ícone + título + `right`/`rightHint` |
+| RankList | ✅ | ranking compacto (metade da altura do BarList), variantes `bar`/`background`, `split` em duas parcelas, share "<1%" |
+
+### Padrões de listagem (painel, ERP e Talkbia)
+
+Regras que os apps da suíte seguem e que estes componentes materializam:
+
+- **Loading de lista é só o esqueleto da tabela** (`TableLoading`/`SkeletonTable`), na primeira carga e em cada busca, filtro ou página. Nunca spinner no campo de busca nem barra de progresso em cima da tabela. Com `keepPreviousData`, o sinal é `isPlaceholderData`, pra recarga em segundo plano não piscar.
+- **Limpar busca é o X do `SearchInput`** (aparece com texto + `onClear`). Sem chip "Limpar".
+- **Filtros aplicados usam `filterActive`** nos campos (ver "Filtros de listagem" no README).
+- **Todo texto de UI começa com maiúscula**, inclusive depois do "·" ("773 pedidos · Ticket R$ 128").
+- **Título de tabela é uma linha** (`TableHeading`): frase longa vai pro tooltip, não pra tela.
+- **Dashboards compactos**: `StatStrip` pra KPIs, `WidgetCard` como casca, `RankList` pra rankings. Sem tabela com scroll horizontal dentro de card.
 
 ## Overlays
 | Componente | Status | Notas |

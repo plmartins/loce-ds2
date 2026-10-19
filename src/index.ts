@@ -69,3 +69,12 @@ export { toast } from "react-hot-toast";
 export type { Toast, ToasterProps, ToastOptions, ToastPosition } from "react-hot-toast";
 
 export { isFilterActive, type FilterStateProps } from "./lib/filter";
+
+// Padrões de listagem e dashboard da suíte (painel, ERP, Talkbia).
+export { TableLoading, type TableLoadingProps } from "./components/TableLoading";
+export { TableHeading, type TableHeadingProps } from "./components/TableHeading";
+export { ErrorState, type ErrorStateProps } from "./components/ErrorState";
+export { StatStrip, type StatStripProps, type StatStripItem } from "./components/StatStrip";
+export { WidgetCard, type WidgetCardProps } from "./components/WidgetCard";
+export { RankList, formatShare, type RankListProps, type RankListItem, type RankListSplit } from "./components/RankList";
+export { ACCENT_TILE, ACCENT_GLOW, ACCENT_TEXT, type WidgetAccent } from "./lib/accents";

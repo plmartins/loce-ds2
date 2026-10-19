@@ -1,0 +1,123 @@
+/* One painted surface: Rotate/inner use the host; outside pulse uses the child. */
+.ds-ai-card {
+    /* Shared native Beam intensity for all AI components. Keep these on
+       each effect host so nested components do not depend on app CSS. */
+    --beam-inner-opacity: 2.4;
+    --beam-stroke-opacity: 2.5;
+    --beam-bloom-opacity: 1.4;
+    position: relative;
+    min-width: 0;
+    border-radius: 24px;
+    background: var(--card);
+    color: var(--card-foreground);
+}
+.ds-ai-card[data-beam-theme="dark"] {
+    --beam-inner-opacity: 1.7;
+    --beam-stroke-opacity: 1.8;
+}
+@media (prefers-color-scheme: dark) {
+    .ds-ai-card[data-beam-theme="auto"] {
+        --beam-inner-opacity: 1.7;
+        --beam-stroke-opacity: 1.8;
+    }
+}
+.ds-ai-card[data-tone="dark"] {
+    background: #1d1d1d;
+    color: white;
+}
+.ds-ai-card[data-animated="false"] {
+    border: 1px solid var(--border);
+}
+.ds-ai-card-surface {
+    min-width: 0;
+    padding: 24px;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    box-shadow: none;
+    color: inherit;
+}
+
+/* Native pulse-outside draws behind the content. An opaque child keeps the
+   halo outside the card instead of showing it through the entire surface. */
+.ds-ai-card[data-beam-type="pulse-outside"] {
+    background: transparent;
+}
+.ds-ai-card[data-beam-type="pulse-outside"] > .ds-ai-card-surface {
+    background: var(--card);
+    border: 1px solid var(--border);
+}
+.ds-ai-card[data-beam-type="pulse-outside"][data-tone="dark"] > .ds-ai-card-surface {
+    background: #1d1d1d;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Typography derives from the native beam spectrum; only contrast changes. */
+:root {
+    --ai-text-orange: color-mix(in srgb, var(--ai-spectrum-orange) 68%, black);
+    --ai-text-red: color-mix(in srgb, var(--ai-spectrum-red) 68%, black);
+    --ai-text-pink: color-mix(in srgb, var(--ai-spectrum-pink) 68%, black);
+    --ai-text-violet: color-mix(in srgb, var(--ai-spectrum-violet) 68%, black);
+    --ai-text-indigo: color-mix(in srgb, var(--ai-spectrum-indigo) 68%, black);
+    --ai-text-blue: color-mix(in srgb, var(--ai-spectrum-blue) 68%, black);
+    --ai-text-teal: color-mix(in srgb, var(--ai-spectrum-teal) 68%, black);
+    --ai-text-green: color-mix(in srgb, var(--ai-spectrum-green) 68%, black);
+}
+.dark {
+    --ai-text-orange: color-mix(in srgb, var(--ai-spectrum-orange) 65%, white);
+    --ai-text-red: color-mix(in srgb, var(--ai-spectrum-red) 65%, white);
+    --ai-text-pink: color-mix(in srgb, var(--ai-spectrum-pink) 65%, white);
+    --ai-text-violet: color-mix(in srgb, var(--ai-spectrum-violet) 65%, white);
+    --ai-text-indigo: color-mix(in srgb, var(--ai-spectrum-indigo) 65%, white);
+    --ai-text-blue: color-mix(in srgb, var(--ai-spectrum-blue) 65%, white);
+    --ai-text-teal: color-mix(in srgb, var(--ai-spectrum-teal) 65%, white);
+    --ai-text-green: color-mix(in srgb, var(--ai-spectrum-green) 65%, white);
+}
+
+ .ds-ai-activity{display:inline-flex;align-items:center;gap:10px;max-width:100%;color:var(--foreground);font-size:17px;font-weight:600}
+@property --activity-travel{syntax:"<length>";inherits:true;initial-value:0px}
+.ds-ai-activity{--activity-width:240px;--activity-travel:0px;--activity-sheen:rgb(255 255 255 / .28);animation:ds-ai-text-rainbow 3.4s cubic-bezier(.4,0,.2,1) infinite;animation-play-state:paused}
+.ds-ai-activity:not([data-loading=true]) .ds-ai-activity-icon{background-position:0 0}.ds-ai-activity:not([data-loading=true]) .ds-ai-activity-text{background-position:-30px 0}.ds-ai-activity[data-loading=true]{animation-play-state:running}
+.ds-ai-activity[data-loading=true] .ds-ai-activity-icon,.ds-ai-activity[data-loading=true] .ds-ai-activity-text{background-image:linear-gradient(105deg,transparent 0%,transparent 25%,rgb(255 255 255 / .06) 38%,var(--activity-sheen) 50%,rgb(255 255 255 / .06) 62%,transparent 75%,transparent 100%),linear-gradient(90deg,var(--ai-text-orange),var(--ai-text-red) 14%,var(--ai-text-pink) 28%,var(--ai-text-violet) 40%,var(--ai-text-indigo) 52%,var(--ai-text-blue) 64%,var(--ai-text-teal) 76%,var(--ai-text-green) 88%,var(--ai-text-orange))}
+.ds-ai-activity[data-loading=true] .ds-ai-activity-icon{animation:ds-ai-activity-icon-pulse 2.4s ease-in-out infinite;transform-origin:center}
+@keyframes ds-ai-activity-icon-pulse{0%,100%{transform:scale(.97);opacity:.85}50%{transform:scale(1.03);opacity:1}}
+.ds-ai-activity-icon,.ds-ai-activity-text{background:linear-gradient(90deg,var(--ai-text-orange),var(--ai-text-red) 14%,var(--ai-text-pink) 28%,var(--ai-text-violet) 40%,var(--ai-text-indigo) 52%,var(--ai-text-blue) 64%,var(--ai-text-teal) 76%,var(--ai-text-green) 88%,var(--ai-text-orange));background-size:var(--activity-width) 100%;background-repeat:no-repeat,repeat-x;background-position:var(--activity-travel) 0,0 0}
+.ds-ai-activity-icon{display:block;width:20px;height:20px;flex-shrink:0;mask-size:contain;mask-position:center;mask-repeat:no-repeat}
+.ds-ai-activity-icon>svg{opacity:0}
+.ds-ai-activity-text{background-position:calc(var(--activity-travel) - 30px) 0,-30px 0;background-clip:text;-webkit-background-clip:text;color:transparent}
+@keyframes ds-ai-text-rainbow{0%,5%{--activity-travel:calc(-1 * var(--activity-width))}95%,100%{--activity-travel:var(--activity-width)}}
+@media(forced-colors:active){.ds-ai-activity-text{background:none;color:CanvasText}.ds-ai-activity-icon{background:CanvasText}}
+
+
+
+.ds-ai-action{display:inline-flex;position:relative;isolation:isolate;flex-shrink:0;max-width:100%;border:1px solid var(--border);border-radius:12px;background:var(--card);box-shadow:0 1px 2px #00000006;vertical-align:middle}
+.ds-ai-button{position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 12px;border:0;border-radius:inherit;background:transparent;color:var(--foreground);font-family:inherit;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;transition:box-shadow 150ms,transform 150ms}
+.ds-ai-button:focus-visible{outline:2px solid var(--ring,var(--accent-brand));outline-offset:3px}.ds-ai-button:active:not(:disabled){transform:scale(.98)}.ds-ai-button:disabled{cursor:not-allowed;opacity:.5}.ds-ai-button[aria-busy=true]{opacity:1}
+.ds-ai-action[data-size=compact] .ds-ai-button{height:30px;font-size:11px;padding:0 9px}
+.ds-ai-cost{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}.ds-ai-cost svg{color:var(--accent-brand)}
+.ds-ai-action-price{padding-left:9px;border-left:1px solid color-mix(in srgb,currentColor 18%,transparent)}.ds-ai-action-label{display:grid;align-items:center;justify-items:center}.ds-ai-action-label>span{grid-area:1/1}.ds-ai-reserve{visibility:hidden;pointer-events:none}
+.ds-ai-action-effects,.ds-ai-surface-effects{position:absolute;inset:0;pointer-events:none;border-radius:inherit}.ds-ai-action-beam,.ds-ai-surface-beam{position:absolute!important;inset:0;transition:opacity 420ms ease!important}.ds-ai-effect-content{padding:0;height:100%}.ds-ai-idle{opacity:1}.ds-ai-busy{opacity:0}[data-loading=true]>.ds-ai-action-effects>.ds-ai-idle,[data-loading=true]>.ds-ai-surface-effects>.ds-ai-idle{opacity:0}[data-loading=true]>.ds-ai-action-effects>.ds-ai-busy,[data-loading=true]>.ds-ai-surface-effects>.ds-ai-busy{opacity:1}
+.ds-ai-working{animation:ds-ai-working 1.8s ease-in-out infinite;transform-origin:center}@keyframes ds-ai-working{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.08)}}
+.ds-ai-surface{position:relative;isolation:isolate;min-width:0;border:1px solid var(--border);border-radius:var(--ds-ai-radius,20px);background:var(--card);color:var(--foreground)}.ds-ai-surface-content{position:relative;z-index:1;padding:24px}.ds-ai-widget-header{display:flex;align-items:flex-start;gap:14px}.ds-ai-widget-header>svg{flex-shrink:0}.ds-ai-widget-header h3{font-size:15px;font-weight:650;line-height:1.3}.ds-ai-widget-header p{margin-top:4px;font-size:12px;color:var(--muted-foreground)}.ds-ai-widget-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:20px}
+.ds-ai-activity[data-size=compact]{font-size:12px;gap:8px}.ds-ai-activity[data-size=compact] .ds-ai-activity-icon{width:16px;height:16px}.ds-ai-activity[data-size=compact] .ds-ai-activity-text{background-position:calc(var(--activity-travel) - 24px) 0,-24px 0}.ds-ai-activity[data-size=compact]:not([data-loading=true]) .ds-ai-activity-text{background-position:-24px 0}
+.ds-ai-composer-input{position:relative}.ds-ai-prompt{display:block;box-sizing:border-box;width:100%;min-height:0;resize:none;margin:0;padding:16px 20px 8px;border:0;background:transparent;color:var(--foreground);font:inherit;font-size:14px;line-height:24px;outline:none;transition:height 180ms cubic-bezier(.22,1,.36,1);overflow-y:auto;overscroll-behavior-y:contain;scrollbar-width:thin;scrollbar-gutter:stable}.ds-ai-prompt:disabled{opacity:.6;cursor:not-allowed}.ds-ai-prompt-measure{position:absolute;inset:0;visibility:hidden;pointer-events:none;height:0!important;overflow:hidden;transition:none}.ds-ai-composer-region{overflow:hidden;transition:height 200ms cubic-bezier(.22,1,.36,1)}.ds-ai-composer-region>div{display:flow-root}.ds-ai-composer-content{padding:0}.ds-ai-composer-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px}.ds-ai-composer-controls{display:flex;flex-wrap:wrap;align-items:center;gap:7px;min-width:0}
+@media(prefers-reduced-motion:reduce){.ds-ai-working,.ds-ai-activity,.ds-ai-activity-icon{animation:none!important}.ds-ai-action-beam,.ds-ai-surface-beam,.ds-ai-prompt,.ds-ai-composer-region{transition:none!important}}
+.dark .ds-ai-activity{--activity-sheen:rgb(255 255 255 / .4)}
+.ds-ai-media-preview{position:relative;width:100%;height:100%;isolation:isolate;overflow:hidden}.ds-ai-media-result,.ds-ai-media-overlay,.ds-ai-media-effect,.ds-ai-revealed-content{position:absolute;inset:0}.ds-ai-media-overlay{overflow:hidden;background:var(--surface-2,var(--card));z-index:1}.ds-ai-effect-base{position:absolute;inset:0;display:grid;place-items:center;opacity:.3}.ds-ai-effect-fallback{position:absolute;bottom:16px;left:16px;right:16px;text-align:center;font-size:11px;color:var(--muted-foreground)}.ds-ai-revealed-image{width:100%;height:100%;object-fit:cover}.ds-ai-media-beam{position:absolute!important;inset:0;z-index:2;pointer-events:none;background:transparent!important;transition:opacity 500ms ease!important}
+.ds-ai-dialog{padding:0!important;border:0!important;gap:0!important;overflow:auto}.ds-ai-dialog-header{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:20px;padding-right:24px}.ds-ai-dialog-header>svg{margin-bottom:10px}
+@media(prefers-reduced-motion:reduce){.ds-ai-media-beam{transition:none!important}}
+
+/* Composer actions: the host gradient is shared by send and priced generation. */
+.ds-ai-action-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.ds-ai-action[data-variant=gradient]{background:var(--gradient-loce,linear-gradient(120deg,#f7c23a 0%,var(--accent-brand) 52%,var(--accent-brand-sec) 100%));background-origin:border-box;background-repeat:no-repeat;border-color:transparent;border-radius:999px;box-shadow:0 1px 3px rgb(0 0 0 / .14),inset 0 1px 0 rgb(255 255 255 / .2)}
+.ds-ai-action[data-variant=gradient] .ds-ai-button{color:#fff}
+.ds-ai-action[data-variant=gradient] .ds-ai-cost svg{color:inherit}
+.ds-ai-action[data-variant=gradient] .ds-ai-action-price{border-color:rgb(255 255 255 / .3)}
+.ds-ai-action[data-variant=gradient][data-disabled=true]{opacity:.4}
+.ds-ai-action[data-variant=gradient] .ds-ai-button:disabled{opacity:1}
+.ds-ai-action[data-size=icon] .ds-ai-button{width:36px;height:36px;padding:0;gap:0}
+.ds-ai-action[data-size=icon] .ds-ai-action-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.ds-ai-action[data-layout=icon-cost] .ds-ai-action-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.ds-ai-action[data-layout=icon-cost] .ds-ai-action-price{padding-left:0;border:0}
+.ds-ai-action[data-layout=icon-cost] .ds-ai-cost svg{display:none}

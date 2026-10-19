@@ -1,11 +1,11 @@
 import type { FilterStateProps } from "../lib/filter";
-import type { SelectHTMLAttributes } from "react";
+import type { ReactNode, SelectHTMLAttributes } from "react";
 import { cn } from "../lib/utils";
 import { fieldClass } from "./Input";
 import { IconCheck, IconChevronDown, IconSpinner, IconFilters, IconClose } from "../icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../primitives/dropdown-menu";
 
-export type SelectOption = { value: string | number; label: string };
+export type SelectOption = { value: string | number; label: string; icon?: ReactNode };
 
 export type SelectProps = FilterStateProps & {
     /** Optional clear action for filters whose neutral value is not empty/all. */
@@ -14,6 +14,8 @@ export type SelectProps = FilterStateProps & {
     value?: string | number;
     onChange?: (value: string) => void;
     placeholder?: string;
+    /** Leading icon when the selected option does not provide its own. */
+    icon?: ReactNode;
     label?: string;
     /** Ação inline ao lado do label (ex.: "Criar novo"). */
     labelAction?: { label: string; onClick: () => void };
@@ -25,10 +27,11 @@ export type SelectProps = FilterStateProps & {
 };
 
 /** Select com dropdown estilizado do DS (não usa o popup nativo do SO). */
-export function Select({ options, value, onChange, placeholder = "Selecionar", label, labelAction, error, loading, disabled, className, filterActive, onClearFilter }: SelectProps) {
+export function Select({ options, value, onChange, placeholder = "Selecionar", icon, label, labelAction, error, loading, disabled, className, filterActive, onClearFilter }: SelectProps) {
     const neutralOption = options.find((opt) => opt.value === "" || opt.value === "all");
     const clearFilter = onClearFilter ?? (neutralOption && onChange ? () => onChange(String(neutralOption.value)) : undefined);
     const selected = options.find((opt) => String(opt.value) === String(value ?? ""));
+    const leadingIcon = selected?.icon ?? icon ?? (filterActive ? <IconFilters size={14} /> : null);
 
     const control = (
         <DropdownMenu>
@@ -48,7 +51,7 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", l
                         className
                     )}
                 >
-                    {filterActive && <IconFilters size={14} className="shrink-0" aria-hidden="true" />}
+                    {leadingIcon && <span className="inline-flex shrink-0 items-center" aria-hidden="true">{leadingIcon}</span>}
                     <span className="min-w-0 flex-1 truncate">{selected?.label ?? placeholder}</span>
                     {loading ? (
                         <IconSpinner size={13} className="shrink-0 animate-spin text-muted-foreground" />
@@ -72,7 +75,10 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", l
                             onClick={() => onChange?.(String(opt.value))}
                             className={cn("justify-between", isSelected && "font-semibold text-brand")}
                         >
-                            <span className="truncate">{opt.label}</span>
+                            <span className="flex min-w-0 items-center gap-2">
+                                {opt.icon && <span className="inline-flex shrink-0 items-center" aria-hidden="true">{opt.icon}</span>}
+                                <span className="truncate">{opt.label}</span>
+                            </span>
                             {isSelected && <IconCheck size={13} className="shrink-0 text-brand" />}
                         </DropdownMenuItem>
                     );

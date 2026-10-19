@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { cn } from "loce-ds2";
+import { cn, AICard, Button } from "loce-ds2";
 import * as Icons from "loce-ds2/icons";
-import type { IconProps } from "loce-ds2/icons";
+import { AILab } from "./AILab";
 import { ShellDemo } from "./ShellDemo";
 
 const PLATFORMS = [
@@ -33,6 +33,8 @@ export default function App() {
         () => (window.location.hash === "#shell" ? "shell" : "fundamentos")
     );
 
+    if (window.location.hash === "#ia") return <AILab />;
+
     if (view === "shell") {
         return (
             <>
@@ -55,7 +57,7 @@ export default function App() {
     };
 
     const iconEntries = Object.entries(Icons).filter(
-        (entry): entry is [string, (props: IconProps) => React.ReactNode] => entry[0].startsWith("Icon")
+        (entry) => entry[0].startsWith("Icon")
     );
 
     return (
@@ -63,6 +65,7 @@ export default function App() {
             <div className="mx-auto max-w-4xl flex flex-col gap-10">
                 <header className="flex flex-wrap items-center gap-3">
                     <h1 className="text-xl font-bold mr-auto">loce-ds2</h1>
+                    <a href="#ia" onClick={() => setTimeout(() => location.reload(), 0)} className="rounded-lg bg-brand px-3 py-2 text-xs font-semibold text-white">Bancada de IA</a>
                     <div className="flex gap-1 rounded-lg border border-border p-1">
                         {PLATFORMS.map((p) => (
                             <button
@@ -90,6 +93,20 @@ export default function App() {
                         Ver shell →
                     </button>
                 </header>
+
+                <section className="flex flex-col gap-3">
+                    <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Cards de IA</h2>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                        <AICard aria-label="Assistente de IA">
+                            <h3 className="text-sm font-semibold">Criar com IA</h3>
+                            <p className="text-xs text-muted-foreground">Cores da plataforma ativa</p><Button variant="secondary" className="mt-4 w-full">Começar</Button>
+                        </AICard>
+                        <AICard tone="dark" animated={false} aria-label="Card de IA estático">
+                            <h3 className="text-sm font-semibold">Seu próximo conteúdo</h3>
+                            <p className="text-xs text-white/60">Superfície escura sem animação</p><Button className="mt-4 w-full">Continuar</Button>
+                        </AICard>
+                    </div>
+                </section>
 
                 <section className="flex flex-col gap-3">
                     <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Tokens</h2>

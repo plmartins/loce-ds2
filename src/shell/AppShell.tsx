@@ -14,9 +14,14 @@ export type AppShellProps = {
     className?: string;
     /** Quando muda (ex.: pathname da rota), o scroll do main volta pro topo. */
     scrollResetKey?: string;
+    /**
+     * Conteúdo "app" de altura fixa (inbox, kanban): o main não rola nem ganha
+     * o respiro inferior; a página controla o próprio scroll com h-full.
+     */
+    fullHeight?: boolean;
 };
 
-export function AppShell({ rail, sidebar, mobileSidebar, header, children, className, scrollResetKey }: AppShellProps) {
+export function AppShell({ rail, sidebar, mobileSidebar, header, children, className, scrollResetKey, fullHeight = false }: AppShellProps) {
     const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
     const mainRef = useRef<HTMLElement>(null);
 
@@ -45,11 +50,11 @@ export function AppShell({ rail, sidebar, mobileSidebar, header, children, class
 
                 <div className="flex flex-1 min-w-0 flex-col min-h-0">
                     {header}
-                    <main ref={mainRef} className="flex-1 min-w-0 min-h-0 flex flex-col overflow-auto">
+                    <main ref={mainRef} className={cn("flex-1 min-w-0 min-h-0 flex flex-col", fullHeight ? "overflow-hidden" : "overflow-auto")}>
                         {children}
                         {/* Elemento REAL de respiro no fim de toda página: padding-bottom
                             e ::after em scroll container falham no Safari */}
-                        <div aria-hidden className="h-14 shrink-0" />
+                        {!fullHeight && <div aria-hidden className="h-14 shrink-0" />}
                     </main>
                 </div>
             </div>

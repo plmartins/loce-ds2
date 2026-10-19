@@ -1,4 +1,6 @@
 export { cn } from "./lib/utils";
+export { AIIcon, type AIIconProps } from "./components/AIIcon";
+export { AICard, type AICardProps } from "./components/AICard";
 export * from "./shell";
 
 export { Button, buttonVariants, type ButtonProps } from "./components/Button";
@@ -78,3 +80,10 @@ export { StatStrip, type StatStripProps, type StatStripItem } from "./components
 export { WidgetCard, type WidgetCardProps } from "./components/WidgetCard";
 export { RankList, formatShare, type RankListProps, type RankListItem, type RankListSplit } from "./components/RankList";
 export { ACCENT_TILE, ACCENT_GLOW, ACCENT_TEXT, type WidgetAccent } from "./lib/accents";
+
+export { AIButton, AISendButton, AICost, type AIButtonProps, type AISendButtonProps, type AICostProps } from './components/AIButton';
+export { AISurface, AIWidget, type AISurfaceProps, type AIWidgetProps } from './components/AISurface';
+export { AIActivity, type AIActivityProps } from './components/AIActivity';
+export { AIComposer, AIComposerInput, AIComposerRegion, type AIComposerProps, type AIComposerInputProps } from './components/AIComposer';
+export { AIMediaPreview, type AIMediaPreviewProps } from './components/AIMediaPreview';
+export { AIActionDialog, type AIActionDialogProps } from './components/AIActionDialog';

@@ -6,6 +6,8 @@ import { IconChevronRight, IconLock, IconPin, type IconProps } from "../icons";
 export type SidebarNavSubItem = {
     label: string;
     endPoint: string;
+    /** Contador/selo à direita do item (ex.: conversas não lidas). Com a sidebar recolhida vira um ponto no ícone do grupo. */
+    badge?: ReactNode;
     /** Item visível mas indisponível: cadeado + tooltip, sem navegação. */
     locked?: boolean;
     /** Texto do tooltip do item travado (default: "Chega em breve"). */
@@ -194,10 +196,16 @@ export function SidebarNav({
                                     !groupActive && "text-foreground/70 hover:bg-foreground/[0.045] hover:text-foreground"
                                 )}
                             >
-                                <span className="flex size-5 shrink-0 items-center justify-center">
+                                <span className="relative flex size-5 shrink-0 items-center justify-center">
                                     <Icon size={20} />
+                                    {!open && item.subItems.some((sub) => sub.badge) && (
+                                        <span className="absolute -top-1 -right-1 size-2 rounded-full bg-destructive ring-2 ring-surface-1" />
+                                    )}
                                 </span>
                                 <Label open={open}>{item.label}</Label>
+                                {singleChild && item.subItems[0]?.badge && (
+                                    <span className={cn("ml-auto shrink-0 transition-opacity duration-150", !open && "opacity-0")}>{item.subItems[0].badge}</span>
+                                )}
                                 {!singleChild && accordion && (
                                     <IconChevronRight
                                         size={12}
@@ -257,7 +265,8 @@ export function SidebarNav({
                                                                 "font-medium text-foreground/55 hover:translate-x-[2px] hover:bg-foreground/[0.04] hover:text-foreground"
                                                         )}
                                                     >
-                                                        {sub.label}
+                                                        <span className="min-w-0 truncate">{sub.label}</span>
+                                                        {sub.badge && <span className="ml-auto shrink-0 pl-2">{sub.badge}</span>}
                                                     </button>
                                                 );
                                             })}

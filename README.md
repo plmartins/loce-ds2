@@ -94,3 +94,14 @@ filtro · Todo período”. Controles usados em cadastros continuam iguais quand
 `data-filter-active="true"` no campo real para herdar a mesma aparência.
 
 Validação: `npm run build && node --test tests/filter-state.test.mjs`.
+
+## Loce Labs (contexto do grupo)
+
+Todos os produtos Loce pertencem ao **Loce Labs**, o laboratório de tecnologia
+que mantém a suíte (Loce ERP, Loce PDV, Loce E-commerce, Loce One, Loce Agency,
+Talkbia) e presta serviço de desenvolvimento sob medida. A landing
+institucional vive em `Projetos/Loce-V2/loce-labs-lp` (domínio alvo `loce.io`)
+e o mapa completo do ecossistema (produtos, domínios, repos) está no
+`CLAUDE.md` dela. Quando um produto mudar de nome, domínio ou posicionamento,
+atualizar o `src/lib/site.ts` daquela LP junto. A `Projetos/Loce/loce-io`
+(Next 14) é a landing antiga e está obsoleta.

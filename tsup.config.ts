@@ -1,11 +1,9 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-    entry: {
-        index: "src/index.ts",
-        "icons/index": "src/icons/index.ts",
-        "charts/index": "src/charts/index.ts",
-    },
+    // Um entry por ícone (src/icons/defs/*): cada ícone vira um módulo próprio no dist,
+    // e o bundler do app consegue mandar cada um só pro chunk que o usa.
+    entry: ["src/index.ts", "src/icons/index.ts", "src/charts/index.ts", "src/icons/defs/*.ts"],
     format: ["esm"],
     dts: true,
     sourcemap: true,

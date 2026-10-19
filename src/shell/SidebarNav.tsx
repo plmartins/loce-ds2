@@ -198,9 +198,11 @@ export function SidebarNav({
                             >
                                 <span className="relative flex size-5 shrink-0 items-center justify-center">
                                     <Icon size={20} />
-                                    {!open && item.subItems.some((sub) => sub.badge) && (
-                                        <span className="absolute -top-1 -right-1 size-2 rounded-full bg-destructive ring-2 ring-surface-1" />
-                                    )}
+                                    {/* Colapsado: o badge do primeiro subitem com contagem encolhe pro canto do ícone. */}
+                                    {!open && (() => {
+                                        const badge = item.subItems.find((sub) => sub.badge)?.badge;
+                                        return badge ? <span className="absolute -top-2 -right-2.5 origin-top-right scale-[0.72]">{badge}</span> : null;
+                                    })()}
                                 </span>
                                 <Label open={open}>{item.label}</Label>
                                 {singleChild && item.subItems[0]?.badge && (

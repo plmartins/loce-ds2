@@ -150,6 +150,32 @@ import {
     XCircle,
     BracketsCurly, Broadcast, CalendarDots, Circle, CircleDashed, Clover, Crown, DeviceMobile, Fire, House, ImageBroken, Lightbulb, Monitor, MusicNote, PaintBrush, Palette, Pause, Play, Plug, Pulse, Rocket, ShareNetwork, SpinnerBall, Target, Timer, Trophy, UserPlus,
     AppleLogo, GooglePlayLogo,
+    Archive,
+    ArrowBendUpLeft,
+    ArrowBendUpRight,
+    ArrowsInSimple,
+    ArrowsOutSimple,
+    CalendarPlus,
+    Camera,
+    Checks,
+    FileX,
+    FileXls,
+    Folder,
+    FolderOpen,
+    InstagramLogo,
+    Microphone,
+    Paperclip,
+    Smiley,
+    SpeakerHigh,
+    SpeakerSlash,
+    Sticker,
+    Stop,
+    TextT,
+    Thermometer,
+    ThumbsDown,
+    ThumbsUp,
+    UserCheck,
+    VideoCamera,
 } from "@phosphor-icons/react";
 import { createIcon } from "./create-icon";
 
@@ -342,3 +368,34 @@ export const IconPause = /*#__PURE__*/ createIcon(Pause);
 export const IconTarget = /*#__PURE__*/ createIcon(Target);
 export const IconCircle = /*#__PURE__*/ createIcon(Circle);
 export const IconRoulette = /*#__PURE__*/ createIcon(SpinnerBall);
+
+// Chat e mídia (Talkbia): ícones em fill; checks, clipe e setas de janela em bold (traço).
+export const IconSound = /*#__PURE__*/ createIcon(SpeakerHigh);
+export const IconSoundOff = /*#__PURE__*/ createIcon(SpeakerSlash);
+export const IconMicrophone = /*#__PURE__*/ createIcon(Microphone);
+export const IconSmiley = /*#__PURE__*/ createIcon(Smiley);
+export const IconSticker = /*#__PURE__*/ createIcon(Sticker);
+export const IconVideo = /*#__PURE__*/ createIcon(VideoCamera);
+export const IconCamera = /*#__PURE__*/ createIcon(Camera);
+export const IconReply = /*#__PURE__*/ createIcon(ArrowBendUpLeft);
+export const IconForward = /*#__PURE__*/ createIcon(ArrowBendUpRight);
+export const IconFolder = /*#__PURE__*/ createIcon(Folder);
+export const IconFolderOpen = /*#__PURE__*/ createIcon(FolderOpen);
+export const IconPaperclip = /*#__PURE__*/ createIcon(Paperclip, "bold");
+export const IconInstagram = /*#__PURE__*/ createIcon(InstagramLogo);
+export const IconArchive = /*#__PURE__*/ createIcon(Archive);
+export const IconArchiveRestore = /*#__PURE__*/ createIcon(ArrowCounterClockwise);
+export const IconCalendarPlus = /*#__PURE__*/ createIcon(CalendarPlus);
+export const IconFileX = /*#__PURE__*/ createIcon(FileX);
+export const IconFileXls = /*#__PURE__*/ createIcon(FileXls);
+export const IconStop = /*#__PURE__*/ createIcon(Stop);
+export const IconText = /*#__PURE__*/ createIcon(TextT);
+export const IconThermometer = /*#__PURE__*/ createIcon(Thermometer);
+export const IconThumbsUp = /*#__PURE__*/ createIcon(ThumbsUp);
+export const IconThumbsDown = /*#__PURE__*/ createIcon(ThumbsDown);
+export const IconUserCheck = /*#__PURE__*/ createIcon(UserCheck);
+export const IconUserMinus = /*#__PURE__*/ createIcon(UserMinus);
+export const IconUserCircle = /*#__PURE__*/ createIcon(UserCircle);
+export const IconChecks = /*#__PURE__*/ createIcon(Checks, "bold");
+export const IconMaximize = /*#__PURE__*/ createIcon(ArrowsOutSimple, "bold");
+export const IconMinimize = /*#__PURE__*/ createIcon(ArrowsInSimple, "bold");

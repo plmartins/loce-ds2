@@ -87,3 +87,5 @@ export { AIActivity, type AIActivityProps } from './components/AIActivity';
 export { AIComposer, AIComposerInput, AIComposerRegion, type AIComposerProps, type AIComposerInputProps } from './components/AIComposer';
 export { AIMediaPreview, type AIMediaPreviewProps } from './components/AIMediaPreview';
 export { AIActionDialog, type AIActionDialogProps } from './components/AIActionDialog';
+export { AISpectrum, type AISpectrumProps } from './components/AISpectrum';
+export { AISplitButton, type AISplitButtonProps } from './components/AISplitButton';

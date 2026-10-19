@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 import { IconSparkle, IconArrowUp } from '../icons';
+import { AIIcon } from './AIIcon';
 import { cn } from '../lib/utils';
 import { AICard } from './AICard';
 
@@ -35,7 +36,7 @@ export function AIButton({ size = 'default', variant = 'beam', layout = 'label',
             <AICard beamType="pulse-inner" borderRadius={12} className="ds-ai-action-beam ds-ai-busy" surfaceClassName="ds-ai-effect-content"><span /></AICard>
         </span>}
         <button {...props} type={type} className={cn('ds-ai-button', className)} disabled={unavailable || loading} aria-busy={loading || undefined}>
-            <span aria-hidden="true" className={cn('ds-ai-action-icon', loading && 'ds-ai-working')}>{icon ?? <IconSparkle size={17} />}</span>
+            <span aria-hidden="true" className={cn('ds-ai-action-icon', loading && 'ds-ai-working')}>{icon ?? <AIIcon size={size === 'compact' ? 15 : 17} />}</span>
             <span className="ds-ai-action-label"><span aria-hidden="true" className="ds-ai-reserve">{children}</span><span aria-hidden="true" className="ds-ai-reserve">{loadingLabel}</span><span>{loading ? loadingLabel : children}</span></span>
             {showCost && <span className="ds-ai-action-price"><AICost credits={credits} state={resolvedCostState} /></span>}
         </button>

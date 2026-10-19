@@ -2,7 +2,15 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { useRef, type ComponentPropsWithoutRef } from "react";
 import { cn } from "../lib/utils";
 
-export const DropdownMenu = DropdownMenuPrimitive.Root;
+/**
+ * Raiz com `modal={false}` por padrão. No modo modal o Radix trava `pointer-events: none`
+ * no body enquanto o menu está aberto; quando um item abre um Dialog no mesmo tick, a
+ * trava do menu e a do diálogo se cruzam e o body pode ficar preso sem cliques depois
+ * que os dois fecham. Sem modal o menu continua fechando ao clicar fora, sem a trava.
+ */
+export const DropdownMenu = ({ modal = false, ...props }: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>) => (
+    <DropdownMenuPrimitive.Root modal={modal} {...props} />
+);
 export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 
 export function DropdownMenuContent({

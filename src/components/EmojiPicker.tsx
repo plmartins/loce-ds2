@@ -58,7 +58,7 @@ const writeRecent = (key: string, list: string[]) => {
 export function EmojiPicker({ onSelect, onEscape, autoFocus = true, recentKey = "loce:emoji-recent", className }: EmojiPickerProps) {
     const [data, setData] = useState<Data | null>(cache);
     const [query, setQuery] = useState("");
-    const [recent, setRecent] = useState<string[]>(() => readRecent(recentKey));
+    const [recent] = useState<string[]>(() => readRecent(recentKey));
     const [active, setActive] = useState<string>("recent");
     const scrollRef = useRef<HTMLDivElement>(null);
     const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -106,9 +106,12 @@ export function EmojiPicker({ onSelect, onEscape, autoFocus = true, recentKey = 
         if (!tabs.some((t) => t.key === active)) setActive(tabs[0]?.key ?? "0");
     }, [tabs, active]);
 
+    // Recentes só mudam na PRÓXIMA abertura: atualizar a grade enquanto o seletor está aberto
+    // faz a seção "Recentes" crescer e tudo pular na hora do clique.
+    const persistedRecent = useRef(recent);
     const pick = (emoji: string) => {
-        const next = [emoji, ...recent.filter((e) => e !== emoji)].slice(0, RECENT_MAX);
-        setRecent(next);
+        const next = [emoji, ...persistedRecent.current.filter((e) => e !== emoji)].slice(0, RECENT_MAX);
+        persistedRecent.current = next;
         writeRecent(recentKey, next);
         onSelect(emoji);
     };
@@ -176,18 +179,18 @@ export function EmojiPicker({ onSelect, onEscape, autoFocus = true, recentKey = 
                             title={title}
                             onClick={() => jumpTo(key)}
                             className={cn(
-                                "relative flex size-7 cursor-pointer items-center justify-center rounded-lg transition-colors",
+                                "relative flex size-7 cursor-pointer items-center justify-center rounded-lg transition-colors duration-150",
                                 active === key ? "text-brand" : "text-muted-foreground hover:bg-surface-2 hover:text-foreground",
                             )}
                         >
                             <Icon size={16} />
-                            {active === key && <span aria-hidden className="absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full bg-brand" />}
+                            <span aria-hidden className={cn("absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full bg-brand transition-[opacity,transform] duration-150", active === key ? "scale-x-100 opacity-100" : "scale-x-50 opacity-0")} />
                         </button>
                     ))}
                 </div>
             )}
 
-            <div ref={scrollRef} onScroll={onScroll} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-2">
+            <div ref={scrollRef} onScroll={onScroll} key={query ? "search" : "browse"} className="ds-emoji-fade min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-2">
                 {!data && (
                     <div className="grid grid-cols-8 gap-0.5 pt-1">
                         {Array.from({ length: 48 }).map((_, i) => <Skeleton key={i} className="m-1 size-7 rounded-full" />)}
@@ -218,7 +221,7 @@ export function EmojiPicker({ onSelect, onEscape, autoFocus = true, recentKey = 
                                     title={r[2]}
                                     aria-label={r[2]}
                                     onClick={() => pick(r[0])}
-                                    className="ds-emoji-glyph flex size-9 cursor-pointer items-center justify-center rounded-lg text-[22px] leading-none transition-[background-color,transform] duration-100 hover:bg-surface-2 active:scale-90"
+                                    className="ds-emoji-glyph flex size-9 cursor-pointer items-center justify-center rounded-lg text-[22px] leading-none transition-[background-color,transform] duration-150 ease-out hover:bg-surface-2 hover:scale-110 active:scale-95"
                                 >
                                     {r[0]}
                                 </button>

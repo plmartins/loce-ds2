@@ -7,7 +7,7 @@ export type PlatformId = "erp" | "ecommerce" | "marketing" | "talkbia" | "dev";
 
 export type PlatformRailItem = {
     id: PlatformId;
-    /** URL da plataforma (troca por navegação completa; a sessão viaja no cookie .loce.io). */
+    /** URL da plataforma. Abre em nova aba (a sessão viaja no cookie .loce.io); a aba atual fica onde estava. */
     href?: string;
     available?: boolean;
     active?: boolean;
@@ -110,7 +110,7 @@ function PlatformPreview({ item, children }: { item: PlatformRailItem; children:
                             </div>
                             <p className="text-[12px] leading-relaxed text-muted-foreground">{meta.description}</p>
                             {available && item.href && !item.active && (
-                                <span className="text-[11px] font-bold text-brand">Clique para abrir</span>
+                                <span className="text-[11px] font-bold text-brand">Abre em nova aba</span>
                             )}
                             {!available && (
                                 <span className="text-[11px] font-medium text-muted-foreground">
@@ -175,7 +175,13 @@ function RailTile({ item }: { item: PlatformRailItem }) {
 
     // O preview no hover substitui o title nativo em todos os estados.
     const trigger = available && item.href && !item.active ? (
-        <a href={item.href} aria-label={meta.label} className="group block w-full cursor-pointer">
+        <a
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={meta.label}
+            className="group block w-full cursor-pointer"
+        >
             {wrapped}
         </a>
     ) : (

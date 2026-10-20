@@ -154,3 +154,9 @@
 .ds-ai-card-outline{box-shadow:0 0 0 1px color-mix(in srgb,var(--foreground) 9%,transparent)}
 
 @media (prefers-reduced-motion:reduce){.ds-ai-beam::before,.ds-ai-beam::after,.ds-ai-generating::before,.ds-ai-generating::after{animation:none}}
+
+/* Bolha de mensagem da IA (chat, mockups): lavagem leve do espectro sobre o card e borda de 1px
+   no espectro suavizada com a borda normal. Sem raio próprio: quem usa decide os cantos.
+   Substitui o antigo .ai-card (roxo chapado da marca). */
+.ds-ai-bubble{border:1px solid transparent;background:linear-gradient(135deg,color-mix(in srgb,var(--ai-spectrum-pink) 9%,var(--card)),color-mix(in srgb,var(--ai-spectrum-violet) 9%,var(--card)) 50%,color-mix(in srgb,var(--ai-spectrum-blue) 8%,var(--card))) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--ai-spectrum-pink) 45%,var(--border)),color-mix(in srgb,var(--ai-spectrum-violet) 45%,var(--border)) 50%,color-mix(in srgb,var(--ai-spectrum-blue) 40%,var(--border))) border-box}
+.dark .ds-ai-bubble{background:linear-gradient(135deg,color-mix(in srgb,var(--ai-spectrum-pink) 12%,var(--card)),color-mix(in srgb,var(--ai-spectrum-violet) 12%,var(--card)) 50%,color-mix(in srgb,var(--ai-spectrum-blue) 10%,var(--card))) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--ai-spectrum-pink) 35%,var(--border)),color-mix(in srgb,var(--ai-spectrum-violet) 35%,var(--border)) 50%,color-mix(in srgb,var(--ai-spectrum-blue) 30%,var(--border))) border-box}

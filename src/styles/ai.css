@@ -127,7 +127,9 @@
 .ds-ai-spectrum{--ds-ai-spectrum:linear-gradient(90deg,var(--ai-spectrum-orange),var(--ai-spectrum-red) 14%,var(--ai-spectrum-pink) 28%,var(--ai-spectrum-violet) 40%,var(--ai-spectrum-indigo) 52%,var(--ai-spectrum-blue) 64%,var(--ai-spectrum-teal) 76%,var(--ai-spectrum-green) 88%,var(--ai-spectrum-orange));display:inline-flex;align-items:center;gap:6px}
 .ds-ai-spectrum-glyph{display:inline-block;flex-shrink:0;background:var(--ds-ai-spectrum);mask-size:contain;mask-repeat:no-repeat;mask-position:center;-webkit-mask-size:contain;-webkit-mask-repeat:no-repeat;-webkit-mask-position:center}
 .ds-ai-spectrum-glyph>svg{opacity:0}
-.ds-ai-spectrum-text{background:var(--ds-ai-spectrum);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* Texto no espectro mostra a MESMA janela do corpo do AIIcon (o meio do anel: rosa, violeta, índigo, azul).
+   Com o degradê inteiro numa palavra curta apareciam só as pontas (laranja e verde) e parecia outro gradiente. */
+.ds-ai-spectrum-text{background:var(--ds-ai-spectrum);background-size:200% 100%;background-position:50% 0;-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* ---- Botão dividido ---- */
 .ds-ai-split-divider{position:relative;z-index:1;align-self:stretch;width:1px;margin:6px 0;background:var(--border)}

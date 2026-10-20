@@ -201,3 +201,8 @@ export { IconUserCircle } from "./defs/IconUserCircle";
 export { IconChecks } from "./defs/IconChecks";
 export { IconMaximize } from "./defs/IconMaximize";
 export { IconMinimize } from "./defs/IconMinimize";
+export { IconPaw } from "./defs/IconPaw";
+export { IconFood } from "./defs/IconFood";
+export { IconPlane } from "./defs/IconPlane";
+export { IconBall } from "./defs/IconBall";
+export { IconFlag } from "./defs/IconFlag";

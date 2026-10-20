@@ -97,3 +97,9 @@
     font-weight: 700;
     line-height: 1.2;
 }
+
+/* EmojiPicker: glifo sempre na fonte de emoji do sistema (sem cair em símbolo monocromático) */
+.ds-emoji-glyph {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", sans-serif;
+    font-variant-emoji: emoji;
+}

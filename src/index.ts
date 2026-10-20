@@ -89,3 +89,4 @@ export { AIMediaPreview, type AIMediaPreviewProps } from './components/AIMediaPr
 export { AIActionDialog, type AIActionDialogProps } from './components/AIActionDialog';
 export { AISpectrum, type AISpectrumProps } from './components/AISpectrum';
 export { AISplitButton, type AISplitButtonProps } from './components/AISplitButton';
+export { EmojiPicker, type EmojiPickerProps } from './components/EmojiPicker';

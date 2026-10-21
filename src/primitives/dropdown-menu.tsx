@@ -16,6 +16,7 @@ export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 export function DropdownMenuContent({
     className,
     sideOffset = 6,
+    collisionPadding = 12,
     onPointerDownCapture,
     onKeyDownCapture,
     onCloseAutoFocus,
@@ -27,8 +28,10 @@ export function DropdownMenuContent({
         <DropdownMenuPrimitive.Portal>
             <DropdownMenuPrimitive.Content
                 sideOffset={sideOffset}
+                collisionPadding={collisionPadding}
                 className={cn(
-                    "z-50 min-w-[190px] overflow-hidden rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-xl shadow-black/5 dark:shadow-black/30",
+                    // Nunca passa da área visível: lista longa rola dentro do menu em vez de sair da tela.
+                    "z-50 max-h-[var(--radix-dropdown-menu-content-available-height)] min-w-[190px] overflow-y-auto overscroll-contain rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-xl shadow-black/5 dark:shadow-black/30",
                     "data-[state=open]:animate-slide-up",
                     className
                 )}

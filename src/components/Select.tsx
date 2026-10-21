@@ -65,6 +65,7 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", i
             </DropdownMenuTrigger>
             <DropdownMenuContent
                 align="start"
+                className="max-h-[min(22rem,var(--radix-dropdown-menu-content-available-height))]"
                 style={{ minWidth: "var(--radix-dropdown-menu-trigger-width)" }}
             >
                 {filterActive && clearFilter && <DropdownMenuItem onSelect={clearFilter} className="mb-1 gap-2 border-b border-border pb-2 font-semibold text-brand">

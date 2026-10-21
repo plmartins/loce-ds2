@@ -30,7 +30,9 @@ test('AI glyphs have distinct gradient IDs and inherit the host palette', () => 
     assert.equal(ids.length, 2);
     assert.notEqual(ids[0], ids[1]);
     for (const id of ids) assert.ok(html.includes(`url(#${id})`));
-    assert.match(html, /var\(--ai-color-mid, var\(--accent-brand\)\)/);
+    // Cores por plataforma: as nove paradas vêm de --ai-icon-1..9 (ai.css).
+    assert.match(html, /stop-color="var\(--ai-icon-1\)"/);
+    assert.match(html, /stop-color="var\(--ai-icon-9\)"/);
 });
 
 // Preserve the material from the creator preview; a generic conic background

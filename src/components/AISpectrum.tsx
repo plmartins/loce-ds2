@@ -10,8 +10,9 @@ export type AISpectrumProps = HTMLAttributes<HTMLSpanElement> & {
 };
 
 /**
- * Glifo e texto no espectro de IA, ESTÁTICOS e inteiros: as oito cores
- * esticadas de ponta a ponta, sem escurecer e sem animação. Pra rótulos de
+ * Glifo e texto no espectro de IA, ESTÁTICOS e inteiros: as nove cores da
+ * faísca (--ai-icon-*, por plataforma) esticadas de ponta a ponta, sem
+ * escurecer e sem animação. Pra rótulos de
  * IA em repouso (o AIActivity é a versão em atividade, com reflexo).
  */
 export function AISpectrum({ children, iconSize = 14, hideIcon = false, className, ...props }: AISpectrumProps) {

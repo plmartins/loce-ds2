@@ -21,9 +21,13 @@ import { AICard } from 'loce-ds2';
 - `className` e `style`: wrapper; `surfaceClassName`: conteúdo e padding.
 - Atributos semânticos e `ref` são encaminhados ao article/section.
 
-As cores de `AIIcon` herdam a marca. A superfície escura é neutra. Personalize com
-`--ai-color-start`, `--ai-color-mid`, `--ai-color-end` no root ou via `style`
-do card. Agency usa #f9ce34, #ee2a7b, #6228d7.
+A faísca do `AIIcon` puxa pra cor da plataforma (`data-platform` no html): ERP,
+Talkbia e dev no espectro da Loce (rosa, violeta e azul no corpo), E-commerce do
+índigo ao verde-limão, Agency do laranja ao índigo. As nove paradas ficam em
+`--ai-icon-1..9` (ai.css) e o `AISpectrum` usa as mesmas. Em fundo preenchido a
+faísca é lisa e herda a cor do texto: o `AIButton variant="gradient"` já faz isso,
+e num `Button` primário use `IconSparkle` em vez de `AIIcon`. A superfície escura
+é neutra.
 
 [BorderBeam](https://libraries.dev/beam) 1.4.1 usa o preset `md` original:
 movimento de 1,96s, brilho radial, borda de 1px e variação de matiz nativa.

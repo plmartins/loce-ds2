@@ -36,7 +36,8 @@ export function AIButton({ size = 'default', variant = 'beam', layout = 'label',
             <AICard beamType="pulse-inner" borderRadius={12} className="ds-ai-action-beam ds-ai-busy" surfaceClassName="ds-ai-effect-content"><span /></AICard>
         </span>}
         <button {...props} type={type} className={cn('ds-ai-button', className)} disabled={unavailable || loading} aria-busy={loading || undefined}>
-            <span aria-hidden="true" className={cn('ds-ai-action-icon', loading && 'ds-ai-working')}>{icon ?? <AIIcon size={size === 'compact' ? 15 : 17} />}</span>
+            {/* No botão preenchido (gradient) a faísca é lisa e herda o branco: o degradê da IA sobre o degradê do botão brigava. */}
+            <span aria-hidden="true" className={cn('ds-ai-action-icon', loading && 'ds-ai-working')}>{icon ?? (variant === 'gradient' ? <IconSparkle size={size === 'compact' ? 15 : 17} /> : <AIIcon size={size === 'compact' ? 15 : 17} />)}</span>
             <span className="ds-ai-action-label"><span aria-hidden="true" className="ds-ai-reserve">{children}</span><span aria-hidden="true" className="ds-ai-reserve">{loadingLabel}</span><span>{loading ? loadingLabel : children}</span></span>
             {showCost && <span className="ds-ai-action-price"><AICost credits={credits} state={resolvedCostState} /></span>}
         </button>

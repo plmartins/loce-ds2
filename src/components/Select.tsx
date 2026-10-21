@@ -34,7 +34,10 @@ export function Select({ options, value, onChange, placeholder = "Selecionar", i
     const leadingIcon = selected?.icon ?? icon ?? (filterActive ? <IconFilters size={14} /> : null);
 
     const control = (
-        <DropdownMenu>
+        // Modal de propósito: o Select nunca abre diálogo (o motivo do modal=false no DropdownMenu), e
+        // não modal ele fecha no mesmo instante quando está dentro de um Dialog (o foco preso do diálogo
+        // puxa o foco de volta e o menu entende como clique fora).
+        <DropdownMenu modal>
             <DropdownMenuTrigger asChild disabled={disabled || loading}>
                 <button
                     type="button"

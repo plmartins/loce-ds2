@@ -42,12 +42,28 @@ function hashString(value: string) {
     return Math.abs(hash);
 }
 
+/** Primeiro caractere visível inteiro (emoji com ZWJ, acento combinado), nunca meio par de surrogates. */
+function firstGrapheme(value: string) {
+    const Segmenter = (Intl as unknown as { Segmenter?: new (l?: string, o?: { granularity: string }) => { segment: (s: string) => Iterable<{ segment: string }> } }).Segmenter;
+    if (Segmenter) {
+        for (const { segment } of new Segmenter(undefined, { granularity: "grapheme" }).segment(value)) return segment;
+    }
+    return Array.from(value)[0] ?? "";
+}
+
+/**
+ * Iniciais só de palavras que começam com letra ou número: nome com emoji ou símbolo
+ * ("Taís 🌸 Souza", "★ Loja") não vira meio caractere quebrado. Sem nenhuma palavra
+ * assim, usa o primeiro caractere do nome (o emoji inteiro, por exemplo).
+ */
 function initialsOf(name?: string) {
-    if (!name?.trim()) return "?";
-    const parts = name.trim().split(/\s+/);
-    const first = parts[0]?.[0] ?? "";
-    const last = parts.length > 1 ? parts[parts.length - 1]?.[0] ?? "" : "";
-    return (first + last).toUpperCase();
+    const trimmed = name?.trim();
+    if (!trimmed) return "?";
+    const words = trimmed.split(/\s+/).map((w) => w.replace(/^[^\p{L}\p{N}]+/u, "")).filter(Boolean);
+    if (!words.length) return firstGrapheme(trimmed) || "?";
+    const first = firstGrapheme(words[0]);
+    const last = words.length > 1 ? firstGrapheme(words[words.length - 1]) : "";
+    return (first + last).toLocaleUpperCase("pt-BR");
 }
 
 export function Avatar({ name, src, size = 32, className, tone = "vivid" }: AvatarProps) {

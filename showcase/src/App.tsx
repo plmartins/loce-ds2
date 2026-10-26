@@ -9,6 +9,7 @@ const PLATFORMS = [
     { id: "ecommerce", label: "Ecommerce" },
     { id: "marketing", label: "Marketing" },
     { id: "talkbia", label: "Talkbia" },
+    { id: "grupos", label: "Grupos" },
 ] as const;
 
 const SWATCHES: [string, string][] = [
@@ -167,6 +168,7 @@ export default function App() {
                                 {p.id === "ecommerce" && <Icons.IconCart size={20} className="text-platform-ecommerce" />}
                                 {p.id === "marketing" && <Icons.IconLock size={20} />}
                                 {p.id === "talkbia" && <Icons.IconLock size={20} />}
+                                {p.id === "grupos" && <Icons.IconWhatsapp size={20} className="text-platform-grupos" />}
                             </div>
                         ))}
                     </div>

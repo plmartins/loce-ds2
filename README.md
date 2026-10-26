@@ -27,7 +27,7 @@ import { cn } from "loce-ds2";
 import { IconProducts, IconPlus } from "loce-ds2/icons";
 ```
 
-Plataformas: `erp` (azul), `ecommerce` (verde), `marketing` (rosa), `talkbia` (roxo). Sem `data-platform`, o acento cai no roxo Loce de propósito, pra denunciar a ausência.
+Plataformas: `erp` (azul), `ecommerce` (verde), `marketing` (rosa), `talkbia` (roxo), `grupos` (laranja). Sem `data-platform`, o acento cai no roxo Loce de propósito, pra denunciar a ausência.
 
 ## Release
 

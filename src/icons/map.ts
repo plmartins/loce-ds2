@@ -67,6 +67,7 @@ export { IconChevronRight } from "./defs/IconChevronRight";
 export { IconApps } from "./defs/IconApps";
 export { IconMarketing } from "./defs/IconMarketing";
 export { IconChat } from "./defs/IconChat";
+export { IconWhatsapp } from "./defs/IconWhatsapp";
 export { IconCode } from "./defs/IconCode";
 export { IconPin } from "./defs/IconPin";
 export { IconMenu } from "./defs/IconMenu";

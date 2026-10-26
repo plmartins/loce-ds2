@@ -128,10 +128,12 @@
    usam o espectro da Loce inteiro, e o corpo da faísca mostra rosa, violeta e azul. E-commerce e Agency
    puxam pra cor da casa sem virar cor sólida: as paradas do meio são misturas em sRGB, o mesmo
    espaço do degradê do SVG, pra reproduzir índigo, ciano, esmeralda, lima (E-commerce) e
-   laranja, rosa, violeta, índigo (Agency) nos pontos 28, 44, 60 e 78% (46 e 62% no Agency). */
+   laranja, rosa, violeta, índigo (Agency) nos pontos 28, 44, 60 e 78% (46 e 62% no Agency).
+   Grupos vai do laranja da casa ao âmbar e termina no rosa, no mesmo desenho do Agency. */
 :root{--ai-icon-1:var(--ai-spectrum-orange);--ai-icon-2:var(--ai-spectrum-red);--ai-icon-3:var(--ai-spectrum-pink);--ai-icon-4:var(--ai-spectrum-violet);--ai-icon-5:var(--ai-spectrum-indigo);--ai-icon-6:var(--ai-spectrum-blue);--ai-icon-7:var(--ai-spectrum-teal);--ai-icon-8:var(--ai-spectrum-green);--ai-icon-9:var(--ai-spectrum-orange)}
 [data-platform=ecommerce]{--ai-icon-1:#6366f1;--ai-icon-2:#6366f1;--ai-icon-3:#6366f1;--ai-icon-4:color-mix(in srgb,#6366f1 25%,#06b6d4);--ai-icon-5:color-mix(in srgb,#06b6d4 50%,#10b981);--ai-icon-6:color-mix(in srgb,#10b981 78%,#a3e635);--ai-icon-7:color-mix(in srgb,#10b981 11%,#a3e635);--ai-icon-8:#a3e635;--ai-icon-9:#a3e635}
 [data-platform=marketing]{--ai-icon-1:#ff7828;--ai-icon-2:#ff7828;--ai-icon-3:#ff7828;--ai-icon-4:color-mix(in srgb,#ff7828 33%,#ec4899);--ai-icon-5:color-mix(in srgb,#ec4899 62.5%,#a855f7);--ai-icon-6:color-mix(in srgb,#a855f7 87.5%,#6366f1);--ai-icon-7:color-mix(in srgb,#a855f7 12.5%,#6366f1);--ai-icon-8:#6366f1;--ai-icon-9:#6366f1}
+[data-platform=grupos]{--ai-icon-1:#f97316;--ai-icon-2:#f97316;--ai-icon-3:#f97316;--ai-icon-4:color-mix(in srgb,#f97316 33%,#f59e0b);--ai-icon-5:color-mix(in srgb,#f59e0b 62.5%,#ec4899);--ai-icon-6:color-mix(in srgb,#ec4899 87.5%,#f43f5e);--ai-icon-7:color-mix(in srgb,#ec4899 12.5%,#f43f5e);--ai-icon-8:#f43f5e;--ai-icon-9:#f43f5e}
 
 /* ---- Espectro estático (AISpectrum) ---- */
 .ds-ai-spectrum{--ds-ai-spectrum:linear-gradient(90deg,var(--ai-icon-1),var(--ai-icon-2) 14%,var(--ai-icon-3) 28%,var(--ai-icon-4) 40%,var(--ai-icon-5) 52%,var(--ai-icon-6) 64%,var(--ai-icon-7) 76%,var(--ai-icon-8) 88%,var(--ai-icon-9));display:inline-flex;align-items:center;gap:6px}

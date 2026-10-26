@@ -68,8 +68,9 @@ export function StatStrip({ items, columns = 6, loading, className }: StatStripP
                                     !item.emphasis && "opacity-70"
                                 )}
                             />
-                            <span className="relative flex items-center justify-between gap-2">
-                                <span className="truncate text-[10.5px] font-bold uppercase tracking-[0.07em] text-muted-foreground">{item.label}</span>
+                            {/* Rótulo quebra em até duas linhas: na grade de 2 colunas do celular o truncate cortava no meio ("TOTAL DE MENSA..."). */}
+                            <span className="relative flex items-start justify-between gap-2">
+                                <span className="line-clamp-2 min-w-0 text-[10.5px] font-bold uppercase leading-snug tracking-[0.07em] text-muted-foreground">{item.label}</span>
                                 {item.icon && (
                                     <span className={cn("flex size-7 shrink-0 items-center justify-center rounded-lg", ACCENT_TILE[accent])}>{item.icon}</span>
                                 )}

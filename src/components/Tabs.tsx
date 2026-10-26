@@ -23,7 +23,8 @@ export type TabsProps<T extends string = string> = {
 
 export function Tabs<T extends string = string>({ tabs, value, onChange, className, size = "default" }: TabsProps<T>) {
     return (
-        <div className={cn("flex w-fit items-center gap-1 rounded-xl border border-border bg-surface-2/60 p-1", className)}>
+        // Sem caber (celular), a fileira rola na horizontal em vez de alargar a página ou quebrar rótulos.
+        <div className={cn("flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl border border-border bg-surface-2/60 p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden", className)}>
             {tabs.map((tab) => {
                 const isActive = tab.key === value;
                 if (tab.disabled) {
@@ -32,7 +33,7 @@ export function Tabs<T extends string = string>({ tabs, value, onChange, classNa
                             <span
                                 aria-disabled
                                 className={cn(
-                                    "relative inline-flex cursor-default select-none items-center justify-center gap-1.5 rounded-lg font-semibold text-muted-foreground/50",
+                                    "relative inline-flex shrink-0 cursor-default select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-lg font-semibold text-muted-foreground/50",
                                     size === "default" ? "px-4 py-1.5 text-[13px]" : "px-3 py-1 text-xs"
                                 )}
                             >
@@ -49,7 +50,7 @@ export function Tabs<T extends string = string>({ tabs, value, onChange, classNa
                         type="button"
                         onClick={() => onChange(tab.key)}
                         className={cn(
-                            "relative inline-flex cursor-pointer select-none items-center justify-center gap-1.5 rounded-lg font-semibold transition-all duration-150 active:scale-[0.97]",
+                            "relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-lg font-semibold transition-all duration-150 active:scale-[0.97]",
                             size === "default" ? "px-4 py-1.5 text-[13px]" : "px-3 py-1 text-xs",
                             isActive
                                 ? "bg-card text-brand shadow-sm ring-1 ring-border"

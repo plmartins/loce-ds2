@@ -204,7 +204,8 @@ export function DataTable<T extends Record<string, any>>({
                                     <span className="shrink-0 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                                         {col.header}
                                     </span>
-                                    <div className="text-right text-sm font-semibold">
+                                    {/* min-w-0: valor longo (nome, descrição) encolhe e quebra dentro do card em vez de passar da borda. */}
+                                    <div className="min-w-0 overflow-hidden text-right text-sm font-semibold [overflow-wrap:anywhere]">
                                         {col.render ? col.render(row[col.accessor] ?? "-", row, idx) : String(row[col.accessor] ?? "-")}
                                     </div>
                                 </div>

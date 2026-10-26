@@ -10,7 +10,8 @@ const STOPS = [0, 14, 28, 40, 52, 64, 76, 88, 100];
  * Glifo decorativo de IA: a marca de "isto é IA" em toda a suíte. O degradê
  * puxa pra cor de cada plataforma (data-platform no html): ERP, Talkbia e dev
  * no espectro da Loce (rosa, violeta, azul no corpo da faísca), E-commerce do
- * índigo ao verde, Agency do laranja ao índigo. Em fundo preenchido use a
+ * índigo ao verde, Agency do laranja ao índigo, Grupos do laranja ao rosa.
+ * Em fundo preenchido use a
  * faísca lisa (IconSparkle), que herda a cor do texto.
  * O controle em volta fornece o nome acessível.
  */

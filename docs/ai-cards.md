@@ -23,7 +23,8 @@ import { AICard } from 'loce-ds2';
 
 A faísca do `AIIcon` puxa pra cor da plataforma (`data-platform` no html): ERP,
 Talkbia e dev no espectro da Loce (rosa, violeta e azul no corpo), E-commerce do
-índigo ao verde-limão, Agency do laranja ao índigo. As nove paradas ficam em
+índigo ao verde-limão, Agency do laranja ao índigo, Grupos do laranja ao rosa
+passando pelo âmbar. As nove paradas ficam em
 `--ai-icon-1..9` (ai.css) e o `AISpectrum` usa as mesmas. Em fundo preenchido a
 faísca é lisa e herda a cor do texto: o `AIButton variant="gradient"` já faz isso,
 e num `Button` primário use `IconSparkle` em vez de `AIIcon`. A superfície escura

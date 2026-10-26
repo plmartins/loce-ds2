@@ -181,6 +181,7 @@ import {
     Wallet,
     Warning,
     WarningCircle,
+    WhatsappLogo,
     X,
     XCircle,
 } from "@phosphor-icons/react";
@@ -261,6 +262,7 @@ export const IconChevronRight = /*#__PURE__*/ createIcon(CaretRight, "bold");
 export const IconApps = /*#__PURE__*/ createIcon(SquaresFour);
 export const IconMarketing = /*#__PURE__*/ createIcon(Megaphone);
 export const IconChat = /*#__PURE__*/ createIcon(ChatCircleDots);
+export const IconWhatsapp = /*#__PURE__*/ createIcon(WhatsappLogo);
 export const IconCode = /*#__PURE__*/ createIcon(Code, "bold");
 export const IconPin = /*#__PURE__*/ createIcon(PushPin);
 export const IconMenu = /*#__PURE__*/ createIcon(List, "bold");

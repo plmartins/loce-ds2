@@ -1,9 +1,9 @@
 import type { ComponentType, ReactNode } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { cn } from "../lib/utils";
-import { IconApps, IconCart, IconChat, IconCode, IconLock, IconMarketing, type IconProps } from "../icons";
+import { IconApps, IconCart, IconChat, IconCode, IconLock, IconMarketing, IconWhatsapp, type IconProps } from "../icons";
 
-export type PlatformId = "erp" | "ecommerce" | "marketing" | "talkbia" | "dev";
+export type PlatformId = "erp" | "ecommerce" | "marketing" | "talkbia" | "grupos" | "dev";
 
 export type PlatformRailItem = {
     id: PlatformId;
@@ -50,6 +50,13 @@ const PLATFORM_META: Record<
         icon: IconChat,
         tileClass: "bg-gradient-to-br from-[#a78bfa] to-[#6d28d9]",
         glowClass: "shadow-[0_2px_14px_rgba(124,58,237,0.5)]",
+    },
+    grupos: {
+        label: "Loce Grupos",
+        description: "Ofertas, reposições e novidades da sua loja postadas automaticamente nos seus grupos de WhatsApp.",
+        icon: IconWhatsapp,
+        tileClass: "bg-gradient-to-br from-[#fb923c] to-[#ea580c]",
+        glowClass: "shadow-[0_2px_14px_rgba(249,115,22,0.5)]",
     },
     // Interna: só entra no rail quando o app confirma que o usuário é dev.
     dev: {

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "../lib/utils";
-import { IconCheck, IconClose, IconPlus } from "../icons";
+import { IconCheck, IconClose, IconPlus, IconSearch } from "../icons";
 import { Avatar } from "./Avatar";
 
 export type MultiSelectOption = {
@@ -18,15 +18,39 @@ export type MultiSelectProps = {
     onChange: (value: string[]) => void;
     placeholder?: string;
     addLabel?: string;
+    /** Campo de busca no menu. Padrão: aparece a partir de 8 opções. */
+    searchable?: boolean;
+    searchPlaceholder?: string;
     className?: string;
 };
 
-/** Seleção múltipla em chips (ex.: responsáveis de uma tarefa). */
-export function MultiSelect({ label, options, value, onChange, placeholder, addLabel = "Adicionar", className }: MultiSelectProps) {
+/** Altura máxima do menu (px); encolhe quando a tela não dá. */
+const MENU_MAX_HEIGHT = 288;
+const MENU_GAP = 4;
+const VIEWPORT_PADDING = 8;
+const SEARCH_FROM = 8;
+
+type MenuCoords = { top: number; left: number; width: number; maxHeight: number };
+
+/**
+ * Seleção múltipla em chips (ex.: responsáveis de uma tarefa). O menu abre
+ * pra cima quando falta espaço embaixo e nunca passa da borda da tela; com
+ * muitas opções ganha busca.
+ */
+export function MultiSelect({ label, options, value, onChange, placeholder, addLabel = "Adicionar", searchable, searchPlaceholder = "Buscar", className }: MultiSelectProps) {
     const [open, setOpen] = useState(false);
-    const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
+    const [query, setQuery] = useState("");
+    const [coords, setCoords] = useState<MenuCoords>({ top: 0, left: 0, width: 0, maxHeight: MENU_MAX_HEIGHT });
     const triggerRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
+    const searchRef = useRef<HTMLInputElement>(null);
+
+    const hasSearch = searchable ?? options.length >= SEARCH_FROM;
+    const filtered = useMemo(() => {
+        const term = query.trim().toLowerCase();
+        if (!term) return options;
+        return options.filter((o) => o.label.toLowerCase().includes(term) || o.description?.toLowerCase().includes(term));
+    }, [options, query]);
 
     const toggle = (val: string) => onChange(value.includes(val) ? value.filter((v) => v !== val) : [...value, val]);
     const remove = (val: string) => onChange(value.filter((v) => v !== val));
@@ -35,12 +59,24 @@ export function MultiSelect({ label, options, value, onChange, placeholder, addL
         const el = triggerRef.current;
         if (!el) return;
         const rect = el.getBoundingClientRect();
-        setCoords({ top: rect.bottom + 4, left: rect.left, width: rect.width });
+        const below = window.innerHeight - rect.bottom - MENU_GAP - VIEWPORT_PADDING;
+        const above = rect.top - MENU_GAP - VIEWPORT_PADDING;
+        // Embaixo quando cabe (ou quando embaixo tem mais espaço que em cima); senão, em cima.
+        const dropUp = below < Math.min(MENU_MAX_HEIGHT, 180) && above > below;
+        const maxHeight = Math.max(120, Math.min(MENU_MAX_HEIGHT, dropUp ? above : below));
+        const height = Math.min(maxHeight, listRef.current?.offsetHeight ?? maxHeight);
+        setCoords({ top: dropUp ? rect.top - MENU_GAP - height : rect.bottom + MENU_GAP, left: rect.left, width: rect.width, maxHeight });
     };
 
     useEffect(() => {
-        if (!open) return;
+        if (!open) {
+            setQuery("");
+            return;
+        }
         updateCoords();
+        // Segunda medida depois do menu existir no DOM (altura real pra abrir pra cima).
+        const raf = requestAnimationFrame(updateCoords);
+        searchRef.current?.focus();
         const handleClick = (e: MouseEvent) => {
             const t = e.target as HTMLElement;
             if (!triggerRef.current?.contains(t) && !listRef.current?.contains(t)) setOpen(false);
@@ -53,6 +89,7 @@ export function MultiSelect({ label, options, value, onChange, placeholder, addL
         window.addEventListener("scroll", updateCoords, true);
         window.addEventListener("resize", updateCoords);
         return () => {
+            cancelAnimationFrame(raf);
             document.removeEventListener("mousedown", handleClick);
             document.removeEventListener("keydown", handleEsc);
             window.removeEventListener("scroll", updateCoords, true);
@@ -101,10 +138,23 @@ export function MultiSelect({ label, options, value, onChange, placeholder, addL
                     <div
                         ref={listRef}
                         data-ds-portal="multiselect"
-                        style={{ top: coords.top, left: coords.left, width: Math.max(coords.width, 230) }}
-                        className="fixed z-[100] max-h-60 overflow-y-auto rounded-xl border border-border bg-popover p-1 shadow-xl shadow-black/5 animate-slide-up dark:shadow-black/30"
+                        style={{ top: coords.top, left: coords.left, width: Math.max(coords.width, 230), maxHeight: coords.maxHeight }}
+                        className="fixed z-[100] flex flex-col overflow-hidden rounded-xl border border-border bg-popover p-1 shadow-xl shadow-black/5 animate-slide-up dark:shadow-black/30"
                     >
-                        {options.map((opt) => {
+                        {hasSearch && (
+                            <label className="mb-1 flex shrink-0 items-center gap-2 rounded-lg bg-surface-1 px-2.5 py-1.5 text-muted-foreground ring-1 ring-border focus-within:ring-ring/60">
+                                <IconSearch size={13} />
+                                <input
+                                    ref={searchRef}
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    placeholder={searchPlaceholder}
+                                    className="min-w-0 flex-1 bg-transparent text-[13px] font-medium text-foreground outline-none placeholder:text-muted-foreground/70"
+                                />
+                            </label>
+                        )}
+                        <div className="min-h-0 flex-1 overflow-y-auto">
+                        {filtered.map((opt) => {
                             const selected = value.includes(opt.value);
                             return (
                                 <button
@@ -129,7 +179,10 @@ export function MultiSelect({ label, options, value, onChange, placeholder, addL
                                 </button>
                             );
                         })}
-                        {options.length === 0 && <div className="px-4 py-3 text-center text-[13px] text-muted-foreground">Nenhuma opção</div>}
+                        {filtered.length === 0 && (
+                            <div className="px-4 py-3 text-center text-[13px] text-muted-foreground">{options.length === 0 ? "Nenhuma opção" : "Nada com esse nome"}</div>
+                        )}
+                        </div>
                     </div>,
                     getContainer()
                 )}
